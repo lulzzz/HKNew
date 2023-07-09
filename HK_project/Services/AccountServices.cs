@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
-using HK_project.Interface;
+using HK_Project.Interface;
 using HKDB.Data;
 using HKDB.Models;
-using HK_project.ViewModels;
+using HK_Project.ViewModels;
 
-namespace HK_Product.Services
+namespace HK_Project.Services
 {
     public class AccountServices
     {
@@ -19,22 +19,27 @@ namespace HK_Product.Services
             _hashService = hashService;
         }
 
-        public async Task<Member?> AuthenticateMember(LoginViewModel loginVM)
+        public async Task<UserInfoViewModel?> AuthenticateMember(LoginViewModel loginVM) // member
         {
             var member = await _ctx.Members
-                .FirstOrDefaultAsync(u => u.MemberEmail.ToUpper() == loginVM.Email.ToUpper() && u.MemberPassword == _hashService.MD5Hash( loginVM.Password));
+                .FirstOrDefaultAsync(u => u.MemberEmail.ToUpper() == loginVM.Email.ToUpper() && u.MemberPassword == _hashService.MD5Hash(loginVM.Password));
 
             if (member != null)
             {
-                Member userInfo = new Member
+                var UserInfo = new UserInfoViewModel
                 {
-                    MemberId = member.MemberId,
-                    MemberName = member.MemberId.ToString(),
-                    MemberEmail = loginVM.Email,
-                    MemberPassword = loginVM.Password,
+                    Email = loginVM.Email,
+                    Password = loginVM.Password,
+                    Name = member.MemberName
                 };
 
-                return userInfo;
+                 //Member userInfo = new Member
+                 //{
+                 //    MemberName = member.MemberId,
+                 //    MemberEmail = loginVM.Email,
+                 //    MemberPassword = loginVM.Password,
+                 //};
+                return UserInfo;
             }
             else
             {
@@ -42,7 +47,7 @@ namespace HK_Product.Services
             }
         }
 
-        public async Task<User?> AuthenticateUser(LoginViewModel loginVM)
+        public async Task<UserInfoViewModel?> AuthenticateUser(LoginViewModel loginVM) // user
         {
             //find user
             // _hashService.MD5Hash(loginVM.Password)
@@ -51,15 +56,20 @@ namespace HK_Product.Services
 
             if (user != null)
             {
-                User userInfo = new User
+                var UserInfo = new UserInfoViewModel
                 {
-                    UserId = user.UserId,
-                    UserName = user.UserName,
-                    UserEmail = loginVM.Email,
-                    UserPassword = loginVM.Password
+                    Email = loginVM.Email,
+                    Password = loginVM.Password,
+                    Name = user.UserName
                 };
+                //User userInfo = new User
+                //{
+                //    UserName = user.UserName,
+                //    UserEmail = loginVM.Email,
+                //    UserPassword = loginVM.Password
+                //};
 
-                return userInfo;
+                return UserInfo;
             }
             else
             {

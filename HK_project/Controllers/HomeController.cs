@@ -1,8 +1,8 @@
-﻿using HK_project.ViewModels;
+﻿using HK_Project.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace HK_project.Controllers
+namespace HK_Project.Controllers
 {
     public class HomeController : Controller
     {

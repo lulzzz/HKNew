@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using HK_project.Interface;
+using HK_Project.Interface;
 
-namespace HK_Product.Services
+namespace HK_Project.Services
 {
     public class HashService : IHashService
     {

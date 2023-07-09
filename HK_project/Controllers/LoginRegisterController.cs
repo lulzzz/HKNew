@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using HK_project.Interface;
-using HK_Product.Services;
-using HK_project.ViewModels;
+using HK_Project.Interface;
+using HK_Project.Services;
+using HK_Project.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
-namespace HK_project.Controllers
+namespace HK_Project.Controllers
 {
     public class LoginRegisterController : Controller
     {
@@ -28,29 +28,34 @@ namespace HK_project.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult Singin()
+        public IActionResult LogIn()
         {
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Singin(LoginViewModel lvm)
+        public async Task<IActionResult> LogIn(LoginViewModel lvm)
         {
             if (ModelState.IsValid)
             {
 
-                Member member = await _accountServices.AuthenticateMember(lvm);
+                var member = await _accountServices.AuthenticateMember(lvm);
+
                 if (member == null)
                 {
                     ModelState.AddModelError(string.Empty, "帳號密碼有錯!!!");
                     return View(lvm);
                 }
+
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.NameIdentifier, member.MemberId.ToString()), // 更改ID
-                    new Claim(ClaimTypes.Email, member.MemberEmail)
+                    new Claim(ClaimTypes.Email, member.Email)
                 };
-                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+
+                var claimsIdentity = new ClaimsIdentity(claims, 
+                    CookieAuthenticationDefaults.AuthenticationScheme);
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, 
+                    new ClaimsPrincipal(claimsIdentity));
+
                 return RedirectToAction("Index", "Member");
 
             }
@@ -58,24 +63,24 @@ namespace HK_project.Controllers
             return View(lvm);
         }
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult SignUp()
         {
 
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Login([Bind("MemberEmail,MemberPassword")] Member member)
+        public async Task<IActionResult> SignUp([Bind("MemberEmail,MemberPassword")] Member member)
         {
             if (ModelState.IsValid)
             {
 
                 var Samememberemail = await _ctx.Members.SingleOrDefaultAsync(u => u.MemberEmail == member.MemberEmail);
-                var MemberWithMaxId = await _ctx.Members.OrderByDescending(u => u.MemberId).FirstOrDefaultAsync();
+                //var MemberWithMaxId = await _ctx.Members.OrderByDescending(u => u.MemberId).FirstOrDefaultAsync();
                 //var appWithMaxId = await _ctx.Applications.OrderByDescending(u => u.ApplicationId).FirstOrDefaultAsync();
 
                 if (Samememberemail != null)
                 {
-                    ViewBag.ErrorMessage = "Signin failed: email already exists.";
+                    ViewBag.ErrorMessage = "SigiUp failed: email already exists.";
                     return View(member);
                 }
                 else
@@ -94,21 +99,21 @@ namespace HK_project.Controllers
                     //    newMemberId = "C0001";
                     //}
 
+                    //會員資料寫入DB
                     member.MemberPassword = _hashService.MD5Hash(member.MemberPassword);
-
+                    
                     Member m = new Member()
                     {
                         MemberEmail = member.MemberEmail,
                         MemberName = "Member",
-                        MemberPassword = member.MemberPassword,
+                        MemberPassword = member.MemberPassword
                     };
 
                     _ctx.Add(m);
                     await _ctx.SaveChangesAsync();
-
+                    //cookie 帶電子郵件
                     var claims = new List<Claim>
                     {
-                        new Claim(ClaimTypes.NameIdentifier, member.MemberId.ToString()),//更改ID
                         new Claim(ClaimTypes.Email, member.MemberEmail)
                     };
 

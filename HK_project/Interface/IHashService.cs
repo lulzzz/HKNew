@@ -1,4 +1,4 @@
-﻿namespace HK_project.Interface
+﻿namespace HK_Project.Interface
 {
     public interface IHashService
     {

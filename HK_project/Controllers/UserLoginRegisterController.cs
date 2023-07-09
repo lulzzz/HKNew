@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace HK_project.Controllers
+namespace HK_Project.Controllers
 {
     public class UserLoginRegisterController : Controller
     {

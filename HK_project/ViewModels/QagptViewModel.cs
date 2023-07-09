@@ -1,5 +1,6 @@
 ﻿using HKDB.Models;
 
+namespace HK_Project.ViewModels;
 public class QagptViewModel
 {
     public Chat Chat { get; set; }

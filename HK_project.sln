@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HK_project", "HK_project\HK_project.csproj", "{FBCBE588-06CB-4550-B2B0-A868784D787C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HK_Project", "HK_project\HK_Project.csproj", "{FBCBE588-06CB-4550-B2B0-A868784D787C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HKDB", "HKDB\HKDB.csproj", "{714F0921-075D-4F7B-A2C3-743D74C975AE}"
 EndProject

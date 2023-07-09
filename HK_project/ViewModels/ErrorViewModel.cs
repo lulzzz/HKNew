@@ -1,6 +1,6 @@
 using System;
 
-namespace HK_project.ViewModels
+namespace HK_Project.ViewModels
 {
     public class ErrorViewModel
     {
