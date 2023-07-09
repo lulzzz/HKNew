@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("HKContext");
+var connectionString = builder.Configuration.GetConnectionString("HKDB");
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -38,8 +38,6 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
-
 
 app.UseRouting();
 

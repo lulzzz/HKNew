@@ -69,18 +69,18 @@ namespace HK_Project.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> SignUp([Bind("MemberEmail,MemberPassword")] Member member)
+        public async Task<IActionResult> SignUp(SignupViewModel member)
         {
             if (ModelState.IsValid)
             {
 
-                var Samememberemail = await _ctx.Members.SingleOrDefaultAsync(u => u.MemberEmail == member.MemberEmail);
+                var Samememberemail = await _ctx.Members.SingleOrDefaultAsync(u => u.MemberEmail == member.Email);
                 //var MemberWithMaxId = await _ctx.Members.OrderByDescending(u => u.MemberId).FirstOrDefaultAsync();
                 //var appWithMaxId = await _ctx.Applications.OrderByDescending(u => u.ApplicationId).FirstOrDefaultAsync();
 
                 if (Samememberemail != null)
                 {
-                    ViewBag.ErrorMessage = "SigiUp failed: email already exists.";
+                    ViewBag.ErrorMessage = "SignUp failed: email already exists.";
                     return View(member);
                 }
                 else
@@ -100,13 +100,13 @@ namespace HK_Project.Controllers
                     //}
 
                     //會員資料寫入DB
-                    member.MemberPassword = _hashService.MD5Hash(member.MemberPassword);
+                    member.Password = _hashService.MD5Hash(member.Password);
                     
                     Member m = new Member()
                     {
-                        MemberEmail = member.MemberEmail,
+                        MemberEmail = member.Email,
                         MemberName = "Member",
-                        MemberPassword = member.MemberPassword
+                        MemberPassword = member.Password
                     };
 
                     _ctx.Add(m);
@@ -114,7 +114,7 @@ namespace HK_Project.Controllers
                     //cookie 帶電子郵件
                     var claims = new List<Claim>
                     {
-                        new Claim(ClaimTypes.Email, member.MemberEmail)
+                        new Claim(ClaimTypes.Email, member.Email)
                     };
 
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

@@ -30,8 +30,8 @@ namespace HK_Project.Controllers
         [HttpGet]
         public async Task<IActionResult> Createapp()
         {
-            var memberId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;//
-            var member = await _ctx.Members.FirstOrDefaultAsync(m => m.MemberId.ToString() == memberId);
+            var MemberEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;//
+            var member = await _ctx.Members.FirstOrDefaultAsync(m => m.MemberEmail == MemberEmail);
 
             ViewBag.MemberCreatapp = member;
             return View();
@@ -56,7 +56,7 @@ namespace HK_Project.Controllers
                 //{
                 //    newAppId = "A0001";
                 //}
-                Application app = new Application
+                Application app = new Application //View修改
                 {
                     Model = "gpt-35-turbo",
                     Parameter = a.Parameter,
@@ -75,8 +75,9 @@ namespace HK_Project.Controllers
         [HttpGet]
         public IActionResult Chooseapp()
         {
-            var memberid = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-            var app = _ctx.Applications.Where(a => a.MemberId.ToString() == memberid).ToList();
+            var MemberEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            var Member = _ctx.Members.FirstOrDefault(m => m.MemberEmail == MemberEmail);
+            var app = _ctx.Applications.Where(a => a.MemberId == Member.MemberId).ToList();
             ViewBag.AppChooseapp = app;
             return View();
         }
@@ -210,7 +211,7 @@ namespace HK_Project.Controllers
                 //    chatid = newchatId;
                 //}
                 var userid = _ctx.Users.FirstOrDefault(u => u.UserEmail == member.MemberEmail).UserId;
-                var chatid = "C" + userid.ToString().PadLeft(4,'0');
+                var chatid = "Chat_" + userid.ToString().PadLeft(4,'0');
                 Chat chat = new Chat()
                 {
                     ChatTime = DateTime.Now,

@@ -22,7 +22,7 @@ namespace HK_Project.Services
         public async Task<UserInfoViewModel?> AuthenticateMember(LoginViewModel loginVM) // member
         {
             var member = await _ctx.Members
-                .FirstOrDefaultAsync(u => u.MemberEmail.ToUpper() == loginVM.Email.ToUpper() && u.MemberPassword == _hashService.MD5Hash(loginVM.Password));
+                .FirstOrDefaultAsync(u => u.MemberEmail == loginVM.Email && u.MemberPassword == _hashService.MD5Hash(loginVM.Password));
 
             if (member != null)
             {
