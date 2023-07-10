@@ -1,4 +1,5 @@
-﻿@model HK_Project.ViewModels.SingupViewModel
+﻿@model HK_Project.ViewModels.LoginViewModel
+
 
 
 <!DOCTYPE html>
@@ -24,8 +25,8 @@
             <input asp-for="Password" class="h-100 col-md-5 col rounded-pill bg-body-secondary border-0 md-50 me-2" type="text" style="font-size: calc(1.375rem + 1vw);">
         </div>
         <div class="w-100 justify-content-around row position-absolute" style="height:100px;margin-top: 80px; bottom: 30px;">
-            <input type="submit" class="btn btn-primary col-md-3 col-5 h-100 rounded-pill d-flex align-items-center justify-content-center" style="font-size: calc(1.375rem + 1vw);" value="註冊">
-            <a asp-controller="LoginRegister" asp-action="Index" class="btn btn-danger col-md-3 col-5 h-100 rounded-pill d-flex align-items-center justify-content-center"><h1>取消</h1></a>
+            <input type="submit" class="btn btn-primary col-md-3 col-5 h-100 rounded-pill d-flex align-items-center justify-content-center" style="font-size: calc(1.375rem + 1vw);" value="登入">
+            <a asp-action="Index" asp-controller="LoginRegister" class="btn btn-danger col-md-3 col-5 h-100 rounded-pill d-flex align-items-center justify-content-center"><h1>取消</h1></a>
         </div>
     </form>
 

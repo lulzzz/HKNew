@@ -2,7 +2,7 @@
 
 namespace HK_Project.ViewModels
 {
-    public class SignupViewModel
+    public class SingupViewModel
     {
         [Required(ErrorMessage = "必須輸入")]
         [DataType(DataType.EmailAddress)]

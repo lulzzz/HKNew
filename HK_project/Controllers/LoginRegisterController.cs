@@ -69,7 +69,7 @@ namespace HK_Project.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> SignUp(SignupViewModel member)
+        public async Task<IActionResult> SignUp(SingupViewModel member)
         {
             if (ModelState.IsValid)
             {
