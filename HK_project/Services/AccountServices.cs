@@ -19,7 +19,7 @@ namespace HK_Project.Services
             _hashService = hashService;
         }
 
-        public async Task<UserInfoViewModel?> AuthenticateMember(LoginViewModel loginVM) // member
+        public async Task<UserInfoViewModel?> AuthenticateMember(UserInfoViewModel loginVM) // member
         {
             var member = await _ctx.Members
                 .FirstOrDefaultAsync(u => u.MemberEmail == loginVM.Email && u.MemberPassword == _hashService.MD5Hash(loginVM.Password));
@@ -30,7 +30,6 @@ namespace HK_Project.Services
                 {
                     Email = loginVM.Email,
                     Password = loginVM.Password,
-                    Name = member.MemberName
                 };
 
                  //Member userInfo = new Member
@@ -59,15 +58,8 @@ namespace HK_Project.Services
                 var UserInfo = new UserInfoViewModel
                 {
                     Email = loginVM.Email,
-                    Password = loginVM.Password,
-                    Name = user.UserName
+                    Password = loginVM.Password
                 };
-                //User userInfo = new User
-                //{
-                //    UserName = user.UserName,
-                //    UserEmail = loginVM.Email,
-                //    UserPassword = loginVM.Password
-                //};
 
                 return UserInfo;
             }

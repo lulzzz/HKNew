@@ -16,12 +16,14 @@ namespace HK_Project.Controllers
         private readonly HKContext _ctx;
         private readonly IHashService _hashService;
         private readonly AccountServices _accountServices;
+        private readonly ClaimServer _claimServer;
 
-        public LoginRegisterController(HKContext ctx, AccountServices accountServices, IHashService hashService)
+        public LoginRegisterController(HKContext ctx, AccountServices accountServices, IHashService hashService, ClaimServer claimServer)
         {
             _ctx = ctx;
             _accountServices = accountServices;
             _hashService = hashService;
+            _claimServer = claimServer;
         }
         public IActionResult Index()
         {
@@ -33,7 +35,7 @@ namespace HK_Project.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> LogIn(LoginViewModel lvm)
+        public async Task<IActionResult> LogIn(UserInfoViewModel lvm)
         {
             if (ModelState.IsValid)
             {
@@ -45,16 +47,7 @@ namespace HK_Project.Controllers
                     ModelState.AddModelError(string.Empty, "帳號密碼有錯!!!");
                     return View(lvm);
                 }
-
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Email, member.Email)
-                };
-
-                var claimsIdentity = new ClaimsIdentity(claims, 
-                    CookieAuthenticationDefaults.AuthenticationScheme);
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, 
-                    new ClaimsPrincipal(claimsIdentity));
+                _claimServer.ClaimAdd(lvm.Email);
 
                 return RedirectToAction("Index", "Member");
 
@@ -75,8 +68,6 @@ namespace HK_Project.Controllers
             {
 
                 var Samememberemail = await _ctx.Members.SingleOrDefaultAsync(u => u.MemberEmail == member.Email);
-                //var MemberWithMaxId = await _ctx.Members.OrderByDescending(u => u.MemberId).FirstOrDefaultAsync();
-                //var appWithMaxId = await _ctx.Applications.OrderByDescending(u => u.ApplicationId).FirstOrDefaultAsync();
 
                 if (Samememberemail != null)
                 {
@@ -85,20 +76,6 @@ namespace HK_Project.Controllers
                 }
                 else
                 {
-                    //if (MemberWithMaxId.MemberId != null)
-                    //{
-                    //    int maxId = int.Parse(MemberWithMaxId.MemberId.Substring(1));
-
-                    //    int newId = maxId + 1;
-
-                    //    newMemberId = "C" + newId.ToString().PadLeft(4, '0');
-
-                    //}
-                    //else
-                    //{
-                    //    newMemberId = "C0001";
-                    //}
-
                     //會員資料寫入DB
                     member.Password = _hashService.MD5Hash(member.Password);
                     
@@ -112,17 +89,7 @@ namespace HK_Project.Controllers
                     _ctx.Add(m);
                     await _ctx.SaveChangesAsync();
                     //cookie 帶電子郵件
-                    var claims = new List<Claim>
-                    {
-                        new Claim(ClaimTypes.Email, member.Email)
-                    };
-
-                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-                    await HttpContext.SignInAsync(
-                        CookieAuthenticationDefaults.AuthenticationScheme,
-                        new ClaimsPrincipal(claimsIdentity)
-                        );
+                    _claimServer.ClaimAdd(member.Email);
 
                     return RedirectToAction("Index", "Member");
                 }
