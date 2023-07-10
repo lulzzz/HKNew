@@ -10,19 +10,40 @@
         
     <div class="w-100 align-items-center justify-content-center d-flex flex-column p-0 overflow-hidden bg-dark position-relative"
          style="height: 100vh;">
-        <video id="video" autoplay loop muted style=" object-fit: cover; opacity: 0.7;" class="w-100 h-100">
-        <source src="/Assets/back.mp4" type="video/mp4" id="videoBg">
+        <video id="video" autoplay loop muted style=" object-fit: cover; opacity: 0.5;" class="w-100 h-100">
+            <source src="./back.mp4" type="video/mp4" id="videoBg">
         </video>
-        
+        <div class="position-absolute w-100 h-100 d-flex align-items-center justify-content-center overflow-hidden"
+             style="z-index: -1;" id="back">
+            <div class=" p-0 d-flex position-relative align-items-center justify-content-center "
+                 style="height: 30vh;width: 30vh;">
+                <a asp-action="" asp-action="" title="Home" class="w-100 h-100 p-0 border-0 rounded-circle d-none HomeAnimate d-flex align-items-center justify-content-center"
+	   style="background-color: #2843AD;z-index:20;text-decoration:none;" id="Home">
+                    <h1 class="m-0 p-1" style="font-family: 'Orbitron', sans-serif;font-size:3rem;color:#191338;">Home</h1>
+                </a>
+                <a asp-action="" asp-action="" title="Login" class="p-1 border-0 position-absolute rounded-circle d-none LoginAnimate d-flex align-items-center justify-content-center"
+                   style="background-color: #60dcfa;height: 15vh;width: 15vh;z-index: 10;color:#191338;text-decoration:none;" id="Login">
+                    <h2 class="m-0" style="font-family: 'Orbitron', sans-serif;text-align:center;">Log in</h2>
+                </a>
+                <a asp-action="" asp-action="" title="About" class="p-2 border-0 position-absolute rounded-circle d-none AboutAnimate d-flex align-items-center justify-content-center"
+                   style="background-color: #60dcfa;height: 15vh;width: 15vh; z-index: 9;color:#191338;text-decoration:none;" id="About">
+                    <h2 class="m-0" style="font-family: 'Orbitron', sans-serif;text-align:center;">About Us</h2>
+                </a>
+                <a asp-action="" asp-action="" title="Q&A" class=" p-1 border-0 position-absolute rounded-circle d-none QAAnimate d-flex align-items-center justify-content-center "
+                   style="background-color: #60dcfa;height: 15vh;width: 15vh;z-index: 8;color:#191338;text-decoration:none;" id="QA">
+                    <h2 class="m-0" style="font-family: 'Orbitron', sans-serif;text-align:center;">QA Maker</h2>
+                </a>
+            </div>
+        </div>
         <div class="position-absolute w-100" style="height: 100vh;">
             <div class="mainBox w-100 p-md-5 p-1 d-flex flex-column justify-content-between align-items-center"
                  style="overflow-y:auto;height:90vh;margin-top: 10vh;">
                 <h1 class="p-2 mt-5"
-                    style="font-family: 'Orbitron', sans-serif;color:#97E3FE;line-height:calc(1.5rem + 1.3vw);font-size: calc(0.8rem + 1.3vw);"
+                    style="background-color:#090c26;font-family: 'Orbitron', sans-serif;color:#97E3FE;line-height:calc(1.5rem + 1.3vw);font-size: calc(0.8rem + 1.3vw);"
                     id="Infotext"></h1>
                 <a asp-action="" asp-action="" title="Start" id="gradientBtn" class="btn col-6 col-md-3 rounded-5 p-0 overflow-hidden mb-5"
                         style="border-width: 10px;background-clip: border-box;background-origin: border-box;">
-                <img src="/Assets/Start.gif" alt="" style="height: 100%;width: 100%;">
+                    <img src="./MOSHED-2023-7-9-20-9-48.gif" alt="" style="height: 100%;width: 100%;">
                 </a>
             </div>
         </div>

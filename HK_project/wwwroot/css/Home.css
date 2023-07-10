@@ -1,0 +1,119 @@
+﻿@keyframes HomeAnimation {
+    0% {
+        transform: scale(1) rotate(0);
+    }
+
+    70% {
+        transform: scale(0.2) rotate(360deg);
+    }
+
+    100% {
+        transform: scale(0.6) rotate(-360deg);
+    }
+}
+
+@keyframes LoginAnimate {
+    0% {
+        top: 7.5vh;
+    }
+
+    80% {
+        transform: scale(0.2);
+    }
+
+    100% {
+        top: -13vh;
+        transform: scale(1);
+    }
+}
+
+@keyframes AboutAnimate {
+    0% {
+        top: 7.5vh;
+        left: 7.5vh;
+    }
+
+    80% {
+        top: 7.5vh;
+        left: 7.5vh;
+        transform: scale(0.2);
+    }
+
+    100% {
+        left: -9vh;
+        top: 20vh;
+        transform: scale(1);
+    }
+}
+
+@keyframes QAAnimate {
+    0% {
+        top: 7.5vh;
+        right: 7.5vh;
+    }
+
+    80% {
+        top: 7.5vh;
+        right: 7.5vh;
+        transform: scale(0.2);
+    }
+
+    100% {
+        right: -9vh;
+        top: 20vh;
+        transform: scale(1);
+    }
+}
+
+.HomeAnimate {
+    animation: HomeAnimation 0.5s ease-out forwards;
+}
+
+
+.LoginAnimate {
+    animation: LoginAnimate 0.2s linear forwards 0.4s;
+    transform: scale(0.2);
+}
+
+.AboutAnimate {
+    animation: AboutAnimate 0.3s linear forwards 0.4s;
+    transform: scale(0.2);
+}
+
+.QAAnimate {
+    animation: QAAnimate 0.3s linear forwards 0.6s;
+    transform: scale(0.2);
+}
+
+#Home {
+    transform: scale(0.2);
+}
+
+#Login {
+    transform: scale(0.2);
+}
+
+#QA {
+    transform: scale(0.2);
+}
+
+
+#Home:hover {
+    transform: scale(0.8) !important;
+}
+
+#Login:hover {
+    transform: scale(1.2) !important;
+}
+
+#QA:hover {
+    transform: scale(1.2) !important;
+}
+
+#About:hover {
+    transform: scale(1.2) !important;
+}
+
+#gradientBtn:hover {
+    transform: scale(1.1);
+}
