@@ -10,11 +10,11 @@ namespace HK_Project.Controllers
     public class UserManageController : Controller
     {
         private readonly HKContext _ctx;
-        private readonly ClaimServer _claim;
-        public UserManageController(HKContext ctx, ClaimServer c)
+        private readonly ClaimService _claim;
+        public UserManageController(HKContext ctx, ClaimService claim)
         {
             _ctx = ctx;
-            _claim = c;
+            _claim = claim;
         }
         public IActionResult Index()
         {
@@ -37,9 +37,9 @@ namespace HK_Project.Controllers
                     _ctx.Users.Add(user);
                     await _ctx.SaveChangesAsync();
                 }
-                _claim.ClaimAdd(lvm.Email);
+                await _claim.ClaimAdd(lvm.Email);
                 
-                return RedirectToAction("Index", "Home");
+                return View();
             }
             return View(lvm);
         }

@@ -20,7 +20,7 @@
                 <h1 class="p-2 mt-5"
                     style="font-family: 'Orbitron', sans-serif;color:#97E3FE;line-height:calc(1.5rem + 1.3vw);font-size: calc(0.8rem + 1.3vw);"
                     id="Infotext"></h1>
-                <a asp-action="" asp-action="" title="Start" id="gradientBtn" class="btn col-6 col-md-3 rounded-5 p-0 overflow-hidden mb-5"
+                <a asp-controller="" asp-action="" title="Start" id="gradientBtn" class="btn col-6 col-md-3 rounded-5 p-0 overflow-hidden mb-5"
                         style="border-width: 10px;background-clip: border-box;background-origin: border-box;">
                 <img src="/Assets/Start.gif" alt="" style="height: 100%;width: 100%;">
                 </a>
@@ -59,45 +59,7 @@
 
             printNextChar();
         };
-        var video = document.getElementById("video");
-        var list = document.getElementById("OpenList");
-        var Login = document.getElementById("Login");
-        var Home = document.getElementById("Home");
-        var About = document.getElementById("About");
-        var QA = document.getElementById("QA");
-        var back = document.getElementById("back");
-        list.addEventListener("click", function () {
-            back.style.zIndex = 1;
-            Home.classList.toggle("d-none");
-            Login.classList.toggle("d-none");
-            About.classList.toggle("d-none");
-            QA.classList.toggle("d-none");
-            if (video.style.opacity != 0.1) {
-                video.style.opacity = 0.1;
-                Infotext.style.opacity = 0.1;
-                Startbutton.style.opacity = 0.1;
-            } else {
-                video.style.opacity = 0.5;
-                Infotext.style.opacity = 1;
-                Startbutton.style.opacity = 1;
-                back.style.zIndex = -1;
-            }
-
-        })
-        back.addEventListener("click", function () {
-            back.style.zIndex = -1;
-            Home.classList.toggle("d-none");
-            Login.classList.toggle("d-none");
-            About.classList.toggle("d-none");
-            QA.classList.toggle("d-none");
-            if (video.style.opacity != 0.1) {
-                video.style.opacity = 0.1;
-            } else {
-                video.style.opacity = 0.5;
-                Infotext.style.opacity = 1;
-                Startbutton.style.opacity = 1;
-            }
-        })
+        
         var Startbutton = document.getElementById("gradientBtn");
         var angle = 0;
         var animationFrameId = null;

@@ -11,23 +11,27 @@ namespace HK_Project.Controllers
     {
         private readonly HKContext _ctx;
         private readonly IHashService _hashService;
-        private readonly AccountServices _accountServices;
+        private readonly AccountService _accountServices;
         private readonly ILogger<MemberController> _logger;
 
-        public ChatController(HKContext ctx, AccountServices accountServices, IHashService hashService, ILogger<MemberController> logger)
+        public ChatController(HKContext ctx, AccountService accountServices, IHashService hashService, ILogger<MemberController> logger)
         {
             _ctx = ctx;
             _accountServices = accountServices;
             _hashService = hashService;
             _logger = logger;
         }
-        public IActionResult Index()
+        public IActionResult UserIndex()
+        {
+            return View();
+        }
+        public IActionResult MemberIndex()
         {
             return View();
         }
 
         [HttpGet]
-        public IActionResult Chooseapp()
+        public IActionResult ChooseApp()
         {
             var applications = _ctx.Applications.Where(a => a.ApplicationId != null).ToList();
 
@@ -36,7 +40,7 @@ namespace HK_Project.Controllers
 
         }
         [HttpPost]
-        public IActionResult Chooseapp(string Email)
+        public IActionResult ChooseApp(string Email)
         {
             var AppSearch = from a in _ctx.Applications
                             join m in _ctx.Members on a.MemberId equals m.MemberId
@@ -80,6 +84,21 @@ namespace HK_Project.Controllers
                 ViewBag.Chat = ChatSearch;
                 return View(ViewBag);
             }
+        }
+
+
+        public IActionResult ChatHistory(int chatid)
+        {
+            var chatHistory = _ctx.QAHistorys.Where(c => c.ChatId == chatid).ToList();
+            return View(chatHistory);
+        }
+
+        [HttpPost]
+        public IActionResult GetChatHistory(int id)
+        {
+            var chatHistory = _ctx.QAHistorys.Where(q => q.ChatId == id).ToList();
+            TempData["Userchatid"] = id;
+            return Json(chatHistory);
         }
     }
 }

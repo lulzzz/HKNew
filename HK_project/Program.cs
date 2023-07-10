@@ -17,7 +17,11 @@ builder.Services.AddDbContext<HKContext>(options =>
 );
 builder.Services.AddSingleton<IHashService, HashService>();
 
-builder.Services.AddScoped<AccountServices>();
+builder.Services.AddScoped<AccountService>();
+
+builder.Services.AddScoped<ClaimService>();
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
 {

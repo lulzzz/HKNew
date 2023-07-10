@@ -13,10 +13,10 @@ namespace HK_Project.Controllers
 
         private readonly HKContext _ctx;
         private readonly IHashService _hashService;
-        private readonly AccountServices _accountServices;
+        private readonly AccountService _accountServices;
         private readonly ILogger<MemberController> _logger;
 
-        public MemberController(HKContext ctx, AccountServices accountServices, IHashService hashService, ILogger<MemberController> logger)
+        public MemberController(HKContext ctx, AccountService accountServices, IHashService hashService, ILogger<MemberController> logger)
         {
             _ctx = ctx;
             _accountServices = accountServices;

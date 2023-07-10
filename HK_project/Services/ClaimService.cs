@@ -6,19 +6,17 @@ using System.Security.Claims;
 
 namespace HK_Project.Services
 {
-    public class ClaimServer
+    public class ClaimService
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ClaimServer(IHttpContextAccessor httpContextAccessor)
+        public ClaimService(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<ClaimViewModel> ClaimAdd(string Email)
         {
-
-
             var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Email, Email)

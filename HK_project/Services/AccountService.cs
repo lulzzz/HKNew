@@ -7,13 +7,13 @@ using HK_Project.ViewModels;
 
 namespace HK_Project.Services
 {
-    public class AccountServices
+    public class AccountService
     {
 
         private readonly HKContext _ctx;
         private readonly IHashService _hashService;
 
-        public AccountServices(HKContext context, IHashService hashService)
+        public AccountService(HKContext context, IHashService hashService)
         {
             _ctx = context;
             _hashService = hashService;

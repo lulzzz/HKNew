@@ -15,10 +15,10 @@ namespace HK_Project.Controllers
     {
         private readonly HKContext _ctx;
         private readonly IHashService _hashService;
-        private readonly AccountServices _accountServices;
-        private readonly ClaimServer _claimServer;
+        private readonly AccountService _accountServices;
+        private readonly ClaimService _claimServer;
 
-        public LoginRegisterController(HKContext ctx, AccountServices accountServices, IHashService hashService, ClaimServer claimServer)
+        public LoginRegisterController(HKContext ctx, AccountService accountServices, IHashService hashService, ClaimService claimServer)
         {
             _ctx = ctx;
             _accountServices = accountServices;
@@ -47,9 +47,9 @@ namespace HK_Project.Controllers
                     ModelState.AddModelError(string.Empty, "帳號密碼有錯!!!");
                     return View(lvm);
                 }
-                _claimServer.ClaimAdd(lvm.Email);
+                await _claimServer.ClaimAdd(lvm.Email);
 
-                return RedirectToAction("Index", "Member");
+                return RedirectToAction("MemberIndex", "Chat");
 
             }
 
@@ -89,9 +89,9 @@ namespace HK_Project.Controllers
                     _ctx.Add(m);
                     await _ctx.SaveChangesAsync();
                     //cookie 帶電子郵件
-                    _claimServer.ClaimAdd(member.Email);
+                    await _claimServer.ClaimAdd(member.Email);
 
-                    return RedirectToAction("Index", "Member");
+                    return RedirectToAction("MemberIndex", "Chat");
                 }
             }
             return View();

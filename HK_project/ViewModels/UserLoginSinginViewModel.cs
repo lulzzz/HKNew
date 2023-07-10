@@ -6,7 +6,7 @@ namespace HK_Project.ViewModels
     {
         [Required]
         [EmailAddress]
-        public string Email { get; set; }
+        public required string Email { get; set; }
 
     }
 }

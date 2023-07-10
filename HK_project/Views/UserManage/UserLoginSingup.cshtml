@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <form asp-controller="LoginRegister" class="w-100 align-items-center justify-content-center d-flex flex-column" style="height: 100vh;">
+    <form asp-action="UserIndex" asp-controller="Chat" class="w-100 align-items-center justify-content-center d-flex flex-column" style="height: 100vh;">
         <div class="row w-100 align-items-center justify-content-center" style="height: 100px;">
             <label asp-for="Email" class="col-3 d-flex m-0 h-100 align-items-center justify-content-center"><h1 class="m-0">Email</h1></label>
             <input asp-for="Email" class="h-100 col-md-5 col rounded-pill bg-body-secondary border-0 md-50 me-2" type="text" style="font-size: calc(1.375rem + 1vw);">
