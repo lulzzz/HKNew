@@ -18,6 +18,11 @@ namespace HK_Project.Controllers
             return View();
         }
 
+        public IActionResult Show()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

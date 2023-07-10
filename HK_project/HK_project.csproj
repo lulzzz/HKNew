@@ -22,7 +22,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\assets\" />
     <Folder Include="Upload\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\assets\back.mp4" />
+    <None Include="wwwroot\assets\List.png" />
+    <None Include="wwwroot\assets\Start.gif" />
   </ItemGroup>
 
 </Project>
