@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
-
 namespace HK_Project.Controllers
 {
     public class ChatController : Controller
@@ -99,7 +98,7 @@ namespace HK_Project.Controllers
             }
             else
             {
-                chatList = ChatSearch.ToList();
+            chatList = ChatSearch.ToList();
             }
 
             ViewBag.Chats = chatList;
@@ -157,6 +156,7 @@ namespace HK_Project.Controllers
         }
 
 
+        
 
         [HttpPost]
         public async Task<IActionResult> Creatchat()
