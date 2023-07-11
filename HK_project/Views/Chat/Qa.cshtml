@@ -20,7 +20,7 @@
 </head>
 
 <body>
-    <a class="btn btn-danger col-3 d-flex align-items-center justify-content-center position-absolute"
+    <a class="btn btn-danger col-3 d-flex align-items-center justify-content-center position-absolute mt-10"
        style="height: 75px;width: 75px;top: 0px;left: 0px; z-index: 2;">
         <img src="https://cdn4.iconfinder.com/data/icons/music-ui-solid-24px/24/playlist_list_menu_options-3-256.png" alt="" class="w-100" id="list">
     </a>
@@ -122,7 +122,7 @@
             var leftbar = document.getElementById('leftbar');
             leftbar.classList.toggle('d-none');
         });
-
+        //即時聊天室內容
         $(document).ready(function () {
             $('#sendout').click(function () {
                 console.log("ok")
@@ -134,12 +134,11 @@
                                     </div>`;
                 $(".chat-content").append(questionDiv);
                 $.ajax({
-                    url: '/User/qainput',
+                    url: '/Chat/qainput',
                     type: 'post',
                     data: { 'question': question },
                     success: function (response) {
                         console.log(response);
-                        // 你可能需要適當地修改此處的代碼，以符合你的需求
                         var answerDiv = `
                                                 <div class=" w-100 bg-body-secondary p-5 d-flex flex-column" style="height:auto">
                                             <p class="m-0 h1">答</p>
@@ -151,19 +150,19 @@
             });
         });
 
-
+        //產出新聊天室
         $(document).ready(function () {
             $("#createbtn").click(function (e) {
                 console.log("click");
                 e.preventDefault();
                 $.ajax({
-                    url: '/User/Creatchat', // Replace 'YourControllerName' with the actual name of your controller
+                    url: '/Chat/Creatchat', 
                     type: 'POST',
                     success: function (data) {
                         console.log(data);
                         var newChat = `<a class="btn btn-secondary w-100 rounded-5 d-flex align-items-center justify-content-center x-2 chat-button"
                                                                 style="font-size: 2em; height: 80px; margin-top: 10px;"
-                                                                data-id="${data.chatId}">
+                                                                data-id="${??}">
                                                                 ${data.chatName}
                                                             </a>`;
                         $("#createbtn").after(newChat);
@@ -173,6 +172,7 @@
             });
         });
 
+        //疊代出歷史聊天室內容
         $(document).ready(function () {
             $(".chat-button").click(function (e) {
                 e.preventDefault();

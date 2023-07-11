@@ -67,7 +67,7 @@ namespace HK_Project.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Chooseapp(string applicationId, string parameter)
+        public IActionResult Chooseapp(int applicationId, string parameter)
         {
             ViewBag.ApplicationIdChooseapp = applicationId;
             TempData["ApplicationIdChooseapp"] = applicationId;
@@ -89,10 +89,8 @@ namespace HK_Project.Controllers
 
             try
             {
-                // 獲取當前已驗證使用者的名稱
-                //var MemberEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-                //var Member = _ctx.Members.FirstOrDefault(m => m.MemberEmail == MemberEmail);
-                //var app = _ctx.Applications.Where(a => a.MemberId == Member.MemberId).ToList();
+                //抓到目前最大的ApplicationId
+                var AppWithMaxId = await _ctx.Applications.OrderByDescending(u => u.ApplicationId).FirstOrDefaultAsync();
 
                 foreach (var file in files)
                 {
@@ -117,7 +115,7 @@ namespace HK_Project.Controllers
                         {
                             AifileType = fileType,
                             AifilePath = filePath,
-                            ApplicationId = short.Parse(TempData["ApplicationIdChooseapp"].ToString())
+                            ApplicationId = AppWithMaxId.ApplicationId,
                         };
 
                         _ctx.Add(embs);

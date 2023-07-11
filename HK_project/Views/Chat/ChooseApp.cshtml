@@ -22,7 +22,7 @@
             </a>
         </header>
         <div class="w-100 align-items-center justify-content-start row flex-column flex-nowrap overflow-y-scroll" style="height: calc(100% - 160px);">
-            @if (Applist.Count == 0)
+            @if (Applist == null || Applist.Count == 0)
             {
                 <a asp-action="Index" asp-controller="Member" class="btn btn-danger col-9 d-flex justify-content-center align-items-center  h-75">
                 <h1 class="text-center">No Application</h1>
@@ -35,7 +35,7 @@
                     <a onclick="sendData('@a.ApplicationId', '@a.Parameter', '@a.ApplicationName')" class="mt-5 btn btn-outline-secondary col-6 justify-content-between d-flex align-items-center" style="height: 60px;">
                         <h2 class="col-4 m-0">@a.ApplicationName</h2>
                         <div class="col-4 h-100 d-flex align-items-end justify-content-end">
-                            <h6>temp: @a.ApplicationId</h6>
+                            <h6>id: @a.ApplicationId</h6><h6>temp: @a.Parameter</h6>
                         </div>
                     </a>
 
@@ -58,11 +58,11 @@
             $('#rangeValue').text($(this).val());
         })
 
-        function sendData(applicationId, parameter) {
+        function sendData(applicationId, parameter, applicationName) {
             var data = {
                 applicationId: applicationId,
                 parameter: parameter,
-
+                applicationName: applicationName
             };
 
             $.ajax({
@@ -72,7 +72,7 @@
                 success: function (response) {
                     // 请求成功后的处理逻辑
                     console.log('Data sent successfully');
-                    window.location.href = '/Member/Uploadfileapp';
+                    window.location.href = '/Chat/Qa';
                 },
                 error: function (error) {
                     // 请求失败后的处理逻辑

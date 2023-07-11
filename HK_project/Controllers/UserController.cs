@@ -138,24 +138,24 @@
 //        }
 
 
-//        [HttpPost]
-//        public async Task<IActionResult> qainput(string question)
-//        {
+//[HttpPost]
+//public async Task<IActionResult> qainput(string question)
+//{
 
-//            var appid = TempData["Userchooseappid"].ToString();
-//            appid = "A0001";
-//            TempData["Userchooseparameter"] = 1;
-//            var temp = TempData["Userchooseparameter"].ToString();
-//            //  temp = "1024";
-//            var chatid = TempData["Userchatid"].ToString();
-//            chatid = "C0001";
-//            var q = question;
-//            var file = await _ctx.AIFiles.FirstOrDefaultAsync(c => c.ApplicationId == appid);
-//            var fileid = file.AifileId;
-//            fileid = "D0003";
+//    var appid = TempData["Userchooseappid"].ToString();
+//    appid = "A0001";
+//    TempData["Userchooseparameter"] = 1;
+//    var temp = TempData["Userchooseparameter"].ToString();
+//    //  temp = "1024";
+//    var chatid = TempData["Userchatid"].ToString();
+//    chatid = "C0001";
+//    var q = question;
+//    var file = await _ctx.AIFiles.FirstOrDefaultAsync(c => c.ApplicationId == appid);
+//    var fileid = file.AifileId;
+//    fileid = "D0003";
 
-//            var client = new HttpClient();
-//            string jsonContent = $@"{{
+//    var client = new HttpClient();
+//    string jsonContent = $@"{{
 //                                    ""ApplicationId"": ""{appid}"",
 //                                    ""temperature"": ""{temp}"",
 //                                    ""ChatId"": ""{chatid}"",
@@ -163,23 +163,23 @@
 //                                    ""DataId"": ""{fileid}""
 //                                }}";
 
-//            var content = new StringContent(jsonContent, null, "application/json");
-//            var request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7168/api/Similar");
-//            request.Content = content;
+//    var content = new StringContent(jsonContent, null, "application/json");
+//    var request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7168/api/Similar");
+//    request.Content = content;
 
-//            var response = await client.SendAsync(request);
+//    var response = await client.SendAsync(request);
 
-//            response.EnsureSuccessStatusCode();
+//    response.EnsureSuccessStatusCode();
 
 
-//            return Json(response);
-//        }
+//    return Json(response);
+//}
 
-//        public class Setting
-//        {
-//            public string ApplicationId { get; set; }
-//            public string FileId { get; set; }
-//        }
+//public class Setting
+//{
+//    public string ApplicationId { get; set; }
+//    public string FileId { get; set; }
+//}
 
 //    }
 //}

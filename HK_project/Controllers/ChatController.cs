@@ -3,6 +3,7 @@ using HK_Project.Services;
 using HKDB.Data;
 using HKDB.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace HK_Project.Controllers
@@ -40,19 +41,30 @@ namespace HK_Project.Controllers
 
         }
         [HttpPost]
-        public IActionResult ChooseApp(string Email)
+        public IActionResult ChooseApp(string ApplicationId, string Parameter, string ApplicationName)//不會回傳使用者email  
+        {
+            //var applications = _ctx.Applications.Where(a => a.ApplicationId != null).ToList();
+            //ViewBag.Applist = applications;
+            TempData["ApplicationId"] = ApplicationId;
+            TempData["Parameter"] = Parameter;
+            TempData["ApplicationName"] = ApplicationName;
+
+            return View();//RedirectToAction("Qa","Chat")
+        }
+
+        [HttpPost]
+        public IActionResult EnterMemberEmail(string Email)
         {
             var AppSearch = from a in _ctx.Applications
                             join m in _ctx.Members on a.MemberId equals m.MemberId
                             where m.MemberEmail == Email
                             select a;
 
-            ViewBag.AppSearch = AppSearch;           
-
-            return RedirectToAction("Qa", "User");
+            ViewBag.AppSearch = AppSearch;
+            return View(ViewBag);
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Qa ()
         {
             var Email = User.FindFirstValue(ClaimTypes.Email);
@@ -100,5 +112,79 @@ namespace HK_Project.Controllers
             TempData["Userchatid"] = id;
             return Json(chatHistory);
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> qainput(string question)
+        {
+
+            //var appid = TempData["ApplicationId"].ToString();
+            //var temp = TempData["Parameter"].ToString();
+            //var chatid = TempData["Userchatid"].ToString();
+            //var q = question;
+            //var file = await _ctx.AIFiles.FirstOrDefaultAsync(c => c.ApplicationId == appid);
+            //var fileid = file.AifileId;
+            //fileid = "D0003";
+
+            //var client = new HttpClient();
+            //string jsonContent = $@"{{
+            //                        ""ApplicationId"": ""{appid}"",
+            //                        ""temperature"": ""{temp}"",
+            //                        ""ChatId"": ""{chatid}"",
+            //                        ""Question"": ""{q}"",
+            //                        ""DataId"": ""{fileid}""
+            //                    }}";
+
+            //var content = new StringContent(jsonContent, null, "application/json");
+            //var request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7168/api/Similar");
+            //request.Content = content;
+
+            //var response = await client.SendAsync(request);
+
+            //response.EnsureSuccessStatusCode();
+
+
+            return Json(0);//response
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> Creatchat()
+        {
+            try
+            {
+                var useremail = User.FindFirstValue(ClaimTypes.Email);
+                var userlist = await _ctx.Users.FirstOrDefaultAsync(u => u.UserEmail == useremail);
+                
+                Chat chat = new Chat()
+                {
+                    UserId = userlist.UserId,
+                    ChatTime = DateTime.Now,
+                    ChatName = "New Chat"
+                };
+                _ctx.Chats.Add(chat);
+                await _ctx.SaveChangesAsync();
+                return Json(chat);//chat
+            }
+            catch (Exception ex)
+            {
+                // Handle the error
+                return Json(new { error = ex.Message });
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }
