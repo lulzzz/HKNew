@@ -129,19 +129,17 @@ namespace HK_Project.Controllers
 
             //var appid = TempData["ApplicationId"].ToString();
             //var temp = TempData["Parameter"].ToString();
-            //var chatid = TempData["Userchatid"].ToString();
+            //var chatid = TempData["chatid"].ToString();
             //var q = question;
-            //var file = await _ctx.AIFiles.FirstOrDefaultAsync(c => c.ApplicationId == appid);
+            //var file = await _ctx.AiFiles.FirstOrDefaultAsync(c => c.ApplicationId == appid);
             //var fileid = file.AifileId;
-            //fileid = "D0003";
 
             //var client = new HttpClient();
             //string jsonContent = $@"{{
             //                        ""ApplicationId"": ""{appid}"",
             //                        ""temperature"": ""{temp}"",
             //                        ""ChatId"": ""{chatid}"",
-            //                        ""Question"": ""{q}"",
-            //                        ""DataId"": ""{fileid}""
+            //                        ""Question"": ""{q}""
             //                    }}";
 
             //var content = new StringContent(jsonContent, null, "application/json");
@@ -156,8 +154,6 @@ namespace HK_Project.Controllers
             return Json(0);//response
         }
 
-
-
         [HttpPost]
         public async Task<IActionResult> Creatchat()
         {
@@ -165,18 +161,28 @@ namespace HK_Project.Controllers
             {
                 var useremail = User.FindFirstValue(ClaimTypes.Email);
                 var userlist = await _ctx.Users.FirstOrDefaultAsync(u => u.UserEmail == useremail);
-                
-                Chat chat = new Chat()
+
+                Chat chat1 = new Chat()
                 {
-                    
                     ChatTime = DateTime.Now,
-                    ChatName = "New Chat",
+                    ChatName = "NewChat",
                     UserId = userlist.UserId
                 };
-                _ctx.Chats.Add(chat);
-                await _ctx.SaveChangesAsync();
-                
-                return Json(chat);//chat
+                _ctx.Chats.Add(chat1);
+                await _ctx.SaveChangesAsync();  
+
+                // create a ChatDto object and copy properties from chat1
+                ChatDto chatDto = new ChatDto()
+                {
+                    ChatId = chat1.ChatId,
+                    ChatTime = chat1.ChatTime,
+                    ChatName = chat1.ChatName,
+                    UserId = chat1.UserId
+                };
+                TempData["chatid"] = chat1.ChatId;
+
+                // return the DTO object instead of the entity
+                return Json(chatDto);
             }
             catch (Exception ex)
             {
@@ -185,6 +191,14 @@ namespace HK_Project.Controllers
             }
         }
 
+
+        public class ChatDto
+        {
+            public int ChatId { get; set; }
+            public DateTime ChatTime { get; set; }
+            public string? ChatName { get; set; }
+            public int UserId { get; set; }
+        }
 
 
 

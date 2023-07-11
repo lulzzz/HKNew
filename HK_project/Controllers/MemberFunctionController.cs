@@ -45,8 +45,8 @@ namespace HK_Project.Controllers
             {
                 Application app = new()
                 {
-                    Model = "gpt-35-turbo",
-                    Parameter = a.Parameter,
+                    Model = a.Model,
+                    Parameter =a.Parameter,
                     MemberId = a.MemberId,
                     ApplicationName = a.ApplicationName
                 };
