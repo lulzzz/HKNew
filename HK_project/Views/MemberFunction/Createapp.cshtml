@@ -1,5 +1,8 @@
 ﻿@model HKDB.Models.Application;//用VModel帶資料
 
+@{
+    Layout = "_Index";
+}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,9 +51,9 @@
             <input asp-for="Parameter" class="h-100 col-md-5 col rounded-pill bg-body-secondary border-0 md-50 me-2 px-5" type="text"
                    style="font-size: 36pt;" value="1024">
         </div>
-        <div class="w-100 justify-content-around row" style="height:100px;margin-top: 80px; bottom: 30px;">
-            <input type="submit" class="btn btn-primary col-md-3 col-5 h-100 rounded-pill d-flex align-items-center justify-content-center" value=" 創建">
-            <a asp-action="Index" asp-controller="Chat" class="btn btn-danger col-md-3 col-5 h-100 rounded-pill d-flex align-items-center justify-content-center">
+        <div class="w-100 justify-content-around row position-absolute" style="height:100px;margin-top: 80px; bottom: 30px;">
+            <input type="submit" class="btn btn-primary col-md-3 col-5 h-100 rounded-pill d-flex align-items-center justify-content-center" style="font-size: calc(1.375rem + 1vw);" value="創建">
+            <a asp-action="Index" asp-controller="Home" class="btn btn-danger col-md-3 col-5 h-100 rounded-pill d-flex align-items-center justify-content-center">
                 <h1>取消</h1>
             </a>
         </div>

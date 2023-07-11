@@ -70,7 +70,7 @@ namespace HK_Project.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Qa()
+        public async Task<IActionResult> Qa(string ID   )
         {
             var Email = User.FindFirstValue(ClaimTypes.Email);
             var UserList = await _lq.GetUser(Email);
@@ -153,6 +153,8 @@ namespace HK_Project.Controllers
 
             return Json(tt);//response
         }
+
+
 
         [HttpPost]
         public async Task<IActionResult> Creatchat()
