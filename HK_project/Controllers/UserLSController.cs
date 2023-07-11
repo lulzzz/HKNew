@@ -7,36 +7,39 @@ using HK_Project.Services;
 
 namespace HK_Project.Controllers
 {
-    public class UserManageController : Controller
+    public class UserLSController : Controller
     {
         private readonly HKContext _ctx;
         private readonly ClaimService _claim;
-        public UserManageController(HKContext ctx, ClaimService claim)
+        private readonly LINQService _lq;
+        public UserLSController(HKContext ctx, ClaimService claim, LINQService lq)
         {
             _ctx = ctx;
             _claim = claim;
+            _lq = lq;
         }
         public IActionResult Index()
         {
             return View();
         }
-        public async Task<IActionResult> UserLoginSingup(UserLoginSinginViewModel lvm)
+        public async Task<IActionResult> UserLoginSingup(EmailLSViewModel lvm)
         {
             if (ModelState.IsValid)
             {
-                var MemberEmail_exist = _ctx.Members.FirstOrDefault(m => m.MemberEmail == lvm.Email);
-                var UserEmail_exist = _ctx.Users.FirstOrDefault(u => u.UserEmail == lvm.Email);
+                var UserEmail_exist = _lq.GetUser(lvm.Email);
 
                 if(UserEmail_exist == null)
                 {
-                    //使用者跟會員都沒有紀錄
+                    //使用者
                     User user = new User()
                     {
                         UserEmail = lvm.Email
                     };
+
                     _ctx.Users.Add(user);
                     await _ctx.SaveChangesAsync();
                 }
+
                 await _claim.ClaimAdd(lvm.Email);
                 
                 return View();

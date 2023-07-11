@@ -21,8 +21,6 @@ builder.Services.AddScoped<AccountService>();
 
 builder.Services.AddScoped<ClaimService>();
 
-builder.Services.AddHttpContextAccessor();
-
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
 {
     options.Cookie.Name = "HK_AI_LOGIN";

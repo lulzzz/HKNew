@@ -2,7 +2,7 @@
 
 namespace HK_Project.ViewModels
 {
-    public class UserLoginSinginViewModel
+    public class EmailLSViewModel
     {
         [Required]
         [EmailAddress]

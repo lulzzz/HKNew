@@ -13,9 +13,9 @@ namespace HK_Project.Controllers
         private readonly HKContext _ctx;
         private readonly IHashService _hashService;
         private readonly AccountService _accountServices;
-        private readonly ILogger<MemberController> _logger;
+        private readonly ILogger<MemberFunctionController> _logger;
 
-        public ChatController(HKContext ctx, AccountService accountServices, IHashService hashService, ILogger<MemberController> logger)
+        public ChatController(HKContext ctx, AccountService accountServices, IHashService hashService, ILogger<MemberFunctionController> logger)
         {
             _ctx = ctx;
             _accountServices = accountServices;

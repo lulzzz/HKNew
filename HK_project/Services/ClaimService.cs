@@ -8,14 +8,14 @@ namespace HK_Project.Services
 {
     public class ClaimService
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly HttpContext _httpContext;
 
-        public ClaimService(IHttpContextAccessor httpContextAccessor)
+        public ClaimService(HttpContext httpContext)
         {
-            _httpContextAccessor = httpContextAccessor;
+            _httpContext = httpContext;
         }
 
-        public async Task<ClaimViewModel> ClaimAdd(string Email)
+        public async Task ClaimAdd(string Email)
         {
             var claims = new List<Claim>
                 {
@@ -25,11 +25,9 @@ namespace HK_Project.Services
             var claimsIdentity = new ClaimsIdentity(claims,
                 CookieAuthenticationDefaults.AuthenticationScheme);
 
-            await _httpContextAccessor.HttpContext.SignInAsync(
+            await _httpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(claimsIdentity));
-
-            return null;
-        }
+        }      
     }
 }
