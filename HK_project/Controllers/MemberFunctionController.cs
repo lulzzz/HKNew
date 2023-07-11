@@ -8,20 +8,22 @@ using System.Security.Claims;
 
 namespace HK_Project.Controllers
 {
-    public class MemberController : Controller
+    public class MemberFunctionController : Controller
     {
 
         private readonly HKContext _ctx;
         private readonly IHashService _hashService;
         private readonly AccountService _accountServices;
-        private readonly ILogger<MemberController> _logger;
+        private readonly ILogger<MemberFunctionController> _logger;
+        private readonly LINQService _lq;
 
-        public MemberController(HKContext ctx, AccountService accountServices, IHashService hashService, ILogger<MemberController> logger)
+        public MemberFunctionController(HKContext ctx, AccountService accountServices, IHashService hashService, ILogger<MemberFunctionController> logger, LINQService lINQService)
         {
             _ctx = ctx;
             _accountServices = accountServices;
             _hashService = hashService;
             _logger = logger;
+            _lq = lINQService;
         }
         public IActionResult Index()
         {
@@ -30,8 +32,8 @@ namespace HK_Project.Controllers
         [HttpGet]
         public async Task<IActionResult> Createapp()
         {
-            var MemberEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;//
-            var member = await _ctx.Members.FirstOrDefaultAsync(m => m.MemberEmail == MemberEmail);
+            var Email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;//
+            var member = await _lq.GetMember(Email);
 
             ViewBag.MemberCreatapp = member;
             return View();
@@ -41,7 +43,7 @@ namespace HK_Project.Controllers
         {
             if (ModelState.IsValid)
             {
-                Application app = new Application //View修改
+                Application app = new()
                 {
                     Model = "gpt-35-turbo",
                     Parameter = a.Parameter,
@@ -58,11 +60,13 @@ namespace HK_Project.Controllers
 
 
         [HttpGet]
-        public IActionResult Chooseapp()
+        public async Task<IActionResult> Chooseapp()
         {
-            var MemberEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-            var Member = _ctx.Members.FirstOrDefault(m => m.MemberEmail == MemberEmail);
-            var app = _ctx.Applications.Where(a => a.MemberId == Member.MemberId).ToList();
+            var Email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            var app = await _lq.GetApplication(Email);
+            //var Member = _ctx.Members.FirstOrDefault(m => m.MemberEmail == MemberEmail);
+            //var app = _ctx.Applications.Where(a => a.MemberId == Member.MemberId).ToList();
+
             ViewBag.AppChooseapp = app;
             return View();
         }
@@ -111,7 +115,7 @@ namespace HK_Project.Controllers
 
                         var fileWithMaxId = await _ctx.AiFiles.OrderByDescending(u => u.AifileId).FirstOrDefaultAsync();
                         
-                        Aifile embs = new Aifile()
+                        Aifile embs = new()
                         {
                             AifileType = fileType,
                             AifilePath = filePath,

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
+using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("HKDB");
@@ -21,7 +22,7 @@ builder.Services.AddScoped<AccountService>();
 
 builder.Services.AddScoped<ClaimService>();
 
-builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<LINQService>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
 {

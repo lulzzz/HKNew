@@ -4,27 +4,31 @@ using HKDB.Models;
 using HKDB.Data;
 using System.Security.Claims;
 using HK_Project.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 namespace HK_Project.Controllers
 {
-    public class UserManageController : Controller
+    public class UserLSController : Controller
     {
         private readonly HKContext _ctx;
         private readonly ClaimService _claim;
-        public UserManageController(HKContext ctx, ClaimService claim)
+        private readonly LINQService _lq;
+        public UserLSController(HKContext ctx, ClaimService claim, LINQService lq)
         {
             _ctx = ctx;
             _claim = claim;
+            _lq = lq;
         }
         public IActionResult Index()
         {
             return View();
         }
-        public async Task<IActionResult> UserLoginSingup(UserLoginSinginViewModel lvm)
+        public async Task<IActionResult> UserLoginSingup(EmailLSViewModel lvm)
         {
             if (ModelState.IsValid)
             {
-                var UserEmail_exist = _ctx.Users.FirstOrDefault(u => u.UserEmail == lvm.Email);
+                var UserEmail_exist = _lq.GetUser(lvm.Email);
 
                 if(UserEmail_exist == null)
                 {
@@ -33,12 +37,16 @@ namespace HK_Project.Controllers
                     {
                         UserEmail = lvm.Email
                     };
+
                     _ctx.Users.Add(user);
                     await _ctx.SaveChangesAsync();
                 }
-                await _claim.ClaimAdd(lvm.Email);
+
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(await _claim.ClaimAdd(lvm.Email)));
                 
-                return View();
+                return RedirectToAction("UserIndex", "Chat");
             }
             return View(lvm);
         }

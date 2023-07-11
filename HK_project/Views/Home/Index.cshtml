@@ -1,7 +1,9 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
+@{
+    Layout = "_Index";
+}
 
 <head>
     <link href="/css/Home.css" rel="stylesheet">
@@ -20,7 +22,7 @@
                 <h1 class="p-2 mt-5"
                     style="font-family: 'Orbitron', sans-serif;color:#97E3FE;line-height:calc(1.5rem + 1.3vw);font-size: calc(0.8rem + 1.3vw);"
                     id="Infotext"></h1>
-                <a asp-controller="" asp-action="" title="Start" id="gradientBtn" class="btn col-6 col-md-3 rounded-5 p-0 overflow-hidden mb-5"
+			<a asp-action="Show" asp-controller="Home" title="Start" id="gradientBtn" class="btn col-6 col-md-3 rounded-5 p-0 overflow-hidden mb-5"
                         style="border-width: 10px;background-clip: border-box;background-origin: border-box;">
                 <img src="/Assets/Start.gif" alt="" style="height: 100%;width: 100%;">
                 </a>

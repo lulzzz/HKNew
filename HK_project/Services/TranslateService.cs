@@ -9,10 +9,10 @@
        _TranslateService = TranslateService;
    }
    ******************************************************
-   var output = _TranslateService.Getlunguage("test");
+   var output = _TranslateService.GetLunguage("test");
    ******************************************************
    string[] test = { "test", "test2", "test3" };
-   foreach (var item in test) { var output = _TranslateService.Getlunguage(item); }
+   foreach (var item in test) { var output = _TranslateService.GetLunguage(item); }
 */
 //======================================================
 /*  GetTranslate(input, form, to) 翻譯文字
@@ -37,7 +37,7 @@ namespace HK_Project.Services
 {
     public class TranslateService
     {
-        public async Task<string> Getlunguage(string input)
+        public async Task<string> GetLunguage(string input)
         {
 
             var client = new HttpClient();
