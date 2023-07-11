@@ -106,13 +106,17 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script>
+
         document.getElementById('list').addEventListener('click', function () {
             var leftbar = document.getElementById('leftbar');
             leftbar.classList.toggle('d-none');
         });
+
+        
         //即時聊天室內容
         $(document).ready(function () {
             $('#sendout').click(function () {
+            chatid = $(this).data('id');
                 console.log("ok")
                 var question = $('textarea[name="question"]').val();
                 var questionDiv = `
@@ -124,14 +128,14 @@
                 $.ajax({
                     url: '/Chat/qainput',
                     type: 'post',
-                    data: { 'question': question },
+                    data: { 'question': question},
                     success: function (response) {
                         console.log(response);
                         var answerDiv = `
-                                                <div class=" w-100 bg-body-secondary p-5 d-flex flex-column" style="height:auto">
-                                            <p class="m-0 h1">答</p>
-                                                    <p class="m-0 h4 mt-3">${response}</p>
-                                        </div>`;
+                                            <div class=" w-100 bg-body-secondary p-5 d-flex flex-column" style="height:auto">
+                                        <p class="m-0 h1">答</p>
+                                                <p class="m-0 h4 mt-3">${response}</p>
+                                    </div>`;
                         $(".chat-content").append(answerDiv);
                     }
                 });

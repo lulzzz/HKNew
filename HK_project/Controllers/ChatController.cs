@@ -7,7 +7,7 @@ using HKDB.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
-
+using Newtonsoft.Json;
 
 namespace HK_Project.Controllers
 {
@@ -94,12 +94,13 @@ namespace HK_Project.Controllers
 
                 _ctx.Chats.Add(Chat);
                 await _ctx.SaveChangesAsync();
-
+                TempData["Chatid"] = Chat.ChatId;
                 chatList.Add(Chat);
             }
             else
             {
                 chatList = ChatSearch.ToList();
+                TempData["Chatid"] = chatList[0].ChatId;
             }
 
             ViewBag.Chats = chatList;
@@ -118,7 +119,7 @@ namespace HK_Project.Controllers
         public IActionResult GetChatHistory(int id)
         {
             var chatHistory = _ctx.QAHistorys.Where(q => q.ChatId == id).ToList();
-            TempData["Userchatid"] = id;
+            TempData["Chatid"] = id;
             return Json(chatHistory);
         }
 
@@ -127,31 +128,30 @@ namespace HK_Project.Controllers
         public async Task<IActionResult> qainput(string question)
         {
 
-            //var appid = TempData["ApplicationId"].ToString();
-            //var temp = TempData["Parameter"].ToString();
-            //var chatid = TempData["chatid"].ToString();
-            //var q = question;
-            //var file = await _ctx.AiFiles.FirstOrDefaultAsync(c => c.ApplicationId == appid);
-            //var fileid = file.AifileId;
+            var appid = TempData["ApplicationId"].ToString();
+            var temp = TempData["Parameter"].ToString();
+            temp = "1";
+            var Chatid = TempData["Chatid"].ToString();
+            var q = question;
 
-            //var client = new HttpClient();
-            //string jsonContent = $@"{{
-            //                        ""ApplicationId"": ""{appid}"",
-            //                        ""temperature"": ""{temp}"",
-            //                        ""ChatId"": ""{chatid}"",
-            //                        ""Question"": ""{q}""
-            //                    }}";
+            var client = new HttpClient();
+            string jsonContent = $@"{{
+                                    ""ApplicationId"": ""{appid}"",
+                                    ""temperature"": ""{temp}"",
+                                    ""ChatId"": ""{Chatid}"",
+                                    ""Question"": ""{q}""
+                                }}";
 
-            //var content = new StringContent(jsonContent, null, "application/json");
-            //var request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7168/api/Similar");
-            //request.Content = content;
+            var content = new StringContent(jsonContent, null, "application/json");
+            var request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7168/api/Similar");
+            request.Content = content;
 
-            //var response = await client.SendAsync(request);
+            var response = await client.SendAsync(request);
 
-            //response.EnsureSuccessStatusCode();
+            response.EnsureSuccessStatusCode();
+            var tt =await response.Content.ReadAsStringAsync();
 
-
-            return Json(0);//response
+            return Json(tt);//response
         }
 
         [HttpPost]
@@ -169,8 +169,8 @@ namespace HK_Project.Controllers
                     UserId = userlist.UserId
                 };
                 _ctx.Chats.Add(chat1);
-                await _ctx.SaveChangesAsync();  
-
+                await _ctx.SaveChangesAsync();
+                TempData["Chatid"] = chat1.ChatId;
                 // create a ChatDto object and copy properties from chat1
                 ChatDto chatDto = new ChatDto()
                 {
@@ -179,7 +179,7 @@ namespace HK_Project.Controllers
                     ChatName = chat1.ChatName,
                     UserId = chat1.UserId
                 };
-                TempData["chatid"] = chat1.ChatId;
+                ViewBag.chatid = chat1.ChatId;
 
                 // return the DTO object instead of the entity
                 return Json(chatDto);
