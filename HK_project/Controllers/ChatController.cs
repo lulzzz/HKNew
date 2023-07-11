@@ -1,5 +1,6 @@
 ﻿using HK_Project.Interface;
 using HK_Project.Services;
+using HK_Project.ViewModels;
 using HKDB.Data;
 using HKDB.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -65,37 +66,41 @@ namespace HK_Project.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Qa ()
+        public async Task<IActionResult> Qa()
         {
             var Email = User.FindFirstValue(ClaimTypes.Email);
-            
             var UserList = _ctx.Users.FirstOrDefault(u => u.UserEmail == Email);
-            
+
             var ChatSearch = from c in _ctx.Chats
+                             orderby c.ChatTime descending
                              join u in _ctx.Users on c.UserId equals u.UserId
                              where u.UserEmail == Email
                              select c;
-            
-            if (ChatSearch == null)
+
+            List<Chat> chatList = new List<Chat>();
+
+            if (ChatSearch.Count() == 0)
             {
                 Chat Chat = new Chat()
                 {
                     ChatTime = DateTime.Now,
-                    ChatName = "Chat_" + UserList.UserId.ToString().PadLeft(4, '0'),
+                    ChatName = "NewChat",
                     UserId = UserList.UserId
                 };
 
                 _ctx.Chats.Add(Chat);
                 await _ctx.SaveChangesAsync();
-                
-                ViewBag.Chat = Chat;
-                return View(ViewBag);
+
+                chatList.Add(Chat);
             }
             else
             {
-                ViewBag.Chat = ChatSearch;
-                return View(ViewBag);
+                chatList = ChatSearch.ToList();
             }
+
+            ViewBag.Chats = chatList;
+
+            return View();
         }
 
 
@@ -159,9 +164,10 @@ namespace HK_Project.Controllers
                 
                 Chat chat = new Chat()
                 {
-                    UserId = userlist.UserId,
+                    
                     ChatTime = DateTime.Now,
-                    ChatName = "New Chat"
+                    ChatName = "New Chat",
+                    UserId = userlist.UserId
                 };
                 _ctx.Chats.Add(chat);
                 await _ctx.SaveChangesAsync();

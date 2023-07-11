@@ -87,6 +87,15 @@ namespace HK_Project.Controllers
                     };
 
                     _ctx.Add(m);
+
+                    User u = new User()
+                    {
+                        UserName = "User",
+                        UserEmail = member.Email,
+                        UserPassword = member.Password
+                    };
+                    _ctx.Add(u);
+
                     await _ctx.SaveChangesAsync();
                     //cookie 帶電子郵件
                     await _claimServer.ClaimAdd(member.Email);

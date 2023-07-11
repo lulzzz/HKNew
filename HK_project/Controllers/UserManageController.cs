@@ -24,12 +24,11 @@ namespace HK_Project.Controllers
         {
             if (ModelState.IsValid)
             {
-                var MemberEmail_exist = _ctx.Members.FirstOrDefault(m => m.MemberEmail == lvm.Email);
                 var UserEmail_exist = _ctx.Users.FirstOrDefault(u => u.UserEmail == lvm.Email);
 
                 if(UserEmail_exist == null)
                 {
-                    //使用者跟會員都沒有紀錄
+                    
                     User user = new User()
                     {
                         UserEmail = lvm.Email

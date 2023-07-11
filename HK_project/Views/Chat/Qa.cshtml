@@ -2,10 +2,11 @@
 @using Microsoft.AspNetCore.Http;
 @{
     //var chats = ViewBag.Userchatlist as List<Chat>;
+    var chats = ViewBag.Chats as List<Chat>;
     var ChatQaHistory = ViewBag.ChatQaHistory as List<Qahistory>;
     //var Userappname = Context.Session.GetString("Userchoosename");
-    var chats = ViewBag.Chat as List<ChatViewModel>;
-}
+    
+}   
 
 <!DOCTYPE html>
 <html lang="en">
@@ -100,19 +101,6 @@
                 </div>
             </div>
 
-
-            @*<div class="row w-100 m-0 px-2 align-items-center justify-content-center bg-secondary" style="height: 8vh;">
-            <div class="col p-0 h-75">
-            <textarea type="text" class="w-100 h-100" style="font-size: 6vh;resize:none;line-height: 6vh;" rows="3" placeholder="Please Enter The Question"></textarea>
-            </div>
-            <div class="col-3 p-0 h-75">
-            <a class="btn btn-primary w-100 h-100 d-flex align-items-center justify-content-center"
-            style="font-size: 2rem;">
-            <p class="m-0 p-0">送出</p>
-            </a>
-            </div>
-            </div>*@
-
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -156,17 +144,20 @@
                 console.log("click");
                 e.preventDefault();
                 $.ajax({
-                    url: '/Chat/Creatchat', 
+                    url: '/Chat/Creatchat',
                     type: 'POST',
                     success: function (data) {
                         console.log(data);
                         var newChat = `<a class="btn btn-secondary w-100 rounded-5 d-flex align-items-center justify-content-center x-2 chat-button"
-                                                                style="font-size: 2em; height: 80px; margin-top: 10px;"
-                                                                data-id="${??}">
-                                                                ${data.chatName}
-                                                            </a>`;
+                                            style="font-size: 2em; height: 80px; margin-top: 10px;"
+                                                    data-id="${data.ChatId}">
+                                                    ${data.ChatName}
+                                        </a>`;
                         $("#createbtn").after(newChat);
                         $(".chat-content").empty();
+                    },
+                    error: function (error) {
+                        console.log('Error');
                     }
                 });
             });
