@@ -1,4 +1,5 @@
-﻿using HK_Project.Interface;
+﻿using HK_Project.Extensions;
+using HK_Project.Interface;
 using HK_Project.Services;
 using HK_Project.ViewModels;
 using HKDB.Data;
@@ -6,6 +7,7 @@ using HKDB.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+
 
 namespace HK_Project.Controllers
 {
@@ -15,13 +17,15 @@ namespace HK_Project.Controllers
         private readonly IHashService _hashService;
         private readonly AccountService _accountServices;
         private readonly ILogger<MemberFunctionController> _logger;
+        private readonly LINQService _lq;
 
-        public ChatController(HKContext ctx, AccountService accountServices, IHashService hashService, ILogger<MemberFunctionController> logger)
+        public ChatController(HKContext ctx, AccountService accountServices, IHashService hashService, ILogger<MemberFunctionController> logger, LINQService lq)
         {
             _ctx = ctx;
             _accountServices = accountServices;
             _hashService = hashService;
             _logger = logger;
+            _lq = lq;
         }
         public IActionResult UserIndex()
         {
@@ -69,7 +73,7 @@ namespace HK_Project.Controllers
         public async Task<IActionResult> Qa()
         {
             var Email = User.FindFirstValue(ClaimTypes.Email);
-            var UserList = _ctx.Users.FirstOrDefault(u => u.UserEmail == Email);
+            var UserList = await _lq.GetUser(Email);
 
             var ChatSearch = from c in _ctx.Chats
                              orderby c.ChatTime descending
@@ -171,6 +175,7 @@ namespace HK_Project.Controllers
                 };
                 _ctx.Chats.Add(chat);
                 await _ctx.SaveChangesAsync();
+                
                 return Json(chat);//chat
             }
             catch (Exception ex)

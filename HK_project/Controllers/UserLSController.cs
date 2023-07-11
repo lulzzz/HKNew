@@ -6,6 +6,7 @@ using System.Security.Claims;
 using HK_Project.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.EntityFrameworkCore;
 
 namespace HK_Project.Controllers
 {
@@ -28,7 +29,7 @@ namespace HK_Project.Controllers
         {
             if (ModelState.IsValid)
             {
-                var UserEmail_exist = _lq.GetUser(lvm.Email);
+                var UserEmail_exist = await _lq.GetUser(lvm.Email);
 
                 if(UserEmail_exist == null)
                 {

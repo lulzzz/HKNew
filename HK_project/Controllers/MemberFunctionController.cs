@@ -53,7 +53,7 @@ namespace HK_Project.Controllers
 
                 _ctx.Add(app); // Use Add() here instead of Update()
                 await _ctx.SaveChangesAsync();
-                return RedirectToAction("Uploadfileapp", "Member");
+                return RedirectToAction("Uploadfileapp", "MemberFunction");
             }
             return View();
         }

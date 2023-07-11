@@ -51,7 +51,9 @@ namespace HK_Project.Controllers
                     ModelState.AddModelError(string.Empty, "帳號密碼有錯!!!");
                     return View(LoginVM);
                 }
-                await _claimServer.ClaimAdd(LoginVM.Email);
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(await _claimServer.ClaimAdd(member.Email)));
 
                 return RedirectToAction("MemberIndex", "Chat");
 

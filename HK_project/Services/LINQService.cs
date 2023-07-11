@@ -31,7 +31,7 @@ namespace HK_Project.Services
                        where m.MemberEmail == email
                        select a;
 
-            var result =await temp.ToListAsync();
+            var result = await temp.ToListAsync();
 
             return result;
         }
