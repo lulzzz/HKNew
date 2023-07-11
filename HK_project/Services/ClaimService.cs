@@ -8,14 +8,7 @@ namespace HK_Project.Services
 {
     public class ClaimService
     {
-        private readonly HttpContext _httpContext;
-
-        public ClaimService(HttpContext httpContext)
-        {
-            _httpContext = httpContext;
-        }
-
-        public async Task ClaimAdd(string Email)
+        public async Task<ClaimsIdentity> ClaimAdd(string Email)
         {
             var claims = new List<Claim>
                 {
@@ -25,9 +18,7 @@ namespace HK_Project.Services
             var claimsIdentity = new ClaimsIdentity(claims,
                 CookieAuthenticationDefaults.AuthenticationScheme);
 
-            await _httpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(claimsIdentity));
+            return claimsIdentity;
         }      
     }
 }

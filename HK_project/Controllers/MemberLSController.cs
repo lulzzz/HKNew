@@ -19,6 +19,7 @@ namespace HK_Project.Controllers
         private readonly ClaimService _claimServer;
         private readonly LINQService _lq;
 
+
         public MemberLSController(HKContext ctx, AccountService accountServices, IHashService hashService, ClaimService claimServer, LINQService linqService)
         {
             _ctx = ctx;
@@ -26,6 +27,7 @@ namespace HK_Project.Controllers
             _hashService = hashService;
             _claimServer = claimServer;
             _lq = linqService;
+
         }
         public IActionResult Index()
         {
@@ -91,8 +93,10 @@ namespace HK_Project.Controllers
                     _ctx.Add(m);
                     await _ctx.SaveChangesAsync();
                     //cookie 帶電子郵件
-                    await _claimServer.ClaimAdd(member.Email);
-                    
+                    await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(await _claimServer.ClaimAdd(member.Email)));
+
                     return RedirectToAction("MemberIndex", "Chat");
                 }
             }
@@ -103,7 +107,7 @@ namespace HK_Project.Controllers
         public async Task<IActionResult> Signout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Show", "Home");
         }
     }
 }

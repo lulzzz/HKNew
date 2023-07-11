@@ -4,6 +4,8 @@ using HKDB.Models;
 using HKDB.Data;
 using System.Security.Claims;
 using HK_Project.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 namespace HK_Project.Controllers
 {
@@ -40,9 +42,11 @@ namespace HK_Project.Controllers
                     await _ctx.SaveChangesAsync();
                 }
 
-                await _claim.ClaimAdd(lvm.Email);
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(await _claim.ClaimAdd(lvm.Email)));
                 
-                return View();
+                return RedirectToAction("UserIndex", "Chat");
             }
             return View(lvm);
         }
