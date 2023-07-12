@@ -187,6 +187,8 @@ namespace HK_Project.Controllers
 
             response.EnsureSuccessStatusCode();
             var tt =await response.Content.ReadAsStringAsync();
+            TempData["ApplicationId"] = appid;
+            TempData["Chatid"] = Chatid;
 
             return Json(tt);//response
         }
