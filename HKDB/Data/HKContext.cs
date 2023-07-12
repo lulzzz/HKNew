@@ -97,7 +97,7 @@ namespace HKDB.Data
                );
 
             modelBuilder.Entity<Chat>().HasData(
-                new Chat { ChatId = 1, ChatTime = DateTime.Now, UserId = 1 }
+                new Chat { ChatId = 1, ChatTime = DateTime.Now, UserId = 1 ,ApplicationId = "1"}
             );
 
             modelBuilder.Entity<Qahistory>().HasData(

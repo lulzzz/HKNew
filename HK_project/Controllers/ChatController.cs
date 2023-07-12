@@ -69,11 +69,66 @@ namespace HK_Project.Controllers
             return View(ViewBag);
         }
 
+        //[HttpGet]
+        //public async Task<IActionResult> Qa()
+        //{
+        //    var Email = User.FindFirstValue(ClaimTypes.Email);
+        //    var UserList = await _lq.GetUser(Email);
+
+        //    var ChatSearch = from c in _ctx.Chats
+        //                     orderby c.ChatTime descending
+        //                     join u in _ctx.Users on c.UserId equals u.UserId
+        //                     where u.UserEmail == Email
+        //                     select c;
+        //    var appid = TempData["ApplicationId"].ToString();
+
+        //    List<Chat> chatList = new List<Chat>();
+
+        //    if (ChatSearch.Count() == 0)
+        //    {
+        //        Chat Chat = new Chat()
+        //        {
+        //            ChatTime = DateTime.Now,
+        //            ChatName = "NewChat",
+        //            UserId = UserList.UserId,
+        //            ApplicationId = appid
+        //        };
+
+        //        _ctx.Chats.Add(Chat);
+        //        await _ctx.SaveChangesAsync();
+        //        TempData["ApplicationId"] = Chat.ApplicationId;
+                
+        //        chatList.Add(Chat);
+        //    }
+        //    else
+        //    {
+        //        chatList = ChatSearch.ToList();
+        //        TempData["ApplicationId"] = chatList[0].ApplicationId;
+        //    }
+        //    ViewBag.Appname = TempData["ApplicationName"].ToString();
+        //    ViewBag.Chats = chatList;
+
+        //    return View();
+        //}
+
         [HttpGet]
-        public async Task<IActionResult> Qa(string ID   )
+        public async Task<IActionResult> Qa()
         {
             var Email = User.FindFirstValue(ClaimTypes.Email);
             var UserList = await _lq.GetUser(Email);
+
+            var appid = TempData["ApplicationId"].ToString();
+
+            Chat Chat = new Chat()
+            {
+                ChatTime = DateTime.Now,
+                ChatName = "NewChat",
+                UserId = UserList.UserId,
+                ApplicationId = appid
+            };
+
+            _ctx.Chats.Add(Chat);
+            await _ctx.SaveChangesAsync();
 
             var ChatSearch = from c in _ctx.Chats
                              orderby c.ChatTime descending
@@ -82,32 +137,14 @@ namespace HK_Project.Controllers
                              select c;
 
             List<Chat> chatList = new List<Chat>();
-
-            if (ChatSearch.Count() == 0)
-            {
-                Chat Chat = new Chat()
-                {
-                    ChatTime = DateTime.Now,
-                    ChatName = "NewChat",
-                    UserId = UserList.UserId
-                };
-
-                _ctx.Chats.Add(Chat);
-                await _ctx.SaveChangesAsync();
-                TempData["Chatid"] = Chat.ChatId;
-                chatList.Add(Chat);
-            }
-            else
-            {
-                chatList = ChatSearch.ToList();
-                TempData["Chatid"] = chatList[0].ChatId;
-            }
-
+            chatList = ChatSearch.ToList();
+            TempData["ApplicationId"] = chatList[0].ApplicationId;
+            ViewBag.Appname = TempData["ApplicationName"].ToString();
+            TempData["ApplicationId"] = chatList[0].ApplicationId;
             ViewBag.Chats = chatList;
 
             return View();
         }
-
 
         public IActionResult ChatHistory(int chatid)
         {
@@ -163,12 +200,14 @@ namespace HK_Project.Controllers
             {
                 var useremail = User.FindFirstValue(ClaimTypes.Email);
                 var userlist = await _ctx.Users.FirstOrDefaultAsync(u => u.UserEmail == useremail);
-
+                var appid = TempData["ApplicationId"].ToString();
                 Chat chat1 = new Chat()
                 {
                     ChatTime = DateTime.Now,
                     ChatName = "NewChat",
-                    UserId = userlist.UserId
+                    UserId = userlist.UserId,
+                    ApplicationId = appid
+                    
                 };
                 _ctx.Chats.Add(chat1);
                 await _ctx.SaveChangesAsync();
@@ -179,9 +218,11 @@ namespace HK_Project.Controllers
                     ChatId = chat1.ChatId,
                     ChatTime = chat1.ChatTime,
                     ChatName = chat1.ChatName,
-                    UserId = chat1.UserId
+                    UserId = chat1.UserId,
+                    ApplicationId = chat1.ApplicationId 
                 };
                 ViewBag.chatid = chat1.ChatId;
+                TempData["ApplicationId"]= chat1.ApplicationId;
 
                 // return the DTO object instead of the entity
                 return Json(chatDto);
@@ -200,11 +241,17 @@ namespace HK_Project.Controllers
             public DateTime ChatTime { get; set; }
             public string? ChatName { get; set; }
             public int UserId { get; set; }
+            public string ApplicationId { get; set; }
         }
 
+        
 
 
 
+
+
+
+        
 
 
 

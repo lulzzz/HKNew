@@ -69,6 +69,9 @@ namespace HKDB.Migrations
                     b.Property<string>("ApplicationName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Key")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("MemberId")
                         .HasColumnType("int");
 
@@ -101,6 +104,9 @@ namespace HKDB.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ChatId"));
 
+                    b.Property<string>("ApplicationId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ChatName")
                         .HasColumnType("nvarchar(max)");
 
@@ -120,7 +126,8 @@ namespace HKDB.Migrations
                         new
                         {
                             ChatId = 1,
-                            ChatTime = new DateTime(2023, 7, 5, 18, 21, 45, 356, DateTimeKind.Local).AddTicks(9328),
+                            ApplicationId = "1",
+                            ChatTime = new DateTime(2023, 7, 12, 11, 23, 23, 454, DateTimeKind.Local).AddTicks(9535),
                             UserId = 1
                         });
                 });

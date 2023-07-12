@@ -14,7 +14,7 @@ public partial class Application
     public string? Model { get; set; }
     public string? Parameter { get; set; }
     public string ApplicationName { get; set; }
-
+    public string? Key { get; set; }
     public virtual int MemberId { get; set; }
     public virtual Member Member { get; set; }
     public virtual ICollection<Aifile> Aifile { get; set; }

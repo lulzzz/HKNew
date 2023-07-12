@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HKDB.Migrations
 {
     /// <inheritdoc />
-    public partial class HKDB : Migration
+    public partial class a : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -52,6 +52,7 @@ namespace HKDB.Migrations
                     Model = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Parameter = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ApplicationName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Key = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MemberId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -73,6 +74,7 @@ namespace HKDB.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ChatTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ChatName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ApplicationId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -165,13 +167,13 @@ namespace HKDB.Migrations
 
             migrationBuilder.InsertData(
                 table: "Applications",
-                columns: new[] { "ApplicationId", "ApplicationName", "MemberId", "Model", "Parameter" },
-                values: new object[] { 1, "aaa", 1, null, null });
+                columns: new[] { "ApplicationId", "ApplicationName", "Key", "MemberId", "Model", "Parameter" },
+                values: new object[] { 1, "aaa", null, 1, null, null });
 
             migrationBuilder.InsertData(
                 table: "Chats",
-                columns: new[] { "ChatId", "ChatName", "ChatTime", "UserId" },
-                values: new object[] { 1, null, new DateTime(2023, 7, 5, 18, 21, 45, 356, DateTimeKind.Local).AddTicks(9328), 1 });
+                columns: new[] { "ChatId", "ApplicationId", "ChatName", "ChatTime", "UserId" },
+                values: new object[] { 1, "1", null, new DateTime(2023, 7, 12, 11, 23, 23, 454, DateTimeKind.Local).AddTicks(9535), 1 });
 
             migrationBuilder.InsertData(
                 table: "AiFiles",

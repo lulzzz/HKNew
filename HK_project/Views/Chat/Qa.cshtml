@@ -44,7 +44,7 @@
                             <a class="btn btn-secondary w-100 rounded-5 d-flex align-items-center justify-content-center x-2 chat-button"
                                style="font-size: 2em; height: 80px; margin-top: 10px;"
                                data-id="@chat.ChatId">
-                                @chat.ChatName
+                                @chat.ChatName - @chat.ApplicationId
                             </a>
                         }
                     }
@@ -53,9 +53,9 @@
                 <div class="px-2 pe-4">
                     <a class="btn btn-light w-100 rounded-5"
                        style="font-size: 2em; height: 80px; margin-top: 20px;"></a>
-                    <a asp-action="Chooseapp" asp-controller="Chat" class="btn btn-light w-100 rounded-5 d-flex align-items-center justify-content-center"
+                    <a asp-controller="Chat" asp-action="ChooseApp" class="btn btn-light w-100 rounded-5 d-flex align-items-center justify-content-center"
                        style="font-size: 2em; height: 80px; margin-top: 10px;">
-                        <p class="m-0">Userappname</p>
+                        <p class="m-0">@ViewBag.Appname</p>
                     </a>
                 </div>
             </div>
@@ -156,7 +156,7 @@
                         var newChat = `<a class="btn btn-secondary w-100 rounded-5 d-flex align-items-center justify-content-center x-2 chat-button"
                                                                 style="font-size: 2em; height: 80px; margin-top: 10px;"
                                                                     data-id="${data.chatId}">
-                                                                ${data.chatName}
+                                                                        ${data.chatName}-${data.applicationId}
                                                             </a>`;
                         $("#createbtn").after(newChat);
                         $(".chat-content").empty();
@@ -174,7 +174,7 @@
                 e.preventDefault();
                 var chatId = $(this).data("id");
                 $.ajax({
-                    url: '/User/GetChatHistory',
+                    url: '/Chat/GetChatHistory',
                     type: 'POST',
                     data: { id: chatId },
                     success: function (data) {
@@ -199,6 +199,9 @@
                             $(".chat-content").append(questionDiv);
                             $(".chat-content").append(answerDiv);
                         });
+                    },Error:function(error){
+                        console.log("Error")
+                        console.log(error);
                     }
                 });
             });
