@@ -1,4 +1,7 @@
-﻿@keyframes HomeAnimation {
+﻿body{
+    height:100vh;
+}
+@keyframes HomeAnimation {
     0% {
         transform: scale(1) rotate(0);
     }
