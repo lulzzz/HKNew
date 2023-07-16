@@ -66,12 +66,12 @@
         var back = document.getElementById("back");
         list.addEventListener("click", function () {
 
-            if (back.style.zIndex == 1) {
+            if (back.style.zIndex == 99) {
                 back.style.zIndex = -1;
                 back.style.backgroundColor = "#25242700";
             }
             else {
-                back.style.zIndex = 1;
+                back.style.zIndex = 99;
                 back.style.backgroundColor = "#252427d7";
             }
             Home.classList.toggle("d-none");

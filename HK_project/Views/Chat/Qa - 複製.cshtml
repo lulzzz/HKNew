@@ -1,0 +1,164 @@
+﻿@using HK_Project.ViewModels;
+@using Microsoft.AspNetCore.Http;
+@{
+    //var chats = ViewBag.Userchatlist as List<Chat>;
+    var chats = ViewBag.Chats as List<Chat>;
+    var ChatQaHistory = ViewBag.ChatQaHistory as List<Qahistory>;
+    //var Userappname = Context.Session.GetString("Userchoosename");
+    
+}   
+
+<body>
+    <div class="row w-100 m-0 " style=" height:calc(100vh - 70px);">
+        
+        <div class="col px-0 h-100">
+            <div class=" bg-body-secondary rounded-4 overflow-y-scroll" style="height: 91%;">
+                <!--問-->
+                <div class="chat-content w-100 bg-body-secondary p-5 d-flex flex-column align-items-end" style="height:auto">
+                </div>
+                @if (ChatQaHistory != null)
+                {
+                    @foreach (var item in ChatQaHistory)
+                    {
+                        <div class="chat-content w-100 bg-body-secondary p-5 d-flex flex-column align-items-end" style="height:auto">
+                            <p class="m-0 h1">問</p>
+                            <p class="m-0 h4 mt-3">
+                                @item.QahistoryQ
+                            </p>
+                        </div>
+                        <div class="chat-content w-100 bg-body-secondary p-5 d-flex flex-column" style="height:auto">
+                            <p class="m-0 h1">答</p>
+                            <p class="m-0 h4 mt-3">
+                                @item.QahistoryA
+                            </p>
+                        </div>
+                    }
+                }
+
+
+
+            </div>
+
+
+            <div class="row w-100 m-0 px-2 align-items-center justify-content-center bg-secondary" style="height: 8vh;">
+                <div class="col p-0 h-75">
+                    <textarea name="question" type="text" class="w-100 h-100" style="font-size: 6vh;resize:none;line-height: 6vh;" rows="3" placeholder="Please Enter The Question"></textarea>
+                </div>
+                <div class="col-3 p-0 h-75">
+                    <button id="sendout" type="submit" class="btn btn-primary w-100 h-100 d-flex align-items-center justify-content-center" style="font-size: 2rem;">
+                        <p class="m-0 p-0">送出</p>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+
+        document.getElementById('list').addEventListener('click', function () {
+            var leftbar = document.getElementById('leftbar');
+            leftbar.classList.toggle('d-none');
+        });
+
+        
+        //即時聊天室內容
+        $(document).ready(function () {
+            $('#sendout').click(function () {
+            chatid = $(this).data('id');
+                console.log("ok")
+                var question = $('textarea[name="question"]').val();
+                var questionDiv = `
+                                            <div class=" w-100 bg-body-secondary p-5 d-flex flex-column align-items-end" style="height:auto">
+                                        <p class="m-0 h1">問</p>
+                                                <p class="m-0 h4 mt-3">${question}</p>
+                                    </div>`;
+                $(".chat-content").append(questionDiv);
+                $.ajax({
+                    url: '/Chat/qainput',
+                    type: 'post',
+                    data: { 'question': question},
+                    success: function (response) {
+                        console.log(response);
+                        var answerDiv = `
+                                            <div class=" w-100 bg-body-secondary p-5 d-flex flex-column" style="height:auto">
+                                        <p class="m-0 h1">答</p>
+                                                <p class="m-0 h4 mt-3">${response}</p>
+                                    </div>`;
+                        $(".chat-content").append(answerDiv);
+                    }
+                });
+            });
+        });
+
+        //產出新聊天室
+        $(document).ready(function () {
+            $("#createbtn").click(function (e) {
+                console.log("click");
+                e.preventDefault();
+                $.ajax({
+                    url: '/Chat/Creatchat', // Replace 'YourControllerName' with the actual name of your controller
+                    type: 'POST',
+                    success: function (data) {
+                        console.log("Success")
+                        console.log(data);
+                        var newChat = `<a class="btn btn-secondary w-100 rounded-5 d-flex align-items-center justify-content-center x-2 chat-button"
+                                                                style="font-size: 2em; height: 80px; margin-top: 10px;"
+                                                                    data-id="${data.chatId}">
+                                                                        ${data.chatName}-${data.applicationId}
+                                                            </a>`;
+                        $("#createbtn").after(newChat);
+                        $(".chat-content").empty();
+                    },Error:function(error){
+                        console.log("Error")
+                        console.log(error);
+                    }
+                });
+            });
+        });
+
+        //疊代出歷史聊天室內容
+        $(document).ready(function () {
+            $(".chat-button").click(function (e) {
+                e.preventDefault();
+                var chatId = $(this).data("id");
+                $.ajax({
+                    url: '/Chat/GetChatHistory',
+                    type: 'POST',
+                    data: { id: chatId },
+                    success: function (data) {
+                        // 清空現有的對話
+                        $(".chat-content").empty();
+                        console.log(data)
+                        // 添加新的對話
+                        data.forEach(item => {
+                            console.log(item);
+
+                            var questionDiv = `
+                                                        <div class=" w-100 bg-body-secondary p-5 d-flex flex-column align-items-end" style="height:auto">
+                                                    <p class="m-0 h1">問</p>
+                                                            <p class="m-0 h4 mt-3">${item['qahistoryQ']}</p>
+                                                </div>`;
+                            var answerDiv = `
+                                                        <div class=" w-100 bg-body-secondary p-5 d-flex flex-column" style="height:auto">
+                                                    <p class="m-0 h1">答</p>
+                                                            <p class="m-0 h4 mt-3">${item['qahistoryA']}</p>
+                                                </div>`;
+
+                            $(".chat-content").append(questionDiv);
+                            $(".chat-content").append(answerDiv);
+                        });
+                    },Error:function(error){
+                        console.log("Error")
+                        console.log(error);
+                    }
+                });
+            });
+        });
+
+
+    </script>
+</body>
+
+</html>

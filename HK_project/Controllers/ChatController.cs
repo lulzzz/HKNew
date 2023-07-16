@@ -139,7 +139,7 @@ namespace HK_Project.Controllers
             List<Chat> chatList = new List<Chat>();
             chatList = ChatSearch.ToList();
             TempData["ApplicationId"] = chatList[0].ApplicationId;
-            ViewBag.Appname = TempData["ApplicationName"].ToString();
+           // ViewBag.Appname = TempData["ApplicationName"].ToString();
             TempData["ApplicationId"] = chatList[0].ApplicationId;
             ViewBag.Chats = chatList;
 
