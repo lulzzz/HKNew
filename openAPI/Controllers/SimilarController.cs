@@ -20,14 +20,6 @@ namespace openAPI.Controllers
             _AnswerService = AnswerService;
         }
 
-        /// <summary>
-        /// test
-        /// </summary>
-        /// <param name="msg">name</param>
-        /// <param name="msg">id</param>
-        /// <returns>
-        /// 0
-        /// </returns>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] SimilarViewModel msg)
         {
@@ -53,7 +45,7 @@ namespace openAPI.Controllers
             List<GetDataViewModel> Data = Data_task.Result;
             if (Data.Count() == 0)
             {
-                return BadRequest("DataID不存在,DataID doesn't exist");
+                return BadRequest("ApplicationID不存在,ApplicationID doesn't exist");
             }
             float[] Sim = new float[Data.Count];
             Parallel.For(0, Data.Count, i =>
@@ -116,7 +108,7 @@ namespace openAPI.Controllers
 
             _hkcontext.Add(qahistory);
             await _hkcontext.SaveChangesAsync();
-            return Ok(new TurboAnserViewModel { Ans = Ans });
+            return Ok(Ans);
         }
     }
 

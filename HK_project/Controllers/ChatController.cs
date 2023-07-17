@@ -8,6 +8,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Newtonsoft.Json;
+using QRCoder;
+using System.Drawing;
+using System.Drawing.Imaging;
+using static HK_Project.Controllers.ChatController;
 
 namespace HK_Project.Controllers
 {
@@ -69,48 +73,6 @@ namespace HK_Project.Controllers
             return View(ViewBag);
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Qa()
-        //{
-        //    var Email = User.FindFirstValue(ClaimTypes.Email);
-        //    var UserList = await _lq.GetUser(Email);
-
-        //    var ChatSearch = from c in _ctx.Chats
-        //                     orderby c.ChatTime descending
-        //                     join u in _ctx.Users on c.UserId equals u.UserId
-        //                     where u.UserEmail == Email
-        //                     select c;
-        //    var appid = TempData["ApplicationId"].ToString();
-
-        //    List<Chat> chatList = new List<Chat>();
-
-        //    if (ChatSearch.Count() == 0)
-        //    {
-        //        Chat Chat = new Chat()
-        //        {
-        //            ChatTime = DateTime.Now,
-        //            ChatName = "NewChat",
-        //            UserId = UserList.UserId,
-        //            ApplicationId = appid
-        //        };
-
-        //        _ctx.Chats.Add(Chat);
-        //        await _ctx.SaveChangesAsync();
-        //        TempData["ApplicationId"] = Chat.ApplicationId;
-                
-        //        chatList.Add(Chat);
-        //    }
-        //    else
-        //    {
-        //        chatList = ChatSearch.ToList();
-        //        TempData["ApplicationId"] = chatList[0].ApplicationId;
-        //    }
-        //    ViewBag.Appname = TempData["ApplicationName"].ToString();
-        //    ViewBag.Chats = chatList;
-
-        //    return View();
-        //}
-
         [HttpGet]
         public async Task<IActionResult> Qa()
         {
@@ -129,6 +91,9 @@ namespace HK_Project.Controllers
 
             _ctx.Chats.Add(Chat);
             await _ctx.SaveChangesAsync();
+            TempData["Chatid"] = Chat.ChatId;
+            var app = _ctx.Applications.FirstOrDefault(a => a.ApplicationId.ToString() == Chat.ApplicationId);
+
 
             var ChatSearch = from c in _ctx.Chats
                              orderby c.ChatTime descending
@@ -142,6 +107,8 @@ namespace HK_Project.Controllers
            // ViewBag.Appname = TempData["ApplicationName"].ToString();
             TempData["ApplicationId"] = chatList[0].ApplicationId;
             ViewBag.Chats = chatList;
+            
+            ViewBag.Appname = app.ApplicationName;
 
             return View();
         }
@@ -189,6 +156,7 @@ namespace HK_Project.Controllers
             var tt =await response.Content.ReadAsStringAsync();
             TempData["ApplicationId"] = appid;
             TempData["Chatid"] = Chatid;
+            TempData["Parameter"] = temp;
 
             return Json(tt);//response
         }
@@ -234,6 +202,37 @@ namespace HK_Project.Controllers
                 // Handle the error
                 return Json(new { error = ex.Message });
             }
+        }
+
+        [HttpPost]
+        public IActionResult QRCode()
+        {
+            var appid = TempData["ApplicationId"].ToString();
+            var key = _ctx.Applications.FirstOrDefault(a => a.Key == appid);
+            var data = "https://bootstrap5.hexschool.com/docs/5.1/components/modal/";  /*$"https://localhost:7229/Chat/SendMessage/{key}";*/
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(data, QRCodeGenerator.ECCLevel.Q);
+            PngByteQRCode pngQRCode = new PngByteQRCode(qrCodeData);
+            byte[] qrCodeAsBytes = pngQRCode.GetGraphic(5);
+
+            // Create Bitmap from byte array
+            MemoryStream ms = new MemoryStream(qrCodeAsBytes);
+            Bitmap qrCodeImage = new Bitmap(ms);
+
+            string outputFileName = $@"wwwroot\Images\{Guid.NewGuid()}.png";
+
+            using (FileStream fs = new FileStream(outputFileName, FileMode.Create, FileAccess.ReadWrite))
+            {
+                qrCodeImage.Save(fs, ImageFormat.Png);
+            }
+            TempData["ApplicationId"] = appid;
+
+            var result = new
+            {
+                imageUrl = outputFileName.Replace("wwwroot", ""),
+                data = data
+            };
+            return Json(result);
         }
 
 
