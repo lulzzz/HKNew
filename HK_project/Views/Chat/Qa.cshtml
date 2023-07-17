@@ -50,9 +50,30 @@
                     }
                 </div>
 
+                <div id="qrModal" class="modal" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Your QR Code</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <img id="qrImage" src=@ViewBag.ImageUrl alt="Your QR Code" />
+                                <div id="qrText" class="mt-2"></div> <!-- 新增的 div -->
+                                <button id="copyButton" class="btn btn-secondary mt-2">複製文字</button> <!-- 新增的複製按鈕 -->
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="px-2 pe-4">
-                    <a class="btn btn-light w-100 rounded-5"
-                       style="font-size: 2em; height: 80px; margin-top: 20px;"></a>
+                    <a id="generateQRCode" class="btn btn-light w-100 rounded-5"
+                       style="font-size: 2em; height: 80px; margin-top: 20px;">產出QRcode</a>
                     <a asp-controller="Chat" asp-action="ChooseApp" class="btn btn-light w-100 rounded-5 d-flex align-items-center justify-content-center"
                        style="font-size: 2em; height: 80px; margin-top: 10px;">
                         <p class="m-0">@ViewBag.Appname</p>
@@ -106,6 +127,34 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script>
+
+        $(document).ready(function () {
+            $('#generateQRCode').click(function (e) {
+                console.log("OK")
+                e.preventDefault();
+                $.ajax({
+                    url: '/Chat/QRCode',
+                    type: 'POST',
+                    success: function (data) {
+                        console.log(data)
+                        $('#qrImage').attr('src', data.imageUrl);
+                        $('#qrText').text(data.data); //設置文字
+                        $('#copyButton').off('click').click(function () { //綁定複製事件
+                            var tempInput = document.createElement("input");
+                            tempInput.value = $('#qrText').text();
+                            document.body.appendChild(tempInput);
+                            tempInput.select();
+                            document.execCommand("copy");
+                            document.body.removeChild(tempInput);
+                            alert("複製成功!");
+                        });
+                        $('#qrModal').modal('show');
+                    }
+                });
+            });
+        });
+
+
 
         document.getElementById('list').addEventListener('click', function () {
             var leftbar = document.getElementById('leftbar');
