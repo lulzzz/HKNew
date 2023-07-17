@@ -1,9 +1,50 @@
-﻿
-<body>
-    <div class="w-100 align-items-center justify-content-center d-flex flex-column" style="height: calc(100vh - 70px);">
-        <a asp-controller="MemberLS" asp-action="Index" type="submit" class="btn btn-primary rounded-pill d-flex align-items-center justify-content-center" style="width:22.375rem; height: 5.75rem;"><p class="px-5 m-0" style="font-size: 36pt;">會員</p></a>
-        <a asp-controller="UserLS" asp-action="UserLoginSingup" type="submit" class="btn btn-secondary rounded-pill mt-5 d-flex align-items-center justify-content-center" style="width:22.375rem; height: 5.75rem"><p class="px-5 m-0 " style="font-size: 36pt;">使用者</p></a>
+﻿<div class="w-100 align-items-center justify-content-around d-flex" style="height: 100vh;">
+    <div class="col h-100 d-flex align-items-end justify-content-center p-2 p-sm-5 position-relative">
+        <div class="position-absolute d-flex align-items-center justify-content-center w-100 h-100 top-0 left-0 overflow-hidden" style="background-color: #1d2e92;">
+            <img class="h-50" src="/assets/member.jpg" alt="" style="opacity: 0.4;" id="memberimg">
+        </div>
+        <a asp-controller="MemberLS" asp-action="Index" type="submit"
+           class="btn rounded-pill d-flex align-items-center justify-content-center mb-5"
+           style="width:100%; height: 5.75rem;z-index: 99;background-color: #67d0eb;"
+           id="member">
+            <p class=" m-0 h1" style="font-family: 'Orbitron', sans-serif;">Member</p>
+        </a>
     </div>
-</body>
-
-</html>
+    <div class="col h-100 d-flex align-items-end justify-content-center p-2 p-sm-5 position-relative">
+        <div class="position-absolute d-flex align-items-center justify-content-center w-100 h-100 top-0 left-0 overflow-hidden" style="background-color: #360d4e;">
+            <img class="h-50" src="/assets/user1.jpg" alt="" style="opacity: 0.4;" id="userimg">
+        </div>
+        <a asp-controller="UserLS" asp-action="UserLoginSingup" type="submit"
+           class="btn  rounded-pill d-flex align-items-center justify-content-center mb-5"
+           style="width:100%; height: 5.75rem ;z-index: 99;background-color: #b639ab;"
+           id="user">
+            <p class=" m-0 h1" style="font-family: 'Orbitron', sans-serif;">User</p>
+        </a>
+    </div>
+    <script>
+        var member = document.getElementById("member");
+        var memberimg = document.getElementById("memberimg");
+        var user = document.getElementById("user")
+        var userimg = document.getElementById("userimg")
+        member.addEventListener("mouseover", function () {
+            this.style.scale = 1.1;
+            memberimg.style.scale = 1.5;
+            memberimg.style.opacity = 0.7;
+        })
+        member.addEventListener("mouseout", function () {
+            this.style.scale = 1;
+            memberimg.style.scale = 1;
+            memberimg.style.opacity = 0.4;
+        })
+        user.addEventListener("mouseover", function () {
+            this.style.scale = 1.1;
+            userimg.style.scale = 1.5;
+            userimg.style.opacity = 0.7;
+        })
+        user.addEventListener("mouseout", function () {
+            this.style.scale = 1;
+            userimg.style.scale = 1;
+            userimg.style.opacity = 0.4;
+        })
+    </script>
+   
