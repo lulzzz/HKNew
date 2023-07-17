@@ -91,6 +91,9 @@ namespace HK_Project.Controllers
 
             _ctx.Chats.Add(Chat);
             await _ctx.SaveChangesAsync();
+            TempData["Chatid"] = Chat.ChatId;
+            var app = _ctx.Applications.FirstOrDefault(a => a.ApplicationId.ToString() == Chat.ApplicationId);
+
 
             var ChatSearch = from c in _ctx.Chats
                              orderby c.ChatTime descending
@@ -104,6 +107,8 @@ namespace HK_Project.Controllers
            // ViewBag.Appname = TempData["ApplicationName"].ToString();
             TempData["ApplicationId"] = chatList[0].ApplicationId;
             ViewBag.Chats = chatList;
+            
+            ViewBag.Appname = app.ApplicationName;
 
             return View();
         }
@@ -151,6 +156,7 @@ namespace HK_Project.Controllers
             var tt =await response.Content.ReadAsStringAsync();
             TempData["ApplicationId"] = appid;
             TempData["Chatid"] = Chatid;
+            TempData["Parameter"] = temp;
 
             return Json(tt);//response
         }
