@@ -2,7 +2,6 @@
     var applist = ViewBag.AppList as List<Application>;
 }
 
-<div class="w-100" style="min-height: 70px;height: calc(1.375rem + 5vw);"></div>
 <div class="w-100 h-75 align-items-center justify-content-around d-flex position-absolute flex-column-reverse flex-sm-row">
     <div class="col-sm-3 h-100 ">
         <div class=" w-100 h-100 d-flex flex-sm-column align-items-center">
@@ -13,12 +12,15 @@
                 <button class="btn btn-outline-dark w-100 rounded-0 py-2" id="btnAppModify">
                     <h1 class="m-0">應用修改</h1>
                 </button>
+                <button class="btn btn-outline-dark w-100 rounded-0 py-2">
+                    <h1 class="m-0">離開</h1>
+                </button>
             </form>
         </div>
     </div>
     <div class="col-sm-9 h-100" id="memberData">
         <div class="p-xl-5 p-sm-1 p-5  d-flex flex-column align-items-center justify-content-center">
-            <div class="col-6 col-md-4 rounded-circle h-auto overflow-hidden me-sm-5">
+            <div class="col-4 col-md-3 rounded-circle h-auto overflow-hidden me-sm-5">
                 <img class="w-100" src="/Assets/user1.jpg" alt="">
             </div>
 
@@ -54,19 +56,18 @@
     </div>
 
     <div class="col-sm-9 h-100" id="appModify">
-        <div class="p-xl-5 p-sm-1 p-5  d-flex flex-column align-items-center justify-content-center">
+        <form class="p-xl-5 p-sm-1 p-5  d-flex flex-column align-items-center justify-content-center">
 
-            <form class="d-flex align-items-center justify-content-center">
                 @foreach(var a in applist){
-                    <a onclick="sendData('@a.ApplicationId', '@a.Parameter', '@a.ApplicationName')" class="d-flex mt-5 btn btn-outline-secondary col-6 justify-content-between d-flex align-items-center" style="height: 60px;">
-                        <h2 class="col-4 m-0">@a.ApplicationName</h2>
-                        <div class="col-4 h-100 d-flex align-items-end justify-content-end">
-                            <h6>id: @a.ApplicationId</h6><h6>temp: @a.Parameter</h6>
+                <a onclick="sendData('@a.ApplicationId', '@a.Parameter', '@a.ApplicationName')" class="btn btn-outline-secondary w-100 mb-5 d-flex justify-content-between align-items-center" style="height:calc(50px + 5vh); ">
+                        <h1 class="m-0">@a.ApplicationName</h1>
+                    <div class="w-25 h-100 d-flex align-items-end justify-content-end">
+                            <p>id: @a.ApplicationId</p><p>temp: @a.Parameter</p>
                         </div>
                     </a>
                 }
-            </form>
-        </div>
+
+        </form>
     </div>
 </div>
 
