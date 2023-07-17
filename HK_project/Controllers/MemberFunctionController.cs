@@ -137,5 +137,55 @@ namespace HK_Project.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Manage()
+        {
+            var Email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            var member = await _lq.GetMember(Email);
+            ViewBag.MemberName = member.MemberName;
+            ViewBag.MemberEmail = member.MemberEmail;
+            ViewBag.MemberPassword = member.MemberPassword;
+
+            var app = _ctx.Applications.Where(a => a.MemberId == member.MemberId).ToList();
+            List<Application> appList = new();
+            appList = app;
+            ViewBag.AppList = appList;
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Manage(string name, string password, string account)
+        {
+            var Member = await _lq.GetMember(account);
+
+            if (Member != null)
+            {
+                if (Member.MemberPassword == password)
+                {
+                    Member.MemberName = name;
+                }
+                else
+                {
+                    Member.MemberPassword = _hashService.MD5Hash(password);
+                    Member.MemberName = name;
+                }
+                _ctx.Update(Member);
+                await _ctx.SaveChangesAsync();
+            }
+            return View();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }
