@@ -27,7 +27,7 @@ namespace HKDB.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=HKDB;TrustServerCertificate=true;MultipleActiveResultSets=true;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Data Source=tcp:hackerdb.database.windows.net,1433;Initial Catalog=openAPI_db;User Id=AsiaTeam@hackerdb;Password=Weareloser!");
                 base.OnConfiguring(optionsBuilder);
             }
         }
