@@ -76,6 +76,28 @@
 
 <script>
 
+    function sendData(appId, parameter, appName) {
+        console.log("ok")
+        $.ajax({
+            url: '/MemberFunction/Appchooseresult', 
+            type: 'POST',
+            data: {
+                ApplicationId: appId,
+                Parameter: parameter,
+                ApplicationName: appName
+            },
+            success: function (response) {
+                console.log(response);
+                // 请求成功后的处理逻辑
+                console.log('Data sent successfully');
+                window.location.href = '/MemberFunction/Appmanage';
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
+    }
+
     $('#Managebtn').click(function (event) {
         event.preventDefault(); 
         console.log("ok")

@@ -1,0 +1,168 @@
+﻿@model HKDB.Models.Application;
+@{
+    var AppName = ViewBag.AppName as string;
+    var model = ViewBag.model as string;
+    var parameter = ViewBag.parameter as string;
+    var Aifile = ViewBag.Aifile as List<Aifile>;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+
+<body>
+
+
+        <div class="col d-flex align-items-center flex-column">
+            <div class="row w-100 align-items-center justify-content-center m-0 mt-5 flex-column flex-sm-row">
+                <h1 class="col-sm-4 col d-flex m-0 h-100 align-items-center justify-content-center">模型</h1>
+                <div class=" col-md-5 col h-100 border-0 me-2 px-0 d-flex align-items-center justify-content-center">
+                    <select asp-for="Model" class="form-select bg-body-secondary" type="text" style="font-size: 24pt;">
+                        <option class="w-100" value="gpt-35-turbo" selected style="width: 100%;">gpt-35-turbo</option>
+                        <option class="w-100" value="gpt-davinci-003" style="width: 100%;">gpt-davinci-003</option>
+                        <option class="w-100" value="text-curie-001" style="width: 100%;">text-curie-001</option>
+                        <option class="w-100" value="text-babbage-001" style="width: 100%;">text-babbage-001</option>
+                        <option class="w-100" value="text-ada-001" style="width: 100%;">text-ada-001</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="row w-100 align-items-center justify-content-center m-0 mt-md-5 mt-2 flex-column flex-sm-row" style="height: 100px;">
+                <h1 class="col-sm-4 col d-flex m-0 h-100 align-items-center justify-content-center">應用名稱*</h1>
+                <input asp-for="ApplicationName" class="h-100 col-md-5 col rounded-pill bg-body-secondary border-0 md-50 me-2 px-5"
+                       type="text" style="font-size: 36pt;" value="@AppName">
+
+
+            </div>
+            <div class="row w-100 align-items-center justify-content-center m-0 mt-md-5 mt-2 flex-column flex-sm-row" style="height: 100px;">
+                <h1 class="col-sm-4 col d-flex m-0 h-100 align-items-center justify-content-center">Maxtoken*</h1>
+               <input asp-for="Parameter" class="h-100 col-md-5 col rounded-pill bg-body-secondary border-0 md-50 me-2 px-5"
+                    type="text" style="font-size: 36pt;" value="@parameter">
+
+            </div>
+            <button class="btn btn-primary w-75 mt-5" id="submitButton">
+                <h1 class="m-0">Submit</h1>
+            </button>
+        </div>
+
+
+        
+
+        <div class="col-md-5 col align-items-center justify-content-center flex-column flex-sm-row p-md-3 mt-3 " style="height: 300px;">
+        <form method="post" enctype="multipart/form-data" asp-controller="MemberFunction" asp-action="Renewuploadfileapp" class="w-100 align-items-center justify-content-center d-flex flex-column px-2" style="height:calc(100vh - 70px);">
+                <div class="row w-100 align-items-center justify-content-center flex-column flex-sm-row "
+                     style="height: 100px;">
+                    <h1 class="col-sm-4 col d-flex m-0 h-100 align-items-center justify-content-center">上傳檔案</h1>
+                    @*<input class="h-100 col-md-5 col rounded-pill bg-body-secondary border-0 md-50 me-2 px-5 py-2 text-sm-start" type="file" style="font-size: 18pt;">*@
+                    <input type="file" class="form-control" name="files" id="fileUpload" accept=".pdf,.csv,.txt,.json" multiple />
+                </div>
+                <input type="submit" id="Renewuploadfileapp"  class="btn btn-primary w-100 mt-5"/>
+            </form>
+            <table class="w-100 mt-50">
+                <tbody>
+                    <tr>
+                        @foreach (var file in Aifile)
+                        {
+                            <td id="@file.AifileId" class="border-1 d-flex align-items-center justify-content-between px-2" style="height: 80px;">
+                                <h1>@file.AifilePath</h1>
+                                <h1>@file.AifileId</h1>
+                                <button type="button" class="btn btn-outline-secondary h-50 p-1 delete-button" data-id="@file.AifileId">
+                                    <img class="h-100" src="/assets/trash-can.png " alt="">
+                                </button>
+
+                            </td>
+                        }
+
+                    </tr>
+                </tbody>
+            </table>
+            
+        </div>
+
+
+
+      @*  <div class="w-100 justify-content-around row position-absolute"
+             style="height:100px; bottom: 30px;">
+            <input type="submit"
+                   class="btn btn-primary col-md-3 col-5 h-100 rounded-pill d-flex align-items-center justify-content-center"
+                   style="font-size: calc(1.375rem + 1vw);" value="創建">
+            <a asp-action="Index" asp-controller="Home"
+               class="btn btn-danger col-md-3 col-5 h-100 rounded-pill d-flex align-items-center justify-content-center">
+                <h1>取消</h1>
+            </a>
+        </div>*@
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#submitButton').click(function (e) {
+                e.preventDefault();
+                var model = $('select[name="Model"]').val();
+                var applicationName = $('input[asp-for="ApplicationName"]').val();
+                var parameter = $('input[asp-for="Parameter"]').val();
+
+                var data = {
+                    Model: model,
+                    ApplicationName: applicationName,
+                    Parameter: parameter
+                };
+
+                $.ajax({
+                    url: '/MemberFunction/Reviseapp',
+                    type: 'POST',
+                    data: data,
+                    success: function (response) {
+                        console.log(response);
+                    },
+                    error: function (err) {
+                        console.error(err);
+                    }
+                });
+            });
+        });
+
+
+        $('.delete-button').click(function () {
+            var fileId = $(this).data('id');
+            console.log(fileId);
+            $.ajax({
+                url: '/MemberFunction/Deletefile',
+                type: 'POST',
+                data: { id: fileId },
+                success: function (result) {
+                    console.log("success")
+                    console.log(result);
+                    $('td#' + fileId).remove();
+                },
+                error: function (err) {
+                    console.log("error")
+                    console.error(err);
+                }
+            });
+        });
+
+
+
+
+        $(document).ready(function () {
+            var selectedModel = '@ViewBag.model'; // 从ViewBag获取模型值
+            $('select[name="Model"]').val(selectedModel); // 设置选择器的值
+        });
+
+
+        $('#rangeInput').on('input', function () {
+            $('#rangeValue').text($(this).val());
+        })
+    </script>
+</body>
+
+</html>
