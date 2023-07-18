@@ -209,7 +209,7 @@ namespace HK_Project.Controllers
         {
             var appid = TempData["ApplicationId"].ToString();
             var key = _ctx.Applications.FirstOrDefault(a => a.Key == appid);
-            var data = "https://onechatpage.azurewebsites.net/Chat/SendMessage/%E8%8F%AF%E9%9B%BB";  /*$"https://localhost:7229/Chat/SendMessage/{key}";*/
+            var data = "https://6205-220-133-90-58.ngrok-free.app/Chat/SendMessage/%E8%8F%AF%E9%9B%BB\r\n";  /*$"https://localhost:7229/Chat/SendMessage/{key}";*/
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(data, QRCodeGenerator.ECCLevel.Q);
             PngByteQRCode pngQRCode = new PngByteQRCode(qrCodeData);
