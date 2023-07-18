@@ -191,10 +191,13 @@
                 console.log("ok")
                 var question = $('textarea[name="question"]').val();
                 var questionDiv = `
-                                            <div class=" w-100 bg-body-secondary p-5 d-flex flex-column align-items-end" style="height:auto">
-                                        <p class="m-0 h1">問</p>
-                                                <p class="m-0 h4 mt-3">${question}</p>
-                                    </div>`;
+                                 <div class="chat-content w-100  p-5 d-flex flex-column align-items-end"
+                                     style="height:auto ;background-color: #21174B;color: #fc8ad4;border-bottom:2px solid #fc8ad4 ;">
+                                    <p class="m-0 h1">問</p>
+                                    <p class="m-0 h4 mt-3">
+                                        ${question}
+                                    </p>
+                                </div>`;
                 $(".chat-content").append(questionDiv);
                 $.ajax({
                     url: '/Chat/qainput',
@@ -203,10 +206,13 @@
                     success: function (response) {
                         console.log(response);
                         var answerDiv = `
-                                            <div class=" w-100 bg-body-secondary p-5 d-flex flex-column" style="height:auto">
-                                        <p class="m-0 h1">答</p>
-                                                <p class="m-0 h4 mt-3">${response}</p>
-                                    </div>`;
+                                <div class="chat-content w-100  p-5 d-flex flex-column"
+                                     style="height:auto ;background-color: #21174B;color: #fdfa50;border-bottom:2px solid #fdfa50;">
+                                    <p class="m-0 h1">答</p>
+                                    <p class="m-0 h4 mt-3">
+                                    ${response}
+                                    </p>
+                                </div>`;
                         $(".chat-content").append(answerDiv);
                     }
                 });
