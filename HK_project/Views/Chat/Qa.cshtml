@@ -190,13 +190,12 @@
         //即時聊天室內容
         $(document).ready(function () {
             $('#sendout').click(function () {
-                this.disabled = true;
-                $("#chatquestion").text("");
+                $('#sendout').prop("disabled", true);
             chatid = $(this).data('id');
                 console.log("ok")
                 var question = $('textarea[name="question"]').val();
                 var questionDiv = `
-                                 <div class="chat-content w-100  p-5 d-flex flex-column align-items-end"
+                                 <div class=" w-100  p-5 d-flex flex-column align-items-end"
                                      style="height:auto ;background-color: #21174B;color: #fc8ad4;border-bottom:2px solid #fc8ad4 ;">
                                     <p class="m-0 h1">問</p>
                                     <p class="m-0 h4 mt-3">
@@ -212,7 +211,7 @@
                     success: function (response) {
                         console.log(response);
                         var answerDiv = `
-                                <div class="chat-content w-100  p-5 d-flex flex-column"
+                                <div class=" w-100  p-5 d-flex flex-column"
                                      style="height:auto ;background-color: #21174B;color: #fdfa50;border-bottom:2px solid #fdfa50;">
                                     <p class="m-0 h1">答</p>
                                     <p class="m-0 h4 mt-3">
@@ -220,9 +219,12 @@
                                     </p>
                                 </div>`;
                         $(".chat-content").append(answerDiv);
-                        this.disabled = true;
+                        //this.disabled = true;
+                        $('#sendout').prop("disabled", false);
                     }
                 });
+                $("#chatquestion").val("")
+                
             });
         });
 
