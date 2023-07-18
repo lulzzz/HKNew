@@ -68,7 +68,7 @@ namespace HK_Project.Controllers
         public async Task<IActionResult> Chooseapp()
         {
             var Email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-            var app = await _lq.GetApplication(Email);
+            var app = _ctx.Applications.Where(a => a.Member.MemberEmail == Email).ToList();
             //var Member = _ctx.Members.FirstOrDefault(m => m.MemberEmail == MemberEmail);
             //var app = _ctx.Applications.Where(a => a.MemberId == Member.MemberId).ToList();
 

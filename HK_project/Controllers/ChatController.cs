@@ -43,9 +43,11 @@ namespace HK_Project.Controllers
         [HttpGet]
         public IActionResult ChooseApp()
         {
-            var applications = _ctx.Applications.Where(a => a.ApplicationId != null).ToList();
+            var Email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            var app = _ctx.Applications.Where(a => a.Member.MemberEmail == Email).ToList();
+            //var applications = _ctx.Applications.Where(a => a.ApplicationId != null).ToList();
 
-            ViewBag.Applist = applications;
+            ViewBag.Applist = app;
             return View();
 
         }
