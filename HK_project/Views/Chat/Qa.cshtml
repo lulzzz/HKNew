@@ -70,6 +70,8 @@
                                 <div id="qrText" class="mt-2"></div> <!-- 新增的 div -->
                                 <button id="copyButton" class="btn btn-secondary mt-2">複製文字</button>
                                 <!-- 新增的複製按鈕 -->
+                                <img id="Linebot" src=/assets/linebot.png  alt ="Your QR Code" />
+                                <h1>LineBot</h1>
                             </div>
 
                             <div class="modal-footer">
@@ -170,6 +172,7 @@
                             document.body.removeChild(tempInput);
                             alert("複製成功!");
                         });
+
                         $('#qrModal').modal('show');
                     }
                 });
