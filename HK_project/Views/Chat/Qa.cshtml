@@ -221,6 +221,20 @@
                         $(".chat-content").append(answerDiv);
                         //this.disabled = true;
                         $('#sendout').prop("disabled", false);
+                    },
+                    Error:function(error){
+                        console.log(error)
+                        var answerDiv = `
+                                        <div class=" w-100  p-5 d-flex flex-column"
+                                             style="height:auto ;background-color: #21174B;color: #fdfa50;border-bottom:2px solid #fdfa50;">
+                                            <p class="m-0 h1">答</p>
+                                            <p class="m-0 h4 mt-3">
+                                                        ${"很抱歉，我無法理解您的問題，請您提供相關的問題或資訊，讓我可以為您服務。謝謝。"}
+                                            </p>
+                                        </div>`;
+                        $(".chat-content").append(answerDiv);
+                        //this.disabled = true;
+                        $('#sendout').prop("disabled", false);
                     }
                 });
                 $("#chatquestion").val("")

@@ -114,6 +114,8 @@ namespace HK_Project.Controllers
                             await file.CopyToAsync(fileStream);
                         }
 
+
+
                         // 取得完整檔案路徑
                         string fullPath = Path.GetFullPath(filePath);
                         _logger.LogInformation($"Upload file success, path: {fullPath}");
@@ -129,6 +131,23 @@ namespace HK_Project.Controllers
 
                         _ctx.Add(embs);
                         await _ctx.SaveChangesAsync();
+
+                        var client = new HttpClient();
+                        string jsonContent = $@"{{
+                                    ""AifileId"": ""{embs.AifileId}"",
+                                    ""AifileName"": ""{fileName}""
+                                }}";
+
+                        var content = new StringContent(jsonContent, null, "application/json");
+                        var request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7168/api/Pdf");
+                        request.Content = content;
+
+                        var response = await client.SendAsync(request);
+
+                        response.EnsureSuccessStatusCode();
+                        var tt = await response.Content.ReadAsStringAsync();
+                        
+                        
                     }
                 }
 
@@ -252,6 +271,21 @@ namespace HK_Project.Controllers
 
                         _ctx.Add(embs);
                         await _ctx.SaveChangesAsync();
+
+                        var client = new HttpClient();
+                        string jsonContent = $@"{{
+                                    ""AifileId"": ""{embs.AifileId}"",
+                                    ""AifileName"": ""{fileName}""
+                                }}";
+
+                        var content = new StringContent(jsonContent, null, "application/json");
+                        var request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7168/api/pdf");
+                        request.Content = content;
+
+                        var response = await client.SendAsync(request);
+
+                        response.EnsureSuccessStatusCode();
+                        var tt = await response.Content.ReadAsStringAsync();
                     }
                 }
 

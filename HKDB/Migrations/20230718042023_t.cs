@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HKDB.Migrations
 {
     /// <inheritdoc />
-    public partial class a : Migration
+    public partial class t : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -168,17 +168,17 @@ namespace HKDB.Migrations
             migrationBuilder.InsertData(
                 table: "Applications",
                 columns: new[] { "ApplicationId", "ApplicationName", "Key", "MemberId", "Model", "Parameter" },
-                values: new object[] { 1, "aaa", null, 1, null, null });
+                values: new object[] { 1, "資料", null, 1, null, null });
 
             migrationBuilder.InsertData(
                 table: "Chats",
                 columns: new[] { "ChatId", "ApplicationId", "ChatName", "ChatTime", "UserId" },
-                values: new object[] { 1, "1", null, new DateTime(2023, 7, 12, 11, 23, 23, 454, DateTimeKind.Local).AddTicks(9535), 1 });
+                values: new object[] { 1, "1", null, new DateTime(2023, 7, 18, 12, 20, 23, 847, DateTimeKind.Local).AddTicks(6730), 1 });
 
             migrationBuilder.InsertData(
                 table: "AiFiles",
                 columns: new[] { "AifileId", "AifilePath", "AifileType", "ApplicationId", "Language" },
-                values: new object[] { 1, "Upload/001.json", "json", 1, null });
+                values: new object[] { 1, "檔案.json", "json", 1, null });
 
             migrationBuilder.InsertData(
                 table: "QAHistorys",
@@ -190,8 +190,8 @@ namespace HKDB.Migrations
                 columns: new[] { "EmbeddingId", "AifileId", "EmbeddingAnswer", "EmbeddingQuestion", "EmbeddingVector", "Qa" },
                 values: new object[,]
                 {
-                    { 1, 1, null, null, "123,345,789", "abc" },
-                    { 2, 1, null, null, "123,345,789", "abc" }
+                    { 1, 1, null, null, "123,345,789", "問題" },
+                    { 2, 1, null, null, "123,345,789", "問題" }
                 });
 
             migrationBuilder.CreateIndex(

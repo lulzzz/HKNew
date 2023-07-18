@@ -53,7 +53,7 @@ namespace openAPI.Controllers
                 if (clear_done != string.Empty)
                 {
                     List<float> result = await _answerService.EmbeddingAsync(clear_done);
-                    _hkcontext.Embeddings.Add(new Embedding { AifileId = fileId, EmbeddingQuestion = "test", EmbeddingAnswer = "test", Qa = clear_done, EmbeddingVector = string.Join(",", result) });
+                    _hkcontext.Embeddings.Add(new Embedding { AifileId = pdf.AifileId, EmbeddingQuestion = "test", EmbeddingAnswer = "test", Qa = clear_done, EmbeddingVector = string.Join(",", result) });
                     await _hkcontext.SaveChangesAsync();
                 }
 

@@ -50,8 +50,8 @@ namespace openAPI.Services
         {
             OpenAIClient client = new OpenAIClient(new Uri(_configuration["endpoint"]), new AzureKeyCredential(_configuration["API_Key"]));
 
-            //List<Qahistory> qahistory = _hkcontext.Qahistorys.Where(x => x.ChatId == msg.ChatId).OrderByDescending(y => y.QahistoryId).Take(3).Reverse().ToList();
-            //IList<ChatMessage> messages = new List<ChatMessage>();
+            List<Qahistory> qahistory = _hkcontext.QAHistorys.Where(x => x.ChatId == msg.ChatId).OrderByDescending(y => y.QahistoryId).Take(3).Reverse().ToList();
+            IList<ChatMessage> messages = new List<ChatMessage>();
 
             var options = new ChatCompletionsOptions()
             {
@@ -63,11 +63,11 @@ namespace openAPI.Services
                 FrequencyPenalty = 0,
                 PresencePenalty = 0,
             };
-            //foreach (var content in qahistory)
-            //{
-            //    options.Messages.Add(new ChatMessage(ChatRole.User, content.QahistoryQ));
-            //    options.Messages.Add(new ChatMessage(ChatRole.Assistant, content.QahistoryA));
-            //};
+            foreach (var content in qahistory)
+            {
+                options.Messages.Add(new ChatMessage(ChatRole.User, content.QahistoryQ));
+                options.Messages.Add(new ChatMessage(ChatRole.Assistant, content.QahistoryA));
+            };
             options.Messages.Add(new ChatMessage(ChatRole.User, msg.Question));
             Response<ChatCompletions> responseWithoutStream = await client.GetChatCompletionsAsync("gpt-35-turbo", options);
 

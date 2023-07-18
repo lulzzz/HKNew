@@ -52,7 +52,7 @@ namespace HKDB.Migrations
                         new
                         {
                             AifileId = 1,
-                            AifilePath = "Upload/001.json",
+                            AifilePath = "檔案.json",
                             AifileType = "json",
                             ApplicationId = 1
                         });
@@ -91,7 +91,7 @@ namespace HKDB.Migrations
                         new
                         {
                             ApplicationId = 1,
-                            ApplicationName = "aaa",
+                            ApplicationName = "資料",
                             MemberId = 1
                         });
                 });
@@ -127,7 +127,7 @@ namespace HKDB.Migrations
                         {
                             ChatId = 1,
                             ApplicationId = "1",
-                            ChatTime = new DateTime(2023, 7, 12, 11, 23, 23, 454, DateTimeKind.Local).AddTicks(9535),
+                            ChatTime = new DateTime(2023, 7, 18, 12, 20, 23, 847, DateTimeKind.Local).AddTicks(6730),
                             UserId = 1
                         });
                 });
@@ -167,14 +167,14 @@ namespace HKDB.Migrations
                             EmbeddingId = 1,
                             AifileId = 1,
                             EmbeddingVector = "123,345,789",
-                            Qa = "abc"
+                            Qa = "問題"
                         },
                         new
                         {
                             EmbeddingId = 2,
                             AifileId = 1,
                             EmbeddingVector = "123,345,789",
-                            Qa = "abc"
+                            Qa = "問題"
                         });
                 });
 

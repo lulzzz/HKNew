@@ -81,16 +81,16 @@ namespace HKDB.Data
             );
 
             modelBuilder.Entity<Application>().HasData(
-                new Application { ApplicationId = 1, MemberId = 1, ApplicationName = "aaa" }
+                new Application { ApplicationId = 1, MemberId = 1, ApplicationName = "資料" }
                 );
 
             modelBuilder.Entity<Aifile>().HasData(
-                new Aifile { AifileId = 1, AifileType = "json", AifilePath = "Upload/001.json", ApplicationId = 1 }
+                new Aifile { AifileId = 1, AifileType = "json", AifilePath = "檔案.json", ApplicationId = 1 }
             );
 
             modelBuilder.Entity<Embedding>().HasData(
-                new Embedding { EmbeddingId = 1, Qa = "abc", EmbeddingVector = "123,345,789", AifileId = 1 },
-                new Embedding { EmbeddingId = 2, Qa = "abc", EmbeddingVector = "123,345,789", AifileId = 1 }
+                new Embedding { EmbeddingId = 1, Qa = "問題", EmbeddingVector = "123,345,789", AifileId = 1 },
+                new Embedding { EmbeddingId = 2, Qa = "問題", EmbeddingVector = "123,345,789", AifileId = 1 }
             );
 
             modelBuilder.Entity<User>().HasData(
