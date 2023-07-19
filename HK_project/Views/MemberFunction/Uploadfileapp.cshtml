@@ -20,15 +20,33 @@
         </div>
         <div class="w-100 justify-content-around row position-absolute"
              style="height:100px;margin-top: 80px; bottom: 30px;">
-            <input type="submit" class="btn btn-primary col-md-3 col-5 h-100 rounded-pill d-flex align-items-center justify-content-center" style="font-size: calc(1.375rem + 1vw);" value="上傳">
-            <a asp-action="Index" asp-controller="Member" class="btn btn-danger col-md-3 col-5 h-100 rounded-pill d-flex align-items-center justify-content-center">
+            <input type="submit" id="" class="btn btn-primary col-md-3 col-5 h-100 rounded-pill d-flex align-items-center justify-content-center" style="font-size: calc(1.375rem + 1vw);" value="上傳">
+            <a asp-action="Index" asp-controller="Member"  class="btn btn-danger col-md-3 col-5 h-100 rounded-pill d-flex align-items-center justify-content-center">
                 <h1>取消</h1>
             </a>
         </div>
 
     </form>
 
+    <div class="text-center" id="loading" style="display: none;">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
 
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+<script>
+    $(document).ready(function(){
+        $("form").on("submit", function(){
+            $("#loading").show();
+        });
+    });
+</script>
+
+
 
 </html>
