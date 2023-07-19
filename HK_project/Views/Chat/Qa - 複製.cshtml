@@ -1,0 +1,79 @@
+﻿@*@using OneChatPage.ViewModels;*@
+@using Microsoft.AspNetCore.Http;
+@{
+    //var chats = ViewBag.Userchatlist as List<Chat>;
+    //var chats = ViewBag.Chats as List<Chat>;
+    //var ChatQaHistory = ViewBag.ChatQaHistory as List<Qahistory>;
+    //var Userappname = Context.Session.GetString("Userchoosename");
+    var id = ViewBag.Id as string;
+}
+
+<body>
+    <div class="row w-100 m-0 " style=" height:calc(100vh - 70px);">
+        <p style="height:70px;" name="title">@id</p>
+        <div class="col px-0 " style="height:calc(100% - 70px);">
+            <div class=" bg-body-secondary rounded-4 " style="height: 91%;overflow-y:scroll;">
+                <!--問-->
+                <div class="chat-content w-100 bg-body-secondary p-5 d-flex flex-column align-items-end" style="height:auto" id="mainChat">
+                </div>
+
+                @*<div class="chat-content w-100 bg-body-secondary p-5 d-flex flex-column align-items-end" style="height:auto">
+                <p class="m-0 h1">問</p>
+                <p class="m-0 h4 mt-3"></p>
+                </div>
+                <div class="chat-content w-100 bg-body-secondary p-5 d-flex flex-column" style="height:auto">
+                <p class="m-0 h1">答</p>
+                <p class="m-0 h4 mt-3"> </p>
+                </div>*@
+
+            </div>
+            <div class="row w-100 m-0 px-2 align-items-center justify-content-center bg-secondary" style="height:  calc(3rem + 2vh);">
+                <div class="col p-0 h-75">
+                    <textarea name="question" type="text" class="w-100 h-100" style="font-size: 1rem;resize:none;line-height: 6vh;" rows="3" placeholder="Please Enter The Question"></textarea>
+                </div>
+                <div class="col-3 p-0 h-75">
+                    <button id="sendout" type="submit" class="btn btn-primary w-100 h-100 d-flex align-items-center justify-content-center" style="font-size: 2rem;">
+                        <p class="m-0 p-0">送出</p>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        //即時聊天室內容
+        $(document).ready(function () {
+            $('#sendout').click(function () {
+                this.disabled = true;
+                chatid = $(this).data('id');
+                console.log("ok")
+                var question = $('textarea[name="question"]').val();
+                var questionDiv =
+                    `<div class=" w-100 bg-body-secondary p-5 d-flex flex-column align-items-end" style="height:auto">
+                            <p class="m-0 h1">問</p>
+                            <p class="m-0 h4 mt-3">${question}</p>
+                        </div>`;
+                $(".chat-content").append(questionDiv);
+                var id = $('p[name="title"]').text();
+                $.ajax({
+                    url: '/Chat/SendMessage',
+                    type: 'POST',
+                    data: { 'id': id, 'Message': question },
+                    success: function (response) {
+                        console.log(response);
+                        var answerDiv =
+                            `<div class=" w-100 bg-body-secondary p-5 d-flex flex-column" style="height:auto">
+                                    <p class="m-0 h1">答</p>
+                                    <p class="m-0 h4 mt-3">${response}</p>
+                                 </div>`;
+                        $(".chat-content").append(answerDiv);
+                        $('#sendout').disabled = false;
+                    }
+                });
+            });
+        });
+
+    </script>
+</body>
