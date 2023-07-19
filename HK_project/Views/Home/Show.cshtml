@@ -5,7 +5,7 @@
         </div>
         <a asp-controller="MemberLS" asp-action="Index" type="submit"
            class="btn rounded-pill d-flex align-items-center justify-content-center mb-5"
-           style="width:100%; height: 5.75rem;z-index: 99;background-color: #67d0eb;"
+           style="width:100%; height: 5.75rem;z-index: 50;background-color: #48bee2;"
            id="member">
             <p class=" m-0 h1" style="font-family: 'Orbitron', sans-serif;">Member</p>
         </a>
@@ -16,7 +16,7 @@
         </div>
         <a asp-controller="UserLS" asp-action="UserLoginSingup" type="submit"
            class="btn  rounded-pill d-flex align-items-center justify-content-center mb-5"
-           style="width:100%; height: 5.75rem ;z-index: 99;background-color: #b639ab;"
+           style="width:100%; height: 5.75rem ;z-index: 50;background-color: #d84dcc;"
            id="user">
             <p class=" m-0 h1" style="font-family: 'Orbitron', sans-serif;">User</p>
         </a>
@@ -29,7 +29,7 @@
         member.addEventListener("mouseover", function () {
             this.style.scale = 1.1;
             memberimg.style.scale = 1.5;
-            memberimg.style.opacity = 0.7;
+            memberimg.style.opacity = 0.6;
         })
         member.addEventListener("mouseout", function () {
             this.style.scale = 1;
@@ -39,7 +39,7 @@
         user.addEventListener("mouseover", function () {
             this.style.scale = 1.1;
             userimg.style.scale = 1.5;
-            userimg.style.opacity = 0.7;
+            userimg.style.opacity = 0.6;
         })
         user.addEventListener("mouseout", function () {
             this.style.scale = 1;
