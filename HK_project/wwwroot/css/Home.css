@@ -120,3 +120,6 @@
 #gradientBtn:hover {
     transform: scale(1.1);
 }
+.btnhover:hover {
+    transform: scale(1.2);
+}
