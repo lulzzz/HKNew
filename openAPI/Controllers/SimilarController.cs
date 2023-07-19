@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿    using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using openAPI.Helper;
 using HKDB.Models;
@@ -59,7 +59,7 @@ namespace openAPI.Controllers
             string Anser_string = "";
             if (Order[0][1] < 0.75)
             {
-                //return BadRequest("無相似資料");
+                return BadRequest("無相似資料");
             }
             else
             {

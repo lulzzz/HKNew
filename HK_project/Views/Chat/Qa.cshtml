@@ -209,6 +209,7 @@
                     type: 'post',
                     data: { 'question': question},
                     success: function (response) {
+                        console.log("success")
                         console.log(response);
                         var answerDiv = `
                                 <div class=" w-100  p-5 d-flex flex-column"
@@ -223,6 +224,7 @@
                         $('#sendout').prop("disabled", false);
                     },
                     Error:function(error){
+                        console.log("error")
                         console.log(error)
                         var answerDiv = `
                                         <div class=" w-100  p-5 d-flex flex-column"
