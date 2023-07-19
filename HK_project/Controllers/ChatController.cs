@@ -139,26 +139,36 @@ namespace HK_Project.Controllers
             temp = "1";
             var Chatid = TempData["Chatid"].ToString();
             var q = question;
+            string tt;
 
-            var client = new HttpClient();
-            string jsonContent = $@"{{
+            try
+            {
+                var client = new HttpClient();
+                string jsonContent = $@"{{
                                     ""ApplicationId"": ""{appid}"",
                                     ""temperature"": ""{temp}"",
                                     ""ChatId"": ""{Chatid}"",
                                     ""Question"": ""{q}""
                                 }}";
 
-            var content = new StringContent(jsonContent, null, "application/json");
-            var request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7168/api/Similar");
-            request.Content = content;
+                var content = new StringContent(jsonContent, null, "application/json");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7168/api/Similar");
+                request.Content = content;
 
-            var response = await client.SendAsync(request);
+                var response = await client.SendAsync(request);
 
-            response.EnsureSuccessStatusCode();
-            var tt =await response.Content.ReadAsStringAsync();
-            TempData["ApplicationId"] = appid;
-            TempData["Chatid"] = Chatid;
-            TempData["Parameter"] = temp;
+                response.EnsureSuccessStatusCode();
+                tt = await response.Content.ReadAsStringAsync();
+                TempData["ApplicationId"] = appid;
+                TempData["Chatid"] = Chatid;
+                TempData["Parameter"] = temp;
+
+            }
+            catch(HttpRequestException ex)
+            {
+                tt = "很抱歉，我無法理解您的問題，請您提供相關的問題或資訊，讓我可以為您服務。謝謝。";
+            }
+
 
             return Json(tt);//response
         }
