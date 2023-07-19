@@ -151,7 +151,6 @@ namespace HK_Project.Controllers
                     }
                 }
 
-                //TempData["UploadSuccess"] = true;
                 return RedirectToAction("MemberIndex", "Chat");
             }
             catch (Exception e)
