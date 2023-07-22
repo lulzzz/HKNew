@@ -12,7 +12,7 @@
                 <button class="btn btn-outline-dark w-100 rounded-0 py-2" id="btnAppModify">
                     <h1 class="m-0">應用修改</h1>
                 </button>
-                <button class="btn btn-outline-dark w-100 rounded-0 py-2">
+                <button asp-action="MemberIndex" asp-controller="Chat" class="btn btn-outline-dark w-100 rounded-0 py-2">
                     <h1 class="m-0">離開</h1>
                 </button>
             </form>
@@ -57,15 +57,18 @@
 
     <div class="col-sm-9 h-100" id="appModify">
         <form class="p-xl-5 p-sm-1 p-5  d-flex flex-column align-items-center justify-content-center">
-
-                @foreach(var a in applist){
-                <a onclick="sendData('@a.ApplicationId', '@a.Parameter', '@a.ApplicationName')" class="btn btn-outline-secondary w-100 mb-5 d-flex justify-content-between align-items-center" style="height:calc(50px + 5vh); ">
-                    <h1 class="m-0">@a.ApplicationName</h1>
-                    <div class="w-25 h-100 d-flex align-items-end justify-content-end">
-                    </div>
-                </a>
+            @if(applist != null){
+                @foreach (var a in applist)
+                {
+                    <a onclick="sendData('@a.ApplicationId', '@a.Parameter', '@a.ApplicationName')" class="btn btn-outline-secondary w-100 mb-5 d-flex justify-content-between align-items-center" style="height:calc(50px + 5vh); ">
+                        <h1 class="m-0">@a.ApplicationName</h1>
+                        <div class="w-25 h-100 d-flex align-items-end justify-content-end">
+                        </div>
+                    </a>
                 }
 
+            }
+                
         </form>
     </div>
 </div>

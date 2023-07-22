@@ -16,15 +16,11 @@
 
 <body>
     <div class="w-100 " style="height: calc(100vh - 70px);">
-        <header class="w-100 border-bottom row m-0 justify-content-center align-items-center" style="height: 80px;">
-            <a asp-action="Index" asp-controller="Member" class="btn btn-danger col-9 d-flex justify-content-center align-items-center  h-75">
-                <h1>Home</h1>
-            </a>
-        </header>
+
         <div class="w-100 align-items-center justify-content-start row flex-column flex-nowrap overflow-y-scroll" style="height: calc(100% - 160px);">
             @if (Applist == null || Applist.Count == 0)
             {
-                <a asp-action="Index" asp-controller="Member" class="btn btn-danger col-9 d-flex justify-content-center align-items-center  h-75">
+                <a asp-action="MemberIndex" asp-controller="Chat" class="btn btn-danger col-9 d-flex justify-content-center align-items-center  h-75">
                 <h1 class="text-center">No Application</h1>
                 </a>
             }
@@ -46,8 +42,8 @@
 
         </div>
         <footer class="w-100 border-top row m-0 justify-content-center align-items-center" style="height: 80px;">
-            <a asp-action="Show" asp-controller="Home" class="btn btn-danger col-9 d-flex justify-content-center align-items-center  h-75">
-                <h1>Home</h1>
+            <a asp-action="MemberIndex" asp-controller="chat" class="btn btn-danger col-9 d-flex justify-content-center align-items-center  h-75">
+                <h1>離開</h1>
             </a>
         </footer>
     </div>

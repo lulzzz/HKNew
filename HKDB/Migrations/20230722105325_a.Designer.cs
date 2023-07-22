@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HKDB.Migrations
 {
     [DbContext(typeof(HKContext))]
-    [Migration("20230718042023_t")]
-    partial class t
+    [Migration("20230722105325_a")]
+    partial class a
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -130,7 +130,7 @@ namespace HKDB.Migrations
                         {
                             ChatId = 1,
                             ApplicationId = "1",
-                            ChatTime = new DateTime(2023, 7, 18, 12, 20, 23, 847, DateTimeKind.Local).AddTicks(6730),
+                            ChatTime = new DateTime(2023, 7, 22, 18, 53, 25, 565, DateTimeKind.Local).AddTicks(8787),
                             UserId = 1
                         });
                 });
