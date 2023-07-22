@@ -1,20 +1,33 @@
 ﻿
-    <form method="post" enctype="multipart/form-data" asp-controller="MemberFunction" class="w-100 align-items-center justify-content-center d-flex flex-column px-2" style="height:calc(100vh - 70px);">
-        <div class="row w-100 align-items-center justify-content-center flex-column flex-sm-row "
-             style="height: 100px;">
-            <h1 class="col-sm-4 col d-flex m-0 h-100 align-items-center justify-content-center">上傳檔案</h1>
+<div class="w-100 position-relative" style="height:calc(100vh - 70px);background-color: #2e1f6d;">
+    <div class="w-100 h-100 position-absolute p-5 d-flex flex-column align-items-center justify-content-between  d-none" style="background-color:#000000df;z-index:100;"id="UpLoadBackground">
+        <div class="w-100 d-flex justify-content-between align-items-start">
+            <div style="border-radius:10% 0px 0px 0px; border:solid #2175b9;border-width:10px 0px 0px 10px;width:4vw;height:4vh;"></div>
+            <div style="border-radius: 0px 10% 0px 0px;border: solid #2175b9;border-width:10px 10px 0px 0px;width:4vw;height:4vh;"></div>
+        </div>
+        <h1 style="font-family: 'Orbitron', sans-serif;font-size: calc(1.375rem + 1vw);color:#2175b9;">Please drop the file on here</h1>
+        <div class="w-100 d-flex justify-content-between align-items-end" >
+            <div style="border-radius:0px 0px 10%  0px; border:solid #2175b9;border-width:0px 0px 10px 10px;width:4vw;height:4vh;"></div>
+            <div style="border-radius: 0px 0px 0px 10%;border: solid #2175b9;border-width:0px 10px 10px 0px;width:4vw;height:4vh;"></div>
+        </div>
+    </div>
+    <form method="post" enctype="multipart/form-data" asp-controller="MemberFunction" class="w-100 h-100 align-items-center justify-content-center d-flex flex-column px-2" >
+        <div class="row w-100 h-100 align-items-center justify-content-center flex-column" >
+            <h1 class="w-auto h-auto p-0  m-0 text-center" style="font-family: 'Orbitron', sans-serif;font-size: calc(1.375rem + 1vw);color:#48bee2;">Upload Files</h1>
             @*<input class="h-100 col-md-5 col rounded-pill bg-body-secondary border-0 md-50 me-2 px-5 py-2 text-sm-start" type="file" style="font-size: 18pt;">*@
-            <input type="file" class="form-control" name="files" id="fileUpload" accept=".pdf,.csv,.txt,.json" multiple />
+            <input type="file"  class="form-control mt-5 " name="files" style="max-width:90vw;height:auto;border:4px solid #48bee2;" id="fileUpload" accept=".pdf,.csv,.txt,.json" multiple />
+            @*<ul style ="max-width:90vw;height:30vh; background-color:white;" id=" fileList"></ul>*@
         </div>
         <div class="w-100 justify-content-around row position-absolute"
              style="height:100px;margin-top: 80px; bottom: 30px;">
-            <input type="submit" id="" class="btn btn-primary col-md-3 col-5 h-100 rounded-pill d-flex align-items-center justify-content-center" style="font-size: calc(1.375rem + 1vw);" value="上傳">
-            <a asp-action="Index" asp-controller="Member"  class="btn btn-danger col-md-3 col-5 h-100 rounded-pill d-flex align-items-center justify-content-center">
-                <h1>取消</h1>
+            <input type="submit" class="btnhover btn col-md-3 col-5 h-100 rounded-pill d-flex align-items-center justify-content-center" style="font-family: 'Orbitron', sans-serif;font-size: calc(1.375rem + 1vw);background-color:#48bee2;" value="Upload">
+            <a asp-action="Index" asp-controller="Member" class="btnhover btn  col-md-3 col-5 h-100 rounded-pill d-flex align-items-center justify-content-center" style="font-family: 'Orbitron', sans-serif;background-color:#fa435c;color:white;">
+                <h1 class="m-0">cancel</h1>
             </a>
         </div>
 
     </form>
+</div>
 
     <div class="text-center" id="loading" style="display: none;">
         <div class="spinner-border" role="status">
@@ -32,6 +45,45 @@
             $("#loading").show();
         });
     });
+    const dropContainer = $('#UpLoadBackground');
+    const fileInput = $('#fileUpload');
+    const fileList = $('#fileList');
+
+    $(document).on('dragenter', function (evt) {
+        evt.preventDefault();
+        dropContainer.removeClass('d-none');
+    });
+
+    $(document).on('dragover', function (evt) {
+        evt.preventDefault();
+    });
+
+    $(document).on('dragleave', function (evt) {
+        evt.preventDefault();
+        if (!dropContainer.is(evt.relatedTarget) && !$.contains(dropContainer[0], evt.relatedTarget)) {
+            dropContainer.addClass('d-none');
+        }
+    });
+
+    $(document).on('drop', function (evt) {
+        evt.preventDefault();
+        fileInput[0].files = evt.originalEvent.dataTransfer.files;
+        dropContainer.addClass('d-none');
+        updateFileList();
+    });
+
+    function updateFileList() {
+        fileList.empty();
+        for (let i = 0; i < fileInput[0].files.length; i++) {
+            const file = fileInput[0].files[i];
+            fileList.append($('<li>').text(file.name));
+        }
+    }
+
+
+
+
+
 </script>
 
 
