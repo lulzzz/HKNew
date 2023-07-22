@@ -32,19 +32,19 @@
             {
                 @foreach (var a in Applist)
                 {
-                    <a onclick="sendData('@a.ApplicationId', '@a.Parameter', '@a.ApplicationName')" class="ms-2 mt-5 btn  col-6 justify-content-between d-flex align-items-center" style="font-size: calc(1.375rem + 1vw);background-color:white;border:4px solid #48bee2;">
-                        <h2 class="col-4 m-0">@a.ApplicationName</h2>
-                        <div class="col-4 h-100 d-flex align-items-end justify-content-end">
-                            <h6>id: @a.ApplicationId</h6><h6>temp: @a.Parameter</h6>
+                <a onclick="sendData('@a.ApplicationId', '@a.Parameter', '@a.ApplicationName')" class="ms-2 mt-5 btn  col-6 justify-content-between d-flex align-items-center" style="font-size: calc(2rem + 1vw);background-color:white;border:4px solid #48bee2;height:calc(3rem + 5vh)">
+                        <h2 class="fw-bolder m-0">@a.ApplicationName</h2>
+                        <div class="col-4 h-100 d-flex align-items-end justify-content-end fw-bolder">
+                            <h6 class="me-2">id: @a.ApplicationId</h6><h6>temp: @a.Parameter</h6>
                         </div>
                     </a>
 
                 }
             }
             </div>
-    <footer class="w-100 border-top row m-0 justify-content-center align-items-center" style="height: 80px;background-color: #2e1f6d;">
+            <footer class="w-100 row m-0 justify-content-center align-items-center" style="height: 80px;background-color: #2e1f6d;">
                 <a asp-action="Show" asp-controller="Home" class="btn btn-danger col-9 d-flex justify-content-center align-items-center  h-75">
-                    <h1>Home</h1>
+                    <h1 class="m-0" style="">Home</h1>
                 </a>
             </footer>
     </div>

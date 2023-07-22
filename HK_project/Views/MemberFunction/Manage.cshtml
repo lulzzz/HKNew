@@ -2,52 +2,61 @@
     var applist = ViewBag.AppList as List<Application>;
 }
 
-<div class="w-100 h-75 align-items-center justify-content-around d-flex position-absolute flex-column-reverse flex-sm-row">
-    <div class="col-sm-3 h-100 ">
+<div class="w-100 align-items-center justify-content-around d-flex position-absolute flex-column-reverse flex-sm-row" style="height: calc(100vh - 70px);background-color: #2e1f6d;">
+    <div class="col-sm-3 h-100" style="font-family: 'Orbitron', sans-serif;">
         <div class=" w-100 h-100 d-flex flex-sm-column align-items-center">
             <form action="" class="w-100">
-                <button class="btn btn-outline-dark w-100 rounded-0  py-2" id="btnMemberData">
-                    <h1 class="m-0">會員資料</h1>
+                <button class="btn w-100 rounded-0 py-2" style="border:4px solid #2175b9;" id="btnMemberData">
+                    <h1 class="m-0" style="color:#2175b9;">Member</h1>
                 </button>
-                <button class="btn btn-outline-dark w-100 rounded-0 py-2" id="btnAppModify">
-                    <h1 class="m-0">應用修改</h1>
+                <button class="btn w-100 rounded-0 py-2" style="border:4px solid #2175b9;border-top:0px;" id="btnAppModify">
+                    <h1 class="m-0" style="color:#2175b9;">APP Revise</h1>
                 </button>
-                <button asp-action="MemberIndex" asp-controller="Chat" class="btn btn-outline-dark w-100 rounded-0 py-2">
-                    <h1 class="m-0">離開</h1>
+                <button asp-action="MemberIndex" asp-controller="Chat" class="btn  w-100 rounded-0 py-2" style="border:4px solid #2175b9;border-top:0px;">
+                    <h1 class="m-0" style="color:#2175b9;">Quit</h1>
                 </button>
             </form>
         </div>
     </div>
-    <div class="col-sm-9 h-100" id="memberData">
+    <div class="col-sm-9 h-100 d-flex align-items-center justify-content-center" id="memberData">
         <div class="p-xl-5 p-sm-1 p-5  d-flex flex-column align-items-center justify-content-center">
             <div class="col-4 col-md-3 rounded-circle h-auto overflow-hidden me-sm-5">
-                <img class="w-100" src="/Assets/user1.jpg" alt="">
+                <img class="w-100 rounded-circle" src="/Assets/user1.jpg" alt="" style="border:10px solid #2175b9;">
             </div>
 
             <form class="d-flex align-items-center justify-content-center">
                 <ul class="m-0 p-0 w-75 ps-sm-5">
-                    <li class="d-flex mt-5 " style="height: calc(1.375rem + 1.5vw); align-items: center;">
-                        <h1 class="m-0 fw-bolder" style="white-space:nowrap;">姓名:</h1>
-                        <input id="memberName" type="text" class="fw-bolder border-0 col-5 h-100 border-bottom border-3 border-dark"
-                               style="text-align:center;font-size: calc(1.375rem + 1.5vw);"
-                               value=@ViewBag.MemberName />
-                        <button class="btn btn-light border-dark border-2 p-1 d-flex align-items-center justify-content-center h-100 ms-1">
-                            <img class="h-100" src="/Assets/edit.png"
-                                 alt="">
-                        </button>
+                    <li class="d-flex mt-5 flex-sm-row flex-column" style="height: calc(1.375rem + 1.5vw); align-items: center;">
+                        <h1 class="m-0 fw-bolder me-sm-4" style="white-space:nowrap;color:#2175b9;">Name:</h1>
+						<div class="d-flex w-100 h-100 justify-content-between justify-content-sm-center">
+                            <input id="memberName" type="text" class="fw-bolder border-0 col-sm-5 col-10 h-100 border-bottom border-3 border-dark"
+                                   style="text-align:center;font-size: calc(1.375rem + 1.5vw);"
+                                   value=@ViewBag.MemberName />
+                            <button class="btn btn-light border-dark border-2 p-1 d-flex align-items-center justify-content-center h-100 ms-1">
+                                <img class="h-100" src="/Assets/edit.png"
+                                     alt="">
+                            </button>
+                        </div>
                     </li>
-                    <li class="d-flex mt-5">
-                        <h1 class="m-0 fw-bolder" style="white-space:nowrap;">帳號:</h1>
-                        <h1 class="m-0 fw-bolder" style="white-space:nowrap;" id="memberAccount">@ViewBag.MemberEmail</h1>
+                    <li class="d-flex mt-5 flex-sm-row flex-column">
+                        <h1 class="m-0 fw-bolder me-sm-4" style="white-space:nowrap;color:#2175b9;">Account:</h1>
+                        <h1 class="m-0 fw-bolder" style="white-space:nowrap;color:#2175b9;" id="memberAccount">@ViewBag.MemberEmail</h1>
                     </li>
-                    <li class="d-flex mt-5" style="height: calc(1.375rem + 1.5vw); align-items: center;">
-                        <h1 class="m-0 fw-bolder" style="white-space:nowrap;">密碼:</h1>
-                        <input id="memberPassword" name="MemberPassword" type="password" class="m-0 fw-bolder border-0 col-5 h-100 border-bottom border-3 border-dark"
-                               style="text-align:center;font-size: calc(1.375rem + 1.5vw);"
-                               value=@ViewBag.MemberPassword justify-content-center h-100 ms-3">
-                        <button id="Managebtn" class=" btn btn-light border-dark border-2 p-1 d-flex align-items-center justify-content-center h-100 ms-1">
-                            <img class="h-100" src="/Assets/edit.png" alt="">
-                        </button>
+                    <li class="d-flex mt-5 flex-sm-row flex-column" style="height: calc(1.375rem + 1.5vw); align-items: center;">
+                        <h1 class="m-0 fw-bolder me-sm-4" style="white-space:nowrap;color:#2175b9;">Password:</h1>
+                        <div class="d-flex w-100 h-100 justify-content-between justify-content-sm-center">
+							<input id="memberPassword" name="MemberPassword" type="password" class="m-0 fw-bolder border-0 col-sm-5 col-10 h-100 border-bottom border-3 border-dark"
+								   style="text-align:center;font-size: calc(1.375rem + 1.5vw);"
+								   value=@ViewBag.MemberPassword justify-content-center h-100 ms-3">
+							<button id="Managebtn" class=" btn btn-light border-dark border-2 p-1 d-flex align-items-center justify-content-center h-100 ms-1">
+								<img class="h-100" src="/Assets/edit.png" alt="">
+							</button>
+                        </div>
+
+
+
+
+                        
                     </li>
 
                 </ul>
@@ -56,7 +65,7 @@
     </div>
 
     <div class="col-sm-9 h-100" id="appModify">
-        <form class="p-xl-5 p-sm-1 p-5  d-flex flex-column align-items-center justify-content-center">
+        <form class="p-xl-5 p-sm-1 p-2  d-flex flex-column align-items-center justify-content-center">
             @if(applist != null){
                 @foreach (var a in applist)
                 {
@@ -124,20 +133,20 @@
 
     $(document).ready(function () {
         // 預設情況下先隱藏應用修改區塊
-        $('#appModify').hide();
+        $('#appModify').addClass('d-none')
 
         // 當點擊會員資料按鈕時
         $('#btnMemberData').click(function (event) {
             event.preventDefault();
-            $('#memberData').show();
-            $('#appModify').hide();
+            $('#memberData').removeClass('d-none');
+            $('#appModify').addClass('d-none');
         });
 
         // 當點擊應用修改按鈕時
         $('#btnAppModify').click(function (event) {
             event.preventDefault();
-            $('#appModify').show();
-            $('#memberData').hide();
+            $('#appModify').removeClass('d-none');
+            $('#memberData').addClass('d-none');
         });
     });
 
