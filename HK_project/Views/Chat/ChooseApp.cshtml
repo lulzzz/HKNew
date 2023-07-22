@@ -20,14 +20,8 @@
 </head>
 <div class="w-100" style="height: calc(100vh - 150px);background-color: #2e1f6d;">
     <div class="w-100 h-100 align-items-center justify-content-start row flex-column flex-nowrap overflow-y-scroll slider-bar">
-                <h1>Home</h1>
-            </a>
-        </header>
-        <div class="w-100 align-items-center justify-content-start row flex-column flex-nowrap overflow-y-scroll" style="height: calc(100% - 160px);">
-                <h1>Home</h1>
-            </a>
-        </header>
-        <div class="w-100 align-items-center justify-content-start row flex-column flex-nowrap overflow-y-scroll" style="height: calc(100% - 160px);">
+        
+
             @if (Applist == null || Applist.Count == 0)
             {
                 <a asp-action="MemberIndex" asp-controller="Chat" class="btn btn-danger col-9 d-flex justify-content-center align-items-center  h-75">
@@ -43,19 +37,16 @@
                         <div class="col-4 h-100 d-flex align-items-end justify-content-end">
                             <h6>id: @a.ApplicationId</h6><h6>temp: @a.Parameter</h6>
                         </div>
-        <footer class="w-100 border-top row m-0 justify-content-center align-items-center" style="height: 80px;">
-            <a asp-action="MemberIndex" asp-controller="chat" class="btn btn-danger col-9 d-flex justify-content-center align-items-center  h-75">
-                <h1>Quit</h1>
+                    </a>
+
+                }
             }
-
-
-
-        </div>
-        <footer class="w-100 border-top row m-0 justify-content-center align-items-center" style="height: 80px;">
-            <a asp-action="Show" asp-controller="Home" class="btn btn-danger col-9 d-flex justify-content-center align-items-center  h-75">
-                <h1>Home</h1>
-            </a>
-        </footer>
+            </div>
+    <footer class="w-100 border-top row m-0 justify-content-center align-items-center" style="height: 80px;background-color: #2e1f6d;">
+                <a asp-action="Show" asp-controller="Home" class="btn btn-danger col-9 d-flex justify-content-center align-items-center  h-75">
+                    <h1>Home</h1>
+                </a>
+            </footer>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
