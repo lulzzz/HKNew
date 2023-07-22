@@ -12,6 +12,9 @@ using QRCoder;
 using System.Drawing;
 using System.Drawing.Imaging;
 using static HK_Project.Controllers.ChatController;
+using Microsoft.CognitiveServices.Speech;
+using Microsoft.CognitiveServices.Speech.Audio;
+using System.Net;
 
 namespace HK_Project.Controllers
 {
@@ -106,10 +109,10 @@ namespace HK_Project.Controllers
             List<Chat> chatList = new List<Chat>();
             chatList = ChatSearch.ToList();
             TempData["ApplicationId"] = chatList[0].ApplicationId;
-           // ViewBag.Appname = TempData["ApplicationName"].ToString();
+            // ViewBag.Appname = TempData["ApplicationName"].ToString();
             TempData["ApplicationId"] = chatList[0].ApplicationId;
             ViewBag.Chats = chatList;
-            
+
             ViewBag.Appname = app.ApplicationName;
 
             return View();
@@ -164,7 +167,7 @@ namespace HK_Project.Controllers
                 TempData["Parameter"] = temp;
 
             }
-            catch(HttpRequestException ex)
+            catch (HttpRequestException ex)
             {
                 tt = "很抱歉，我無法理解您的問題，請您提供相關的問題或資訊，讓我可以為您服務。謝謝。";
             }
@@ -189,7 +192,7 @@ namespace HK_Project.Controllers
                     ChatName = "NewChat",
                     UserId = userlist.UserId,
                     ApplicationId = appid
-                    
+
                 };
                 _ctx.Chats.Add(chat1);
                 await _ctx.SaveChangesAsync();
@@ -201,10 +204,10 @@ namespace HK_Project.Controllers
                     ChatTime = chat1.ChatTime,
                     ChatName = chat1.ChatName,
                     UserId = chat1.UserId,
-                    ApplicationId = chat1.ApplicationId 
+                    ApplicationId = chat1.ApplicationId
                 };
                 ViewBag.chatid = chat1.ChatId;
-                TempData["ApplicationId"]= chat1.ApplicationId;
+                TempData["ApplicationId"] = chat1.ApplicationId;
 
                 // return the DTO object instead of the entity
                 return Json(chatDto);
@@ -257,21 +260,5 @@ namespace HK_Project.Controllers
             public string ApplicationId { get; set; }
         }
 
-        
-
-
-
-
-
-
-        
-
-
-
-
-
-
-
-
-    }
+    }  
 }
