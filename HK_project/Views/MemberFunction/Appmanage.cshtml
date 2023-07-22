@@ -7,32 +7,34 @@
 }
 
 <div class="w-100 align-items-center justify-content-center d-flex flex-column flex-md-row px-2"
-        style="height: calc(100vh - 70px);">
+     style="height: calc(100vh - 70px);background-color: #2e1f6d;">
         <div class="col d-flex flex-column align-items-center">
             <div class="row w-100 align-items-center justify-content-center m-0 mt-5 flex-column flex-sm-row">
-                <h1 class="col-sm-4 col d-flex m-0 h-100 align-items-center justify-content-center">模型</h1>
+            <h1 class="col-sm-4 col d-flex m-0 h-100 align-items-center justify-content-center" style="color:#48bee2;font-family: 'Orbitron', sans-serif;">Modle</h1>
                 <div class=" col-md-5 col h-100 border-0 me-2 px-0 d-flex align-items-center justify-content-center">
-                    <select asp-for="Model" class="form-select bg-body-secondary" type="text" style="font-size: 24pt;">
-                        <option class="w-100" value="gpt-35-turbo" selected style="width: 100%;">gpt-35-turbo</option>
-                        <option class="w-100" value="gpt-davinci-003" style="width: 100%;">gpt-davinci-003</option>
-                        <option class="w-100" value="text-curie-001" style="width: 100%;">text-curie-001</option>
-                        <option class="w-100" value="text-babbage-001" style="width: 100%;">text-babbage-001</option>
-                        <option class="w-100" value="text-ada-001" style="width: 100%;">text-ada-001</option>
+                <select asp-for="Model" class="form-select bg-body-secondary p-0" type="text"
+                        style="font-size: calc(1.375rem + 1vw);">
+                    <option class="w-100" value="gpt-35-turbo" selected style="width: 100%;background-color:white;">gpt-35-turbo</option>
+                <option class="w-100" value="gpt-davinci-003" style="width: 100%;background-color:white;">gpt-davinci-003</option>
+                <option class="w-100" value="text-curie-001" style="width: 100%;background-color:white;">text-curie-001</option>
+                <option class="w-100" value="text-babbage-001" style="width: 100%;background-color:white;">text-babbage-001</option>
+                <option class="w-100" value="text-ada-001" style="width: 100%;background-color:white;">text-ada-001</option>
                     </select>
                 </div>
 
             </div>
-            <div class="row w-100 align-items-center justify-content-center m-0 mt-md-5 mt-2 flex-column flex-sm-row" style="height: 100px;">
-                <h1 class="col-sm-4 col d-flex m-0 h-100 align-items-center justify-content-center">應用名稱*</h1>
-                <input asp-for="ApplicationName" class="h-100 col-md-5 col rounded-pill bg-body-secondary border-0 md-50 me-2 px-5"
-                       type="text" style="font-size: 36pt;" value="@AppName">
+
+        <div class="row w-100 align-items-center justify-content-center mt-5 flex-column flex-sm-row">
+            <h1 class="col-sm-4 col d-flex m-0 h-100 align-items-center justify-content-center" style="font-family: 'Orbitron', sans-serif;color:#48bee2;">App Name*</h1>
+                <input asp-for="ApplicationName" class="h-100 col-md-5 col md-50 me-2 "
+                   type="text" style="font-size: calc(1.375rem + 1vw);" value="@AppName">
 
 
             </div>
-            <div class="row w-100 align-items-center justify-content-center m-0 mt-md-5 mt-2 flex-column flex-sm-row" style="height: 100px;">
-                <h1 class="col-sm-4 col d-flex m-0 h-100 align-items-center justify-content-center">Maxtoken*</h1>
+        <div class="row w-100 align-items-center justify-content-center my-5 flex-column flex-sm-row">
+            <h1 class="col-sm-4 col d-flex m-0 h-100 align-items-center justify-content-center" style="color:#48bee2;font-family: 'Orbitron', sans-serif;">Maxtoken*</h1>
                <input asp-for="Parameter" class="h-100 col-md-5 col rounded-pill bg-body-secondary border-0 md-50 me-2 px-5"
-                    type="text" style="font-size: 36pt;" value="@parameter">
+                   type="text" style="font-size: calc(1.375rem + 1vw);" value="@parameter">
 
             </div>
             <button class="btn btn-primary w-75 mt-5" id="submitButton">
@@ -47,7 +49,8 @@
         <form method="post" enctype="multipart/form-data" asp-controller="MemberFunction" asp-action="Renewuploadfileapp" class="w-100 align-items-center justify-content-center d-flex flex-column px-2" style="">
                 <div class="row w-100 align-items-center justify-content-center flex-column flex-sm-row "
                      style="height: 100px;">
-                <h1 class="col-sm-4 col d-flex m-0 h-100 align-items-center justify-content-center" style="white-space:nowrap;">上傳檔案</h1>
+                
+                <h1 class="col-sm-4 col d-flex m-0 h-100 align-items-center justify-content-center" style="color:#48bee2;font-family: 'Orbitron', sans-serif;">Upload</h1>
                     @*<input class="h-100 col-md-5 col rounded-pill bg-body-secondary border-0 md-50 me-2 px-5 py-2 text-sm-start" type="file" style="font-size: 18pt;">*@
                     <input type="file" class="form-control" name="files" id="fileUpload" accept=".pdf,.csv,.txt,.json" multiple />
                 </div>
@@ -58,8 +61,8 @@
                     <tr>
                         @foreach (var file in Aifile)
                         {
-                            <td id="@file.AifileId" class="border-1 d-flex align-items-center justify-content-between px-2 mt-2" style="height: 80px;">
-                                <h1>@file.AifilePath</h1>
+                            <td id="@file.AifileId" class="border-1 d-flex align-items-center justify-content-between px-2 mt-2" style="height: 80px;background-color:white;">
+                            <h1 h5 >@file.AifilePath</h1>
                                 <h1>@file.AifileId</h1>
                                 <button type="button" class="btn btn-outline-secondary h-50 p-1 delete-button" data-id="@file.AifileId">
                                     <img class="h-100" src="/assets/trash-can.png " alt="">
