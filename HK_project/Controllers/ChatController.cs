@@ -92,12 +92,12 @@ namespace HK_Project.Controllers
             {
                  appid = TempData["ApplicationId"].ToString();
             }
-
+            var appname = _ctx.Applications.FirstOrDefault(a => a.ApplicationId.ToString() == appid);
 
             Chat Chat = new Chat()
             {
                 ChatTime = DateTime.Now,
-                ChatName = "NewChat",
+                ChatName = appname.ApplicationName,
                 UserId = UserList.MemberId,
                 ApplicationId = appid
             };
@@ -125,7 +125,21 @@ namespace HK_Project.Controllers
 
             return View();
         }
+        [HttpGet]
+        public IActionResult ChatHistory()
+        {
+            
+            var Email = User.FindFirstValue(ClaimTypes.Email);
+            var MemberList = _ctx.Members.Where(m => m.MemberEmail == Email).FirstOrDefault();
+            var user = _ctx.Users.Where(u => u.UserEmail == Email).FirstOrDefault();
+            var chatlist = _ctx.Chats.Where(c => c.UserId == user.UserId).OrderByDescending(c=>c.ChatId).ToList();
+            var chathistory = _ctx.QAHistorys.Where(q => q.ChatId == chatlist[0].ChatId).ToList();
+            ViewBag.ChatHistory = chathistory;
+            ViewBag.chatlist = chatlist;
 
+            return View(chatlist);
+        }
+        [HttpPost]
         public IActionResult ChatHistory(int chatid)
         {
             var chatHistory = _ctx.QAHistorys.Where(c => c.ChatId == chatid).ToList();
@@ -180,6 +194,18 @@ namespace HK_Project.Controllers
             }
             catch (HttpRequestException ex)
             {
+                TempData["ApplicationId"] = appid;
+                TempData["Chatid"] = Chatid;
+                TempData["Parameter"] = temp;
+                Qahistory qahistory = new Qahistory()
+                {
+                    ChatId = Convert.ToInt32(Chatid),
+                    QahistoryQ = q,
+                    QahistoryA = "很抱歉，我無法理解您的問題，請您提供相關的問題或資訊，讓我可以為您服務。謝謝。",
+                    QahistoryVector = "123,456,778"
+                };
+                _ctx.QAHistorys.Add(qahistory);
+                await _ctx.SaveChangesAsync();
                 tt = "很抱歉，我無法理解您的問題，請您提供相關的問題或資訊，讓我可以為您服務。謝謝。";
             }
 

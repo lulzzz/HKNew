@@ -5,8 +5,8 @@
     var chats = ViewBag.Chats as List<Chat>;
     var ChatQaHistory = ViewBag.ChatQaHistory as List<Qahistory>;
     //var Userappname = Context.Session.GetString("Userchoosename");
-    
-}   
+
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,14 +27,14 @@
             }
 
         #quborder:before {
-            content:"";
-            top:-20px;
-            right:-10px;
-            position:absolute;
-            width:0;
-            height:0;
-            border-style:solid;
-            border-width:20px 10px 0 10px;
+            content: "";
+            top: -20px;
+            right: -10px;
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 20px 10px 0 10px;
             border-color: transparent transparent transparent #41d3ff;
         }
 
@@ -77,55 +77,43 @@
 </head>
 
 <body>
-    
+    <a class="btn col-3 d-flex align-items-center justify-content-center position-absolute mt-10"
+       style="height: 75px;width: 75px;top: 75px;left: 10px; z-index: 2;background-color: #21174B;">
+        <img src="/assets/List.png"
+             alt="" class="w-100" id="list">
+    </a>
     <div class="row w-100 m-0 flex-nowrap" style=" height:calc(100vh - 70px);background-color: #661586;">
-            
-          
+        <div class="col-lg-4 row flex-column m-0 p-0 align-items-center h-100 flex-nowrap" id="leftbar">
+            <div class="d-flex row justify-content-end p-0" style="height: 75px;margin-bottom:5px;margin-top: 5px;">
 
-
-                    
-
-
-        <div class="col ms-sm-1 px-0 h-100 position-relative"style="box-sizing:content-box;">
-
-
-            <div id="qrModal" class="modal" tabindex="-1">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" style="font-family: 'Orbitron', sans-serif;">Your QR Code</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body p-3 d-flex flex-column align-items-center">
-                            <img id="qrImage" src=@ViewBag.ImageUrl alt="Your QR Code" />
-                            <div id="qrText" class="mt-2"></div> <!-- 新增的 div -->
-                            <button id="copyButton" class="btn btn-secondary mt-2">複製文字</button>
-                            <!-- 新增的複製按鈕 -->
-                            @*                                <img id="Linebot" src=/assets/linebot.png  alt ="Your QR Code" />
-                            <h1>LineBot</h1>*@
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary"
-                                    data-bs-dismiss="modal">
-                                Close
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <div class=" ms-sm-0 col-sm-8 col me-lg-0 me-2 d-flex align-items-center justify-content-center overflow-hidden " style="white-space: nowrap;font-size: calc(1rem + 1.5vw); font-family: 'Orbitron', sans-serif;background-color: #21174B;color: #6AAFF2;margin-left: 100px;height: 75px;" id="createbtn"><p class="m-0">App Name</p></div>
             </div>
-            <!---->
-            <a id="generateQRCode" class="p-2 position-absolute btn rounded-3 d-flex align-items-center justify-content-center p-0"
-               style="width:70px ;height: 70px;right:5px;top:5px;">
-                <img class="h-100" src="/assets/qr-code (1).png" alt="" />
-            </a>
-            <!---->
+            <div style="height:calc(100% - 85px);background-color: #21174B;" class="rounded-1 d-flex flex-column p-0">
+                <div class=" px-2 slider-bar h-100" style="overflow: auto;"
+                     id="chatHis">
+
+                    @if (chats != null)
+                    {
+                        @foreach (var chat in chats)
+                        {
+                            <a class="btn w-100 rounded-4 d-flex align-items-center justify-content-between x-2 chat-button fw-bolder overflow-hidden"
+                               style=" white-space: nowrap; font-family: 'Orbitron', sans-serif;font-size: 2em; height: 80px; margin-top: 10px;background-color: #2c4296;color: #EBA4D2;">
+                                <h1 class="col me-5 m-0 overflow-hidden" data-id="@chat.ChatId">@chat.ChatName - @chat.ApplicationId</h1>
+                                <div type="button" class="btn btn-outline-info p-2 border-2 "><h4 class="m-0">X</h4></div>
+                            </a>
+                        }
+                    }
+                </div>
 
 
 
 
-            <div class="mt-sm-1 me-sm-1 overflow-y-scroll px-1 slider-bar" id="chatPart" style="height: 90%;background-color: #21174B;">
+
+            </div>
+        </div>
+
+        <div class="col ms-sm-1 px-0 h-100 " style="box-sizing:content-box;">
+            <div class="mt-sm-1 me-sm-1 overflow-y-scroll px-1 slider-bar" id="chatPart" style="height: 99%;background-color: #21174B;">
                 <!--問-->
                 <div class="chat-content w-100 p-5 d-flex flex-column align-items-end"
                      style="height:auto;background-color: #21174B;">
@@ -135,14 +123,14 @@
                     @foreach (var item in ChatQaHistory)
                     {
                         <div class=" w-100  py-5 px-lg-5 px-2 d-flex flex-column align-items-end"
-                        style="height:auto ;background-color: #21174B;color: #fc8ad4;border-bottom:2px solid #fc8ad4;">
+                             style="height:auto ;background-color: #21174B;color: #fc8ad4;border-bottom:2px solid #fc8ad4;">
                             <div class="d-flex align-items-center">
                                 <p class="m-0 h5 me-2">Question:</p>
                                 <div class="rounded-circle overflow-hidden" style="height:2vw;width:2vw;min-height:30px;min-width:30px;">
                                     <img class="w-100 h-100" src="/assets/user1.jpg" alt="" />
                                 </div>
                             </div>
-                            <div class="mt-5 align-items-center rounded-3 justify-content-center w-75 h-auto p-3 position-relative" style="background-color:white;border:4px solid #48bee2;caret-color:white;"id="quborder">
+                            <div class="mt-5 align-items-center rounded-3 justify-content-center w-75 h-auto p-3 position-relative" style="background-color:white;border:4px solid #48bee2;caret-color:white;" id="quborder">
                                 <p class="m-0 h4 w-100 p-1" style="word-wrap: break-word;color:black;font-family:Arial, Microsoft JhengHei;">
                                     QahistoryQ
                                 </p>
@@ -150,51 +138,65 @@
 
                         </div>
 
-                <div class=" w-100  py-5 px-lg-5 px-2 d-flex flex-column "
-                     style="height:auto ;background-color: #21174B;color: #fc8ad4;border-bottom:2px solid #fa435c ;">
-                    <div class="d-flex align-items-center">
-                        <div class="rounded-circle overflow-hidden" style="height:2vw;width:2vw;min-height:30px;min-width:30px;">
-                            <img class="w-100 h-100" src="/assets/user1.jpg" alt="" />
-                        </div>
-                        <p class="m-0 h5 ms-2">:Answer</p>
-                    </div>
-                    <div class="mt-5 align-items-center rounded-3 justify-content-center w-75 h-auto p-3 position-relative" style="background-color:white;border:4px solid #fa435c;caret-color:white;"id="ansborder">
-                        <p class="m-0 h4 w-100 p-1" style="word-wrap: break-word;color:black;font-family:Arial, Microsoft JhengHei;">
-                            QahistoryQ
-                        </p>
-                    </div>
+                        <div class=" w-100  py-5 px-lg-5 px-2 d-flex flex-column "
+                             style="height:auto ;background-color: #21174B;color: #fc8ad4;border-bottom:2px solid #fa435c ;">
+                            <div class="d-flex align-items-center">
+                                <div class="rounded-circle overflow-hidden" style="height:2vw;width:2vw;min-height:30px;min-width:30px;">
+                                    <img class="w-100 h-100" src="/assets/user1.jpg" alt="" />
+                                </div>
+                                <p class="m-0 h5 ms-2">:Answer</p>
+                            </div>
+                            <div class="mt-5 align-items-center rounded-3 justify-content-center w-75 h-auto p-3 position-relative" style="background-color:white;border:4px solid #fa435c;caret-color:white;" id="ansborder">
+                                <p class="m-0 h4 w-100 p-1" style="word-wrap: break-word;color:black;font-family:Arial, Microsoft JhengHei;">
+                                    QahistoryQ
+                                </p>
+                            </div>
 
-                </div>
+                        </div>
                     }
 
                 }
-              
+                @*@if (ChatQaHistory != null)
+                {
+                @foreach (var item in ChatQaHistory)
+                {
+                <div class=" w-100  p-5 d-flex flex-column align-items-end"
+                style="height:auto ;background-color: #21174B;color: #fc8ad4;border-bottom:2px solid #fc8ad4 ;">
+                <div class="d-flex align-items-center">
+                <p class="m-0 h5 me-2">Question:</p>
+                <div class="rounded-circle overflow-hidden" style="height:2vw;width:2vw;">
+                <img class="w-100 h-100" src="/assets/user1.jpg" alt="" />
+                </div>
+                </div>
+                <p class="m-0 h4 mt-3">
+                @item.QahistoryQ
+                </p>
+
+                </div>
+                <div class="chat-content w-100  p-5 d-flex flex-column"
+                style="height:auto ;background-color: #21174B;color: #fdfa50;border-bottom:2px solid #fdfa50;">
+                <p class="m-0 h1">答</p>
+                <p class="m-0 h4 mt-3">
+                @item.QahistoryA
+                </p>
+                </div>
+
+                }
+                }*@
 
 
             </div>
 
 
-            <div class="row col  px-2 me-sm-1 m-0 align-items-center justify-content-center"
-                 style="height: calc(10% - 0.25rem);background-color: #0d4aa5;">
-                <div class="col p-0 ">
-                    <textarea name="question" type="text" class="w-100 py-auto slider-bar" id="chatquestion"
-                              style="font-size: 2.5vh;resize:none;line-height: 3vh;background-color: #0d4aa5;border: 0px;color:white;" rows="1"
-                              placeholder="Please Enter The Question"></textarea>
-                </div>
-                <div class="col-3 p-0 h-75">
-                    <button id="sendout" type="submit"
-                            class="btn btn-primary w-100 h-100 d-flex align-items-center justify-content-center"
-                            style="font-size: calc(0.8rem + 1.5vw);">
-                        <p class="m-0 p-0 " style="font-family: 'Orbitron', sans-serif;">Submit</p>
-                    </button>
-                </div>
-            </div>
+
 
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script>
+
+        $(document).ready(function () {
             $(document).ready(function () {
 
                 // 複製事件的綁定
@@ -209,7 +211,6 @@
                 });
 
                 // QR 碼產生的事件綁定
-
                 $('#generateQRCode').click(function (e) {
                     e.preventDefault();
                     $.ajax({
@@ -225,82 +226,85 @@
                 // 其他的事件綁定 ...
             });
 
+        });
 
 
 
+        document.getElementById('list').addEventListener('click', function () {
+            var leftbar = document.getElementById('leftbar');
+            leftbar.classList.toggle('d-none');
+        });
 
-       
 
-        
         //即時聊天室內容
         $(document).ready(function () {
             $('#sendout').click(function () {
                 $('#sendout').prop("disabled", true);
-            chatid = $(this).data('id');
+                chatid = $(this).data('id');
                 console.log("ok")
                 var question = $('textarea[name="question"]').val();
                 var questionDiv = `<div class=" w-100  py-5 px-lg-5 px-2 d-flex flex-column align-items-end"
-                                        style="height:auto ;background-color: #21174B;color: #fc8ad4;border-bottom:2px solid #48bee2;">
-                                    <div class="d-flex align-items-center">
-                                        <p class="m-0 h5 me-2">Question:</p>
-                                        <div class="rounded-circle overflow-hidden" style="height:2vw;width:2vw;min-height:30px;min-width:30px;">
-                                            <img class="w-100 h-100" src="/assets/user1.jpg" alt="" />
-                                        </div>
-                                    </div>
-                                    <div class="mt-5 align-items-center rounded-3 justify-content-center w-75 h-auto p-3 position-relative" style="background-color:white;border:4px solid #48bee2;caret-color:white;"id="quborder">
-                                        <p class="m-0 h4 w-100 p-1" style="word-wrap: break-word;color:black;font-family:Arial, Microsoft JhengHei;">
-                                            ${question}
-                                        </p>
-                                    </div>
+                                                                style="height:auto ;background-color: #21174B;color: #fc8ad4;border-bottom:2px solid #48bee2;">
+                                                            <div class="d-flex align-items-center">
+                                                                <p class="m-0 h5 me-2">Question:</p>
+                                                                <div class="rounded-circle overflow-hidden" style="height:2vw;width:2vw;min-height:30px;min-width:30px;">
+                                                                    <img class="w-100 h-100" src="/assets/user1.jpg" alt="" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="mt-5 align-items-center rounded-3 justify-content-center w-75 h-auto p-3 position-relative" style="background-color:white;border:4px solid #48bee2;caret-color:white;"id="quborder">
+                                                                <p class="m-0 h4 w-100 p-1" style="word-wrap: break-word;color:black;font-family:Arial, Microsoft JhengHei;">
+                                                                    ${question}
+                                                                </p>
+                                                            </div>
 
-                                </div>`;
-                
+                                                        </div>`;
+
                 $(".chat-content").append(questionDiv);
                 $.ajax({
                     url: '/Chat/qainput',
                     type: 'post',
-                    data: { 'question': question},
+                    data: { 'question': question },
                     success: function (response) {
                         console.log("success")
                         console.log(response);
                         var answerDiv = `
-                                                <div class=" w-100  py-5 px-lg-5 px-2 d-flex flex-column "
-                             style="height:auto ;background-color: #21174B;color: #fc8ad4;border-bottom:2px solid #fa435c ;">
-                            <div class="d-flex align-items-center">
-                                <div class="rounded-circle overflow-hidden" style="height:2vw;width:2vw;min-height:30px;min-width:30px;">
-                                    <img class="w-100 h-100" src="/assets/user1.jpg" alt="" />
-                                </div>
-                                <p class="m-0 h5 ms-2">:Answer</p>
-                            </div>
-                            <div class="mt-5 align-items-center rounded-3 justify-content-center w-75 h-auto p-3 position-relative" style="background-color:white;border:4px solid #fa435c;caret-color:white;"id="ansborder">
-                                <p class="m-0 h4 w-100 p-1" style="word-wrap: break-word;color:black;font-family:Arial, Microsoft JhengHei;">
-                                    ${response}
-                                </p>
-                            </div>
+                                                                        <div class=" w-100  py-5 px-lg-5 px-2 d-flex flex-column "
+                                                     style="height:auto ;background-color: #21174B;color: #fc8ad4;border-bottom:2px solid #fa435c ;">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="rounded-circle overflow-hidden" style="height:2vw;width:2vw;min-height:30px;min-width:30px;">
+                                                            <img class="w-100 h-100" src="/assets/user1.jpg" alt="" />
+                                                        </div>
+                                                        <p class="m-0 h5 ms-2">:Answer</p>
+                                                    </div>
+                                                    <div class="mt-5 align-items-center rounded-3 justify-content-center w-75 h-auto p-3 position-relative" style="background-color:white;border:4px solid #fa435c;caret-color:white;"id="ansborder">
+                                                        <p class="m-0 h4 w-100 p-1" style="word-wrap: break-word;color:black;font-family:Arial, Microsoft JhengHei;">
+                                                            ${response}
+                                                        </p>
+                                                    </div>
 
-                        </div>`;
+                                                </div>`;
                         $(".chat-content").append(answerDiv);
                         //this.disabled = true;
                         $('#sendout').prop("disabled", false);
                     },
-                    Error:function(error){
+                    Error: function (error) {
                         console.log("error")
                         console.log(error)
                         var answerDiv = `
-                                        <div class=" w-100  p-5 d-flex flex-column"
-                                             style="height:auto ;background-color: #21174B;color: #fdfa50;border-bottom:2px solid #fdfa50;">
-                                            <p class="m-0 h1">答</p>
-                                            <p class="m-0 h4 mt-3">
-                                                        ${"很抱歉，我無法理解您的問題，請您提供相關的問題或資訊，讓我可以為您服務。謝謝。"}
-                                            </p>
-                                        </div>`;
+                                                                <div class=" w-100  p-5 d-flex flex-column"
+                                                                     style="height:auto ;background-color: #21174B;color: #fdfa50;border-bottom:2px solid #fdfa50;">
+                                                                    <p class="m-0 h1">答</p>
+                                                                    <p class="m-0 h4 mt-3">
+                                                                                ${"很抱歉，我無法理解您的問題，請您提供相關的問題或資訊，讓我可以為您服務。謝謝。"}
+                                                                    </p>
+                                                                </div>`;
                         $(".chat-content").append(answerDiv);
                         //this.disabled = true;
                         $('#sendout').prop("disabled", false);
                     }
                 });
                 $("#chatquestion").val("")
-                
+
             });
         });
 
@@ -316,13 +320,13 @@
                         console.log("Success")
                         console.log(data);
                         var newChat = `<a class="btn w-100 rounded-4 d-flex align-items-center justify-content-between x-2 chat-button fw-bolder overflow-hidden"
-                               style=" white-space: nowrap; font-family: 'Orbitron', sans-serif;font-size: 2em; height: 80px; margin-top: 10px;background-color: #2c4296;color: #EBA4D2;">
-                                                        <h1 class="col me-5 m-0 overflow-hidden" data-id="${data.chatId}">${data.chatName} - ${data.application}</h1>
-                                <div type="button" class="btn btn-outline-info p-2 border-2 "><h4 class="m-0">X</h4></div>
-                            </a>`;
+                                                       style=" white-space: nowrap; font-family: 'Orbitron', sans-serif;font-size: 2em; height: 80px; margin-top: 10px;background-color: #2c4296;color: #EBA4D2;">
+                                                                                <h1 class="col me-5 m-0 overflow-hidden" data-id="${data.chatId}">${data.chatName} - ${data.application}</h1>
+                                                        <div type="button" class="btn btn-outline-info p-2 border-2 "><h4 class="m-0">X</h4></div>
+                                                    </a>`;
                         $("#chatHis").append(newChat);
                         $(".chat-content").empty();
-                    },Error:function(error){
+                    }, Error: function (error) {
                         console.log("Error")
                         console.log(error);
                     }
@@ -348,20 +352,20 @@
                             console.log(item);
 
                             var questionDiv = `
-                                                        <div class=" w-100 bg-body-secondary p-5 d-flex flex-column align-items-end" style="height:auto">
-                                                    <p class="m-0 h1">問</p>
-                                                            <p class="m-0 h4 mt-3">${item['qahistoryQ']}</p>
-                                                </div>`;
+                                                                                <div class=" w-100 bg-body-secondary p-5 d-flex flex-column align-items-end" style="height:auto">
+                                                                            <p class="m-0 h1">問</p>
+                                                                                    <p class="m-0 h4 mt-3">${item['qahistoryQ']}</p>
+                                                                        </div>`;
                             var answerDiv = `
-                                                        <div class=" w-100 bg-body-secondary p-5 d-flex flex-column" style="height:auto">
-                                                    <p class="m-0 h1">答</p>
-                                                            <p class="m-0 h4 mt-3">${item['qahistoryA']}</p>
-                                                </div>`;
+                                                                                <div class=" w-100 bg-body-secondary p-5 d-flex flex-column" style="height:auto">
+                                                                            <p class="m-0 h1">答</p>
+                                                                                    <p class="m-0 h4 mt-3">${item['qahistoryA']}</p>
+                                                                        </div>`;
 
                             $(".chat-content").append(questionDiv);
                             $(".chat-content").append(answerDiv);
                         });
-                    },Error:function(error){
+                    }, Error: function (error) {
                         console.log("Error")
                         console.log(error);
                     }
