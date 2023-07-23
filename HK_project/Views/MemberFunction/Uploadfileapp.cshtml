@@ -29,11 +29,9 @@
     </form>
 </div>
 
-    <div class="text-center" id="loading" style="display: none;">
-        <div class="spinner-border" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
-    </div>
+<div class="position-absolute d-flex justify-content-center align-items-center d-none"style="width:100vw; height:100vh;background-color:#000000dd;top:0px;left:0px ;z-index:150;">
+    <img src="/assets/giphy (1).gif" alt="" style="width:20%;" id="loading" />
+</div>
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -42,7 +40,7 @@
 <script>
     $(document).ready(function(){
         $("form").on("submit", function(){
-            $("#loading").show();
+            $("#loading").removeclass('d-none');
         });
     });
     const dropContainer = $('#UpLoadBackground');
