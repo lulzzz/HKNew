@@ -25,14 +25,16 @@ namespace HK_Project.Controllers
         private readonly AccountService _accountServices;
         private readonly ILogger<MemberFunctionController> _logger;
         private readonly LINQService _lq;
+        private readonly TranslateService _tr;
 
-        public ChatController(HKContext ctx, AccountService accountServices, IHashService hashService, ILogger<MemberFunctionController> logger, LINQService lq)
+        public ChatController(HKContext ctx, AccountService accountServices, IHashService hashService, ILogger<MemberFunctionController> logger, LINQService lq, TranslateService translateService)
         {
             _ctx = ctx;
             _accountServices = accountServices;
             _hashService = hashService;
             _logger = logger;
             _lq = lq;
+            _tr = translateService;
         }
         public IActionResult UserIndex()
         {
@@ -166,17 +168,27 @@ namespace HK_Project.Controllers
             var temp = TempData["Parameter"].ToString();
             temp = "1";
             var Chatid = TempData["Chatid"].ToString();
-            var q = question;
+            
             string tt;
 
-            try
+
+			//如果輸入語文本不同，進行翻譯
+			var lan = await _tr.GetLunguage(question);
+
+			if (lan != "en")
+			{
+				question = await _tr.GetTranslate(question, lan, "en");
+			}
+
+
+			try
             {
                 var client = new HttpClient();
                 string jsonContent = $@"{{
                                     ""ApplicationId"": ""{appid}"",
                                     ""temperature"": ""{temp}"",
                                     ""ChatId"": ""{Chatid}"",
-                                    ""Question"": ""{q}""
+                                    ""Question"": ""{question}""
                                 }}";
 
                 var content = new StringContent(jsonContent, null, "application/json");

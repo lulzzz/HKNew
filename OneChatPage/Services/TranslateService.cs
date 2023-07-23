@@ -33,10 +33,14 @@
     string[] test = {"test", "test2", "test3" };
     foreach (var item in test) { var output = _TranslateService.GetTranslate(item, "en", "zh-Hans"); }
  */
-using HK_Project.ViewModels;
 using System.Text.Json;
+using Newtonsoft.Json.Linq;
+using OneChatPage.Extensions;
+using OneChatPage.ViewModels;
+using System.Transactions;
+using System.Xml.Linq;
 
-namespace HK_Project.Services
+namespace OneChatPage.Services
 {
     public class TranslateService
     {
@@ -56,12 +60,12 @@ namespace HK_Project.Services
             var response = await client.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
-			var result = await response.Content.ReadAsStringAsync();
+            var result = await response.Content.ReadAsStringAsync();
 
-			var json = JsonSerializer.Deserialize<List<lanViewModel>>(result).FirstOrDefault();
+            var json = JsonSerializer.Deserialize<List<lanViewModel>>(result).FirstOrDefault();
 
-			return json.language;
-		}
+            return json.language;
+        }
 
         public async Task<string> GetTranslate(string input, string from, string to)
         {
@@ -78,12 +82,12 @@ namespace HK_Project.Services
             var response = await client.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
-			var result = await response.Content.ReadAsStringAsync();
+            var result = await response.Content.ReadAsStringAsync();
 
-			var json = JsonSerializer.Deserialize<List<TranslationsViewModel>>(result).FirstOrDefault();
+            var json = JsonSerializer.Deserialize<List<TranslationsViewModel>>(result).FirstOrDefault();
 
-			return json.translations[0].text;
-		}
+            return json.translations[0].text;
+        }
 
     }
 }
