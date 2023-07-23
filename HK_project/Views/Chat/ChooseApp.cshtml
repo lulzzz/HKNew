@@ -33,9 +33,9 @@
                 @foreach (var a in Applist)
                 {
                 <a onclick="sendData('@a.ApplicationId', '@a.Parameter', '@a.ApplicationName')" class="ms-2 mt-5 btn  col-6 justify-content-between d-flex align-items-center" style="font-size: calc(2rem + 1vw);background-color:white;border:4px solid #48bee2;height:calc(3rem + 5vh)">
-                    <h2 class="fw-bolder m-0">@a.ApplicationId -@a.ApplicationName</h2>
+                    <h2 class="fw-bolder m-0">@a.ApplicationName</h2>
                     <div class="col-8 h-100 d-flex align-items-end justify-content-end fw-bolder">
-                        <h6 class="me-2">@*AppId: @a.ApplicationId</h6> &nbsp;*@ <h6>Maxtoken: @a.Parameter</h6> &nbsp;  <h6>Model: @a.Model</h6>
+                        <h6 class="me-2">AppId: @a.ApplicationId</h6> &nbsp; <h6>Maxtoken: @a.Parameter</h6> &nbsp;  <h6>Model: @a.Model</h6>
                     </div>
                 </a>
 
