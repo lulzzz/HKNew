@@ -82,15 +82,23 @@ namespace HK_Project.Controllers
         public async Task<IActionResult> Qa()
         {
             var Email = User.FindFirstValue(ClaimTypes.Email);
-            var UserList = await _lq.GetUser(Email);
+            var UserList = await _ctx.Members.Where(m => m.MemberEmail == Email).FirstOrDefaultAsync();
+            var appid = "";
+            if(TempData["ApplicationId"] == null)
+            {
+                 appid = _ctx.Applications.FirstOrDefault(a => a.MemberId == UserList.MemberId).ApplicationId.ToString();
+            }
+            else
+            {
+                 appid = TempData["ApplicationId"].ToString();
+            }
 
-            var appid = TempData["ApplicationId"].ToString();
 
             Chat Chat = new Chat()
             {
                 ChatTime = DateTime.Now,
                 ChatName = "NewChat",
-                UserId = UserList.UserId,
+                UserId = UserList.MemberId,
                 ApplicationId = appid
             };
 
@@ -129,6 +137,9 @@ namespace HK_Project.Controllers
         {
             var chatHistory = _ctx.QAHistorys.Where(q => q.ChatId == id).ToList();
             TempData["Chatid"] = id;
+            //var chatid = _ctx.Chats.FirstOrDefault(c => c.ChatId == id);
+            //var appid = _ctx.Applications.FirstOrDefault(a => a.ApplicationId.ToString() == chatid.ApplicationId);
+            //TempData["ApplicationId"] = appid.ApplicationId;
             return Json(chatHistory);
         }
 
