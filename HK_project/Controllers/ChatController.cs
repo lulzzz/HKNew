@@ -212,7 +212,7 @@ namespace HK_Project.Controllers
                 Qahistory qahistory = new Qahistory()
                 {
                     ChatId = Convert.ToInt32(Chatid),
-                    QahistoryQ = q,
+                    QahistoryQ = question,
                     QahistoryA = "很抱歉，我無法理解您的問題，請您提供相關的問題或資訊，讓我可以為您服務。謝謝。",
                     QahistoryVector = "123,456,778"
                 };
