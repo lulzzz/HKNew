@@ -24,6 +24,8 @@ builder.Services.AddScoped<ClaimService>();
 
 builder.Services.AddScoped<LINQService>();
 
+builder.Services.AddScoped<TranslateService>();
+
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
 {
     options.Cookie.Name = "HK_AI_LOGIN";
