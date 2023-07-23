@@ -79,24 +79,52 @@
 <body>
     
     <div class="row w-100 m-0 flex-nowrap" style=" height:calc(100vh - 70px);background-color: #661586;">
-        <div class="col-lg-4 row flex-column m-0 p-0 align-items-center h-100 flex-nowrap" id="leftbar">
             
           
 
 
-                <div class="px-2">
-                    <a id="generateQRCode" class="btn w-100 rounded-5 d-flex align-items-center justify-content-center overflow-hidden"
-                       style=" height: 80px; margin-top: 10px;background-color: #41d3ff;"><h1 class="m-0" style="font-size: calc(1rem + 1.5vw);font-family: 'Orbitron', sans-serif;">Create QRcode</h1></a>
-                    <a asp-controller="Chat" asp-action="ChooseApp"
-                       class="btn btn w-100 rounded-5 d-flex align-items-center justify-content-center overflow-hidden"
-                       style=" height: 80px; margin-top: 10px; background-color: #fa435c;">
-                        <h1 style="font-size: calc(1rem + 1.5vw);font-family:Arial, Microsoft JhengHei;" class="m-0 fw-bolder">@ViewBag.Appname</h1>
-                    </a>
+                    
+
+
+        <div class="col ms-sm-1 px-0 h-100 position-relative"style="box-sizing:content-box;">
+
+
+            <div id="qrModal" class="modal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" style="font-family: 'Orbitron', sans-serif;">Your QR Code</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body p-3 d-flex flex-column align-items-center">
+                            <img id="qrImage" src=@ViewBag.ImageUrl alt="Your QR Code" />
+                            <div id="qrText" class="mt-2" style="white-space:normal;"></div> <!-- 新增的 div -->
+                            <button id="copyButton" class="btn btn-secondary mt-2">複製文字</button>
+                            <!-- 新增的複製按鈕 -->
+                            @*                                <img id="Linebot" src=/assets/linebot.png  alt ="Your QR Code" />
+                            <h1>LineBot</h1>*@
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">
+                                Close
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+            <!---->
+            <a id="generateQRCode" class="p-2 position-absolute btn rounded-3 d-flex align-items-center justify-content-center p-0"
+               style="width:70px ;height: 70px;right:5px;top:5px;">
+                <img class="h-100" src="/assets/qr-code (1).png" alt="" />
+            </a>
+            <!---->
 
-        <div class="col ms-sm-1 px-0 h-100 "style="box-sizing:content-box;">
+
+
+
             <div class="mt-sm-1 me-sm-1 overflow-y-scroll px-1 slider-bar" id="chatPart" style="height: 90%;background-color: #21174B;">
                 <!--問-->
                 <div class="chat-content w-100 p-5 d-flex flex-column align-items-end"
@@ -140,33 +168,7 @@
                     }
 
                 }
-                @*@if (ChatQaHistory != null)
-                {
-                    @foreach (var item in ChatQaHistory)
-                    {
-                        <div class=" w-100  p-5 d-flex flex-column align-items-end"
-                             style="height:auto ;background-color: #21174B;color: #fc8ad4;border-bottom:2px solid #fc8ad4 ;">
-                            <div class="d-flex align-items-center">
-                                <p class="m-0 h5 me-2">Question:</p>
-                                <div class="rounded-circle overflow-hidden" style="height:2vw;width:2vw;">
-                                    <img class="w-100 h-100" src="/assets/user1.jpg" alt="" />
-                                </div>
-                            </div>
-                            <p class="m-0 h4 mt-3">
-                                @item.QahistoryQ
-                            </p>
-
-                        </div>
-                        <div class="chat-content w-100  p-5 d-flex flex-column"
-                             style="height:auto ;background-color: #21174B;color: #fdfa50;border-bottom:2px solid #fdfa50;">
-                            <p class="m-0 h1">答</p>
-                            <p class="m-0 h4 mt-3">
-                                @item.QahistoryA
-                            </p>
-                        </div>
-
-                    }
-                }*@
+              
 
 
             </div>
@@ -193,8 +195,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script>
-
-        $(document).ready(function () {
             $(document).ready(function () {
 
                 // 複製事件的綁定
@@ -209,6 +209,7 @@
                 });
 
                 // QR 碼產生的事件綁定
+
                 $('#generateQRCode').click(function (e) {
                     e.preventDefault();
                     $.ajax({
@@ -224,14 +225,11 @@
                 // 其他的事件綁定 ...
             });
 
-        });
 
 
 
-        document.getElementById('list').addEventListener('click', function () {
-            var leftbar = document.getElementById('leftbar');
-            leftbar.classList.toggle('d-none');
-        });
+
+       
 
         
         //即時聊天室內容
