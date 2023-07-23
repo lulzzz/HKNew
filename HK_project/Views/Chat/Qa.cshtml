@@ -25,6 +25,54 @@
             .slider-bar::-webkit-scrollbar-thumb:hover {
                 background-color: #2175b9; /* 设置滚动条滑块在悬停时的颜色，根据需要调整 */
             }
+
+        #quborder:before {
+            content:"";
+            top:-20px;
+            right:-10px;
+            position:absolute;
+            width:0;
+            height:0;
+            border-style:solid;
+            border-width:20px 10px 0 10px;
+            border-color: transparent transparent transparent #41d3ff;
+        }
+
+        #quborder:after {
+            content: "";
+            top: -40px;
+            right: 10px;
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 20px 0px 20px 10px;
+            border-color: transparent transparent #41d3ff transparent;
+        }
+
+        #ansborder:before {
+            content: "";
+            top: -20px;
+            left: 10px;
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 20px 10px 0 10px;
+            border-color: transparent transparent transparent #fa435c;
+        }
+
+        #ansborder:after {
+            content: "";
+            top: -40px;
+            left: 0px;
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 20px 0px 20px 10px;
+            border-color: transparent transparent #fa435c transparent;
+        }
     </style>
 </head>
 
@@ -34,11 +82,11 @@
         <img src="/assets/List.png"
              alt="" class="w-100" id="list">
     </a>
-    <div class="row w-100 m-0 " style=" height:calc(100vh - 70px);background-color: #661586;">
-        <div class="col-md-4 row flex-column m-0 p-0 align-items-center h-100 flex-nowrap" id="leftbar">
+    <div class="row w-100 m-0 flex-nowrap" style=" height:calc(100vh - 70px);background-color: #661586;">
+        <div class="col-lg-4 row flex-column m-0 p-0 align-items-center h-100 flex-nowrap" id="leftbar">
             <div class="d-flex row justify-content-end p-0" style="height: 75px;margin-bottom:5px;margin-top: 5px;">
 
-                <a class="btn ms-sm-0 col-sm-8 col me-sm-0 me-2 d-flex align-items-center justify-content-start overflow-hidden " style="white-space: nowrap;font-size: calc(1rem + 1.5vw); font-family: 'Orbitron', sans-serif;background-color: #21174B;color: #6AAFF2;margin-left: 100px;height: 75px;" id="createbtn"><p class="m-0">+ Create Chat</p></a>
+                <a class="btn ms-sm-0 col-sm-8 col me-lg-0 me-2 d-flex align-items-center justify-content-center overflow-hidden " style="white-space: nowrap;font-size: calc(1rem + 1.5vw); font-family: 'Orbitron', sans-serif;background-color: #21174B;color: #6AAFF2;margin-left: 100px;height: 75px;" id="createbtn"><p class="m-0">+ Create Chat</p></a>
             </div>
             <div style="height:calc(100% - 85px);background-color: #21174B;" class="rounded-1 d-flex flex-column p-0">
                 <div class=" px-2 slider-bar" style="height: 75%;overflow: auto;border-bottom:5px solid #ca3491;"
@@ -91,13 +139,13 @@
                     <a asp-controller="Chat" asp-action="ChooseApp"
                        class="btn btn w-100 rounded-5 d-flex align-items-center justify-content-center overflow-hidden"
                        style=" height: 80px; margin-top: 10px; background-color: #fa435c;">
-                        <h1 style="font-size: calc(1rem + 1.5vw);font-family: 'Orbitron', sans-serif;" class="m-0">@ViewBag.Appname</h1>
+                        <h1 style="font-size: calc(1rem + 1.5vw);font-family:Arial, Microsoft JhengHei;" class="m-0 fw-bolder">@ViewBag.Appname</h1>
                     </a>
                 </div>
             </div>
         </div>
 
-        <div class="col ms-sm-1 px-0 h-100 ">
+        <div class="col ms-sm-1 px-0 h-100 "style="box-sizing:content-box;">
             <div class="mt-sm-1 me-sm-1 overflow-y-scroll px-1 slider-bar" id="chatPart" style="height: 90%;background-color: #21174B;">
                 <!--問-->
                 <div class="chat-content w-100 p-5 d-flex flex-column align-items-end"
@@ -107,12 +155,56 @@
                 {
                     @foreach (var item in ChatQaHistory)
                     {
-                        <div class="chat-content w-100  p-5 d-flex flex-column align-items-end"
+                        <div class=" w-100  py-5 px-lg-5 px-2 d-flex flex-column align-items-end"
+                        style="height:auto ;background-color: #21174B;color: #fc8ad4;border-bottom:2px solid #fc8ad4;">
+                            <div class="d-flex align-items-center">
+                                <p class="m-0 h5 me-2">Question:</p>
+                                <div class="rounded-circle overflow-hidden" style="height:2vw;width:2vw;min-height:30px;min-width:30px;">
+                                    <img class="w-100 h-100" src="/assets/user1.jpg" alt="" />
+                                </div>
+                            </div>
+                            <div class="mt-5 align-items-center rounded-3 justify-content-center w-75 h-auto p-3 position-relative" style="background-color:white;border:4px solid #48bee2;caret-color:white;"id="quborder">
+                                <p class="m-0 h4 w-100 p-1" style="word-wrap: break-word;color:black;font-family:Arial, Microsoft JhengHei;">
+                                    QahistoryQ
+                                </p>
+                            </div>
+
+                        </div>
+
+                <div class=" w-100  py-5 px-lg-5 px-2 d-flex flex-column "
+                     style="height:auto ;background-color: #21174B;color: #fc8ad4;border-bottom:2px solid #fa435c ;">
+                    <div class="d-flex align-items-center">
+                        <div class="rounded-circle overflow-hidden" style="height:2vw;width:2vw;min-height:30px;min-width:30px;">
+                            <img class="w-100 h-100" src="/assets/user1.jpg" alt="" />
+                        </div>
+                        <p class="m-0 h5 ms-2">:Answer</p>
+                    </div>
+                    <div class="mt-5 align-items-center rounded-3 justify-content-center w-75 h-auto p-3 position-relative" style="background-color:white;border:4px solid #fa435c;caret-color:white;"id="ansborder">
+                        <p class="m-0 h4 w-100 p-1" style="word-wrap: break-word;color:black;font-family:Arial, Microsoft JhengHei;">
+                            QahistoryQ
+                        </p>
+                    </div>
+
+                </div>
+                    }
+
+                }
+                @*@if (ChatQaHistory != null)
+                {
+                    @foreach (var item in ChatQaHistory)
+                    {
+                        <div class=" w-100  p-5 d-flex flex-column align-items-end"
                              style="height:auto ;background-color: #21174B;color: #fc8ad4;border-bottom:2px solid #fc8ad4 ;">
-                            <p class="m-0 h1">問</p>
+                            <div class="d-flex align-items-center">
+                                <p class="m-0 h5 me-2">Question:</p>
+                                <div class="rounded-circle overflow-hidden" style="height:2vw;width:2vw;">
+                                    <img class="w-100 h-100" src="/assets/user1.jpg" alt="" />
+                                </div>
+                            </div>
                             <p class="m-0 h4 mt-3">
                                 @item.QahistoryQ
                             </p>
+
                         </div>
                         <div class="chat-content w-100  p-5 d-flex flex-column"
                              style="height:auto ;background-color: #21174B;color: #fdfa50;border-bottom:2px solid #fdfa50;">
@@ -123,24 +215,23 @@
                         </div>
 
                     }
-                }
-
+                }*@
 
 
             </div>
 
 
-            <div class="row col  px-2 me-sm-2 m-0 align-items-center justify-content-center"
-                 style="height: 8vh;background-color: #0d4aa5;">
-                <div class="col p-0 h-75">
-                    <textarea name="question" type="text" class="w-100 h-100 p-1 slider-bar" id="chatquestion"
-                              style="font-size: calc(1rem + 1.5vh);resize:none;line-height: (1rem + 1.5vh);background-color: #0d4aa5;border: 0px;color:white;" rows="3"
+            <div class="row col  px-2 me-sm-1 m-0 align-items-center justify-content-center"
+                 style="height: calc(10% - 0.25rem);background-color: #0d4aa5;">
+                <div class="col p-0 ">
+                    <textarea name="question" type="text" class="w-100 py-auto slider-bar" id="chatquestion"
+                              style="font-size: 2.5vh;resize:none;line-height: 3vh;background-color: #0d4aa5;border: 0px;color:white;" rows="1"
                               placeholder="Please Enter The Question"></textarea>
                 </div>
                 <div class="col-3 p-0 h-75">
                     <button id="sendout" type="submit"
                             class="btn btn-primary w-100 h-100 d-flex align-items-center justify-content-center"
-                            style="font-size: calc(1rem + 1.5vh);">
+                            style="font-size: calc(0.8rem + 1.5vw);">
                         <p class="m-0 p-0 " style="font-family: 'Orbitron', sans-serif;">Submit</p>
                     </button>
                 </div>
@@ -199,13 +290,20 @@
             chatid = $(this).data('id');
                 console.log("ok")
                 var question = $('textarea[name="question"]').val();
-                var questionDiv = `
-                                 <div class=" w-100  p-5 d-flex flex-column align-items-end"
-                                     style="height:auto ;background-color: #21174B;color: #fc8ad4;border-bottom:2px solid #fc8ad4 ;">
-                                    <p class="m-0 h1">問</p>
-                                    <p class="m-0 h4 mt-3">
-                                        ${question}
-                                    </p>
+                var questionDiv = `<div class=" w-100  py-5 px-lg-5 px-2 d-flex flex-column align-items-end"
+                                style="height:auto ;background-color: #21174B;color: #fc8ad4;border-bottom:2px solid #fc8ad4;">
+                                    <div class="d-flex align-items-center">
+                                        <p class="m-0 h5 me-2">Question:</p>
+                                        <div class="rounded-circle overflow-hidden" style="height:2vw;width:2vw;min-height:30px;min-width:30px;">
+                                            <img class="w-100 h-100" src="/assets/user1.jpg" alt="" />
+                                        </div>
+                                    </div>
+                                    <div class="mt-5 align-items-center rounded-3 justify-content-center w-75 h-auto p-3 position-relative" style="background-color:white;border:4px solid #48bee2;caret-color:white;"id="ansborder">
+                                        <p class="m-0 h4 w-100 p-1" style="word-wrap: break-word;color:black;font-family:Arial, Microsoft JhengHei;">
+                                            ${question}
+                                        </p>
+                                    </div>
+
                                 </div>`;
                 
                 $(".chat-content").append(questionDiv);
@@ -217,13 +315,21 @@
                         console.log("success")
                         console.log(response);
                         var answerDiv = `
-                                <div class=" w-100  p-5 d-flex flex-column"
-                                     style="height:auto ;background-color: #21174B;color: #fdfa50;border-bottom:2px solid #fdfa50;">
-                                    <p class="m-0 h1">答</p>
-                                    <p class="m-0 h4 mt-3">
+                                                <div class=" w-100  py-5 px-lg-5 px-2 d-flex flex-column "
+                             style="height:auto ;background-color: #21174B;color: #fc8ad4;border-bottom:2px solid #fa435c ;">
+                            <div class="d-flex align-items-center">
+                                <div class="rounded-circle overflow-hidden" style="height:2vw;width:2vw;min-height:30px;min-width:30px;">
+                                    <img class="w-100 h-100" src="/assets/user1.jpg" alt="" />
+                                </div>
+                                <p class="m-0 h5 ms-2">:Answer</p>
+                            </div>
+                            <div class="mt-5 align-items-center rounded-3 justify-content-center w-75 h-auto p-3 position-relative" style="background-color:white;border:4px solid #fa435c;caret-color:white;"id="ansborder">
+                                <p class="m-0 h4 w-100 p-1" style="word-wrap: break-word;color:black;font-family:Arial, Microsoft JhengHei;">
                                     ${response}
-                                    </p>
-                                </div>`;
+                                </p>
+                            </div>
+
+                        </div>`;
                         $(".chat-content").append(answerDiv);
                         //this.disabled = true;
                         $('#sendout').prop("disabled", false);
