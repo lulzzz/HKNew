@@ -70,8 +70,8 @@
                                 <div id="qrText" class="mt-2"></div> <!-- 新增的 div -->
                                 <button id="copyButton" class="btn btn-secondary mt-2">複製文字</button>
                                 <!-- 新增的複製按鈕 -->
-                                <img id="Linebot" src=/assets/linebot.png  alt ="Your QR Code" />
-                                <h1>LineBot</h1>
+@*                                <img id="Linebot" src=/assets/linebot.png  alt ="Your QR Code" />
+                                <h1>LineBot</h1>*@
                             </div>
 
                             <div class="modal-footer">
@@ -153,30 +153,35 @@
     <script>
 
         $(document).ready(function () {
-            $('#generateQRCode').click(function (e) {
-                console.log("OK")
-                e.preventDefault();
-                $.ajax({
-                    url: '/Chat/QRCode',
-                    type: 'POST',
-                    success: function (data) {
-                        console.log(data)
-                        $('#qrImage').attr('src', data.imageUrl);
-                        $('#qrText').text(data.data); //設置文字
-                        $('#copyButton').off('click').click(function () { //綁定複製事件
-                            var tempInput = document.createElement("input");
-                            tempInput.value = $('#qrText').text();
-                            document.body.appendChild(tempInput);
-                            tempInput.select();
-                            document.execCommand("copy");
-                            document.body.removeChild(tempInput);
-                            alert("複製成功!");
-                        });
+            $(document).ready(function () {
 
-                        $('#qrModal').modal('show');
-                    }
+                // 複製事件的綁定
+                $('#copyButton').off('click').click(function () {
+                    var tempInput = document.createElement("input");
+                    tempInput.value = $('#qrText').text("https://6205-220-133-90-58.ngrok-free.app/Chat/SendMessage/%E8%8F%AF%E9%9B%BB");
+                    document.body.appendChild(tempInput);
+                    tempInput.select();
+                    document.execCommand("copy");
+                    document.body.removeChild(tempInput);
+                    alert("複製成功!");
                 });
+
+                // QR 碼產生的事件綁定
+                $('#generateQRCode').click(function (e) {
+                    e.preventDefault();
+                    $.ajax({
+                        url: '/Chat/QRCode',
+                        type: 'POST',
+                        success: function (data) {
+                            $('#qrImage').attr('src', data.imageUrl);
+                            $('#qrText').text(data.data); //設置文字
+                            $('#qrModal').modal('show');
+                        }
+                    });
+                });
+                // 其他的事件綁定 ...
             });
+
         });
 
 
