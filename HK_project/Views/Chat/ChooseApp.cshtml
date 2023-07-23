@@ -19,13 +19,13 @@
     </style>
 </head>
 <div class="w-100" style="height: calc(100vh - 150px);background-color: #2e1f6d;">
-    <div class="w-100 h-100 align-items-center justify-content-start row flex-column flex-nowrap overflow-y-scroll slider-bar">
+    <div class="w-100 h-100 align-items-center justify-content-start row flex-column flex-nowrap overflow-y-scroll slider-bar m-0 p-0" style="font-family: Arial, Microsoft JhengHei;">
         
 
             @if (Applist == null || Applist.Count == 0)
             {
-                <a asp-action="MemberIndex" asp-controller="Chat" class="btn btn-danger col-9 d-flex justify-content-center align-items-center  h-75">
-                <h1 class="text-center">No Application</h1>
+                <a asp-action="MemberIndex" asp-controller="Chat" class="btn btn-outline-danger col-9 d-flex justify-content-center align-items-center  h-100">
+                <h1 class="text-center m-0" style="font-family: 'Orbitron', sans-serif;">No Application</h1>
                 </a>
             }
             else
@@ -42,9 +42,9 @@
                 }
             }
             </div>
-            <footer class="w-100 row m-0 justify-content-center align-items-center" style="height: 80px;background-color: #2e1f6d;">
+            <footer class="w-100 row m-0 justify-content-center align-items-center pe-2" style="height: 80px;background-color: #2e1f6d;">
                 <a asp-action="MemberIndex" asp-controller="Chat" class="btn btn-danger col-9 d-flex justify-content-center align-items-center  h-75">
-                    <h1 class="m-0" style="">Home</h1>
+            <h1 class="m-0" style="font-family: 'Orbitron', sans-serif;">Home</h1>
                 </a>
             </footer>
     </div>

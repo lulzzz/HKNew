@@ -29,8 +29,8 @@
     </form>
 </div>
 
-<div class="position-absolute d-flex justify-content-center align-items-center d-none"style="width:100vw; height:100vh;background-color:#000000dd;top:0px;left:0px ;z-index:150;">
-    <img src="/assets/giphy (1).gif" alt="" style="width:20%;" id="loading" />
+<div id ="loading" class="position-absolute d-flex justify-content-center align-items-center d-none" style="width:100vw; height:100vh;background-color:#000000dd;top:0px;left:0px ;z-index:150;">
+    <img src="/assets/giphy (1).gif" alt="" style="width:20%;"  />
 </div>
 
 
@@ -39,8 +39,10 @@
 
 <script>
     $(document).ready(function(){
+        const loading = $("#loading")
         $("form").on("submit", function(){
-            $("#loading").removeclass('d-none');
+
+            loading.removeClass('d-none');
         });
     });
 
