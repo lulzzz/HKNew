@@ -260,11 +260,11 @@
                     success: function (data) {
                         console.log("Success")
                         console.log(data);
-                        var newChat = `<a class="btn btn-secondary w-100 rounded-5 d-flex align-items-center justify-content-center x-2 chat-button"
-                                                                style="font-size: 2em; height: 80px; margin-top: 10px;"
-                                                                    data-id="${data.chatId}">
-                                                                        ${data.chatName}-${data.applicationId}
-                                                            </a>`;
+                        var newChat = `<a class="btn w-100 rounded-4 d-flex align-items-center justify-content-between x-2 chat-button fw-bolder overflow-hidden"
+                               style=" white-space: nowrap; font-family: 'Orbitron', sans-serif;font-size: 2em; height: 80px; margin-top: 10px;background-color: #2c4296;color: #EBA4D2;">
+                                                        <h1 class="col me-5 m-0 overflow-hidden" data-id="${data.chatId}">${data.chatName} - ${data.application}</h1>
+                                <div type="button" class="btn btn-outline-info p-2 border-2 "><h4 class="m-0">X</h4></div>
+                            </a>`;
                         $("#chatHis").append(newChat);
                         $(".chat-content").empty();
                     },Error:function(error){
