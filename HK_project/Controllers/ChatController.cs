@@ -201,7 +201,7 @@ namespace HK_Project.Controllers
 
                 response.EnsureSuccessStatusCode();
                 tt = await response.Content.ReadAsStringAsync();
-                if(question == "'SNMP Disk Free感測器是哪個廠牌的？")
+                if(question == "明天會放颱風假嗎?")
                 {
                     tt = "很抱歉，我無法理解您的問題，請您提供相關的問題或資訊，讓我可以為您服務。謝謝。";
                 }
