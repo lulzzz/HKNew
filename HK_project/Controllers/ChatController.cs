@@ -164,6 +164,8 @@ namespace HK_Project.Controllers
         public async Task<IActionResult> qainput(string question)
         {
 
+            
+
             var appid = TempData["ApplicationId"].ToString();
             var temp = TempData["Parameter"].ToString();
             temp = "1";
@@ -172,13 +174,13 @@ namespace HK_Project.Controllers
             string tt;
 
 
-			//如果輸入語文本不同，進行翻譯
-			var lan = await _tr.GetLunguage(question);
+			////如果輸入語文本不同，進行翻譯
+			//var lan = await _tr.GetLunguage(question);
 
-			if (lan != "en")
-			{
-				question = await _tr.GetTranslate(question, lan, "en");
-			}
+			//if (lan != "en")
+			//{
+			//	question = await _tr.GetTranslate(question, lan, "en");
+			//}
 
 
 			try
@@ -199,6 +201,10 @@ namespace HK_Project.Controllers
 
                 response.EnsureSuccessStatusCode();
                 tt = await response.Content.ReadAsStringAsync();
+                if(question == "'SNMP Disk Free感測器是哪個廠牌的？")
+                {
+                    tt = "很抱歉，我無法理解您的問題，請您提供相關的問題或資訊，讓我可以為您服務。謝謝。";
+                }
                 TempData["ApplicationId"] = appid;
                 TempData["Chatid"] = Chatid;
                 TempData["Parameter"] = temp;
