@@ -226,7 +226,20 @@ namespace HK_Project.Controllers
                 await _ctx.SaveChangesAsync();
                 tt = "很抱歉，我無法理解您的問題，請您提供相關的問題或資訊，讓我可以為您服務。謝謝。";
             }
-
+            //string ans = "";
+            //foreach(var t in tt)
+            //{
+                
+            //    if(t == '。')
+            //    {
+            //        ans = ans + "。<br>";
+            //    }
+            //    else
+            //    {
+            //        ans = ans + t;
+            //    }
+                
+            //}
 
             return Json(tt);//response
         }
