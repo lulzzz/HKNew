@@ -177,10 +177,10 @@ namespace HK_Project.Controllers
 			////如果輸入語文本不同，進行翻譯
 			//var lan = await _tr.GetLunguage(question);
 
-			if (lan != "en")
-			{
-				question = await _tr.GetTranslate(question, lan, "en");
-			}
+			//if (lan != "en")
+			//{
+			//	question = await _tr.GetTranslate(question, lan, "en");
+			//}
 
 
             try

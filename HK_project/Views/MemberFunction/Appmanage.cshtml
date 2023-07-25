@@ -5,11 +5,24 @@
     var parameter = ViewBag.parameter as string;
     var Aifile = ViewBag.Aifile as List<Aifile>;
 }
+<style>
+    .slider-bar::-webkit-scrollbar {
+        width: 8px; /* 设置滚动条宽度，根据需要调整 */
+    }
 
-<div class="w-100 align-items-center justify-content-center d-flex flex-column flex-md-row px-2"
-     style="height: calc(100vh - 70px);background-color: #2e1f6d;">
+    .slider-bar::-webkit-scrollbar-thumb {
+        background-color: #4dafff; /* 设置滚动条滑块颜色，根据需要调整 */
+        border-radius: 3px; /* 设置滚动条滑块圆角，根据需要调整 */
+    }
+
+        .slider-bar::-webkit-scrollbar-thumb:hover {
+            background-color: #2175b9; /* 设置滚动条滑块在悬停时的颜色，根据需要调整 */
+        }
+</style>
+<div class="w-100 align-items-center justify-content-center d-flex flex-column flex-xl-row px-2"
+     style="min-height: calc(100vh - 70px);background-color: #2e1f6d;">
         <div class="col d-flex flex-column align-items-center">
-            <div class="row w-100 align-items-center justify-content-center m-0 mt-5 flex-column flex-sm-row">
+            <div class="row w-100 align-items-center justify-content-center m-0 mt-4 flex-column flex-sm-row">
             <h1 class="col-sm-4 col d-flex m-0 h-100 align-items-center justify-content-center" style="color:#48bee2;font-family: 'Orbitron', sans-serif;">Modle</h1>
                 <div class=" col-md-5 col h-100 border-0 me-2 px-0 d-flex align-items-center justify-content-center">
                 <select asp-for="Model" class="form-select bg-body-secondary p-0" type="text"
@@ -24,20 +37,20 @@
 
             </div>
 
-        <div class="row w-100 align-items-center justify-content-center mt-5 flex-column flex-sm-row">
+        <div class="row w-100 align-items-center justify-content-center mt-4 flex-column flex-sm-row">
             <h1 class="col-sm-4 col d-flex m-0 h-100 align-items-center justify-content-center" style="font-family: 'Orbitron', sans-serif;color:#48bee2;">App Name*</h1>
                 <input asp-for="ApplicationName" class="h-100 col-md-5 col md-50 me-2 "
                    type="text" style="font-size: calc(1.375rem + 1vw);" value="@AppName">
 
 
             </div>
-        <div class="row w-100 align-items-center justify-content-center my-5 flex-column flex-sm-row">
+        <div class="row w-100 align-items-center justify-content-center my-4 flex-column flex-sm-row">
             <h1 class="col-sm-4 col d-flex m-0 h-100 align-items-center justify-content-center" style="color:#48bee2;font-family: 'Orbitron', sans-serif;">Maxtoken*</h1>
                <input asp-for="Parameter" class="h-100 col-md-5 col rounded-pill bg-body-secondary border-0 md-50 me-2 px-5"
                    type="text" style="font-size: calc(1.375rem + 1vw);" value="@parameter">
 
             </div>
-            <button class="btn btn-primary w-75 mt-5" id="submitButton">
+            <button class="btn btn-primary w-75 mt-2" id="submitButton">
                 <h1 class="m-0">Submit</h1>
             </button>
         </div>
@@ -45,7 +58,7 @@
 
 
 
-    <div class="col-md-5 col align-items-center justify-content-center flex-column flex-sm-row p-md-3 mt-3" style="height: calc(300px + 10vh);overflow-y:scroll;">
+    <div class="col-xl-5 col align-items-center justify-content-center flex-column flex-sm-row p-md-3 mt-3 " style="height: calc(300px + 10vh);">
         <form method="post" enctype="multipart/form-data" asp-controller="MemberFunction" asp-action="Renewuploadfileapp" class="w-100 align-items-center justify-content-center d-flex flex-column px-2" style="">
                 <div class="row w-100 align-items-center justify-content-center flex-column flex-sm-row "
                      style="height: 100px;">
@@ -56,13 +69,14 @@
                 </div>
                 <input type="submit" id="Renewuploadfileapp"  class="btn btn-primary w-100 mt-5"/>
             </form>
-            <table class="w-100 mt-50">
-                <tbody>
+        <div class="w-100 slider-bar h-50 d-flex justify-content-center mb-5" style="overflow-y:scroll; background-color:#201357;">
+            <table class="w-75 h-100">
+                <tbody class="h-100">
                     <tr>
                         @foreach (var file in Aifile)
                         {
                             <td id="@file.AifileId" class="border-1 d-flex align-items-center justify-content-between px-2 mt-2" style="height: 80px;background-color:white;">
-                            <h1 h5 >@file.AifilePath</h1>
+                                <h1 h5>@file.AifilePath</h1>
                                 <h1>@file.AifileId</h1>
                                 <button type="button" class="btn btn-outline-secondary h-50 p-1 delete-button" data-id="@file.AifileId">
                                     <img class="h-100" src="/assets/trash-can.png " alt="">
@@ -70,10 +84,42 @@
 
                             </td>
                         }
+                        <td id="AifileId" class="border-1 d-flex align-items-center justify-content-between px-2 mt-2" style="height: 80px;background-color:white;">
+                            <h1 h5>.AifilePath</h1>
+                            <h1>AifileId</h1>
+                            <button type="button" class="btn btn-outline-secondary h-50 p-1 delete-button" data-id="AifileId">
+                                <img class="h-100" src="/assets/trash-can.png " alt="">
+                            </button>
 
+                        </td>
+                        <td id="AifileId" class="border-1 d-flex align-items-center justify-content-between px-2 mt-2" style="height: 80px;background-color:white;">
+                            <h1 h5>.AifilePath</h1>
+                            <h1>AifileId</h1>
+                            <button type="button" class="btn btn-outline-secondary h-50 p-1 delete-button" data-id="AifileId">
+                                <img class="h-100" src="/assets/trash-can.png " alt="">
+                            </button>
+
+                        </td>
+                        <td id="AifileId" class="border-1 d-flex align-items-center justify-content-between px-2 mt-2" style="height: 80px;background-color:white;">
+                            <h1 h5>.AifilePath</h1>
+                            <h1>AifileId</h1>
+                            <button type="button" class="btn btn-outline-secondary h-50 p-1 delete-button" data-id="AifileId">
+                                <img class="h-100" src="/assets/trash-can.png " alt="">
+                            </button>
+
+                        </td>
+                        <td id="AifileId" class="border-1 d-flex align-items-center justify-content-between px-2 mt-2" style="height: 80px;background-color:white;">
+                            <h1 h5>.AifilePath</h1>
+                            <h1>AifileId</h1>
+                            <button type="button" class="btn btn-outline-secondary h-50 p-1 delete-button" data-id="AifileId">
+                                <img class="h-100" src="/assets/trash-can.png " alt="">
+                            </button>
+
+                        </td>
                     </tr>
                 </tbody>
             </table>
+            </div>
             
         </div>
         </div>
