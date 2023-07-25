@@ -98,9 +98,14 @@
                                     aria-label="Close"></button>
                         </div>
                         <div class="modal-body p-3 d-flex flex-column align-items-center">
+                            <h2>LineBot</h2>
                             <img id="qrImage" src=@ViewBag.ImageUrl alt="Your QR Code" />
                             <div id="qrText" class="mt-2"></div> <!-- 新增的 div -->
-                            <button id="copyButton" class="btn btn-secondary mt-2">複製文字</button>
+                            <br>
+                            <h2>For PC</h2>
+                            <img id="qrImage2" src=@ViewBag.ImageUrl2 alt="Your QR Code" />
+                            <div id="qrText2" class="mt-2"></div> <!-- 新增的 div -->
+                            
                             <!-- 新增的複製按鈕 -->
                             @*                                <img id="Linebot" src=/assets/linebot.png  alt ="Your QR Code" />
                             <h1>LineBot</h1>*@
@@ -196,20 +201,7 @@
 
     <script>
         $(document).ready(function () {
-
-            // 複製事件的綁定
-            $('#copyButton').off('click').click(function () {
-                var tempInput = document.createElement("input");
-                tempInput.value = $('#qrText').text("https://6205-220-133-90-58.ngrok-free.app/Chat/SendMessage/%E8%8F%AF%E9%9B%BB");
-                document.body.appendChild(tempInput);
-                tempInput.select();
-                document.execCommand("copy");
-                document.body.removeChild(tempInput);
-                alert("複製成功!");
-            });
-
             // QR 碼產生的事件綁定
-
             $('#generateQRCode').click(function (e) {
                 e.preventDefault();
                 $.ajax({
@@ -226,7 +218,22 @@
         });
 
 
-
+        $(document).ready(function () {
+            // QR 碼產生的事件綁定
+            $('#generateQRCode').click(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: '/Chat/QRCode2',
+                    type: 'POST',
+                    success: function (data) {
+                        $('#qrImage2').attr('src', data.imageUrl);
+                        $('#qrText2').text(data.data); //設置文字
+                        $('#qrModal').modal('show');
+                    }
+                });
+            });
+            // 其他的事件綁定 ...
+        });
 
 
 

@@ -279,7 +279,7 @@ namespace HK_Project.Controllers
         {
             var appid = TempData["ApplicationId"].ToString();
             var key = _ctx.Applications.FirstOrDefault(a => a.Key == appid);
-            var data = "https://6205-220-133-90-58.ngrok-free.app/Chat/SendMessage/%E8%8F%AF%E9%9B%BB\r\n";  /*$"https://localhost:7229/Chat/SendMessage/{key}";*/
+            var data = "https://line.me/R/ti/p/@753zjagg\r\n";  /*$"https://localhost:7229/Chat/SendMessage/{key}";*/
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(data, QRCodeGenerator.ECCLevel.Q);
             PngByteQRCode pngQRCode = new PngByteQRCode(qrCodeData);
@@ -305,6 +305,36 @@ namespace HK_Project.Controllers
             return Json(result);
         }
 
+        [HttpPost]
+        public IActionResult QRCode2()
+        {
+            var appid = TempData["ApplicationId"].ToString();
+            var key = _ctx.Applications.FirstOrDefault(a => a.Key == appid);
+            var data = "https://87a2-220-133-90-58.ngrok-free.app/Chat/SendMessage/%E8%8F%AF%E9%9B%BB\r\n";  /*$"https://localhost:7229/Chat/SendMessage/{key}";*/
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(data, QRCodeGenerator.ECCLevel.Q);
+            PngByteQRCode pngQRCode = new PngByteQRCode(qrCodeData);
+            byte[] qrCodeAsBytes = pngQRCode.GetGraphic(5);
+
+            // Create Bitmap from byte array
+            MemoryStream ms = new MemoryStream(qrCodeAsBytes);
+            Bitmap qrCodeImage = new Bitmap(ms);
+
+            string outputFileName = $@"wwwroot\Images\{Guid.NewGuid()}.png";
+
+            using (FileStream fs = new FileStream(outputFileName, FileMode.Create, FileAccess.ReadWrite))
+            {
+                qrCodeImage.Save(fs, ImageFormat.Png);
+            }
+            TempData["ApplicationId"] = appid;
+
+            var result = new
+            {
+                imageUrl = outputFileName.Replace("wwwroot", ""),
+                data = data
+            };
+            return Json(result);
+        }
 
         public class ChatDto
         {
