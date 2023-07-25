@@ -89,23 +89,28 @@
         <div class="col ms-sm-1 px-0 h-100 position-relative" style="box-sizing:content-box;">
 
 
-            <div id="qrModal" class="modal" tabindex="-1">
-                <div class="modal-dialog">
+            <div id="qrModal" class="modal justify-content-center" tabindex="-1">
+                <div class="modal-dialog"style="max-width:80vw;">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" style="font-family: 'Orbitron', sans-serif;">Your QR Code</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                         </div>
-                        <div class="modal-body p-3 d-flex flex-column align-items-center">
-                            <h2>LineBot</h2>
-                            <img id="qrImage" src=@ViewBag.ImageUrl alt="Your QR Code" />
-                            <div id="qrText" class="mt-2"></div> <!-- 新增的 div -->
-                            <br>
-                            <h2>For PC</h2>
-                            <img id="qrImage2" src=@ViewBag.ImageUrl2 alt="Your QR Code" />
-                            <div id="qrText2" class="mt-2"></div> <!-- 新增的 div -->
-                            
+                        <div class="modal-body p-3 d-flex flex-lg-row flex-column align-items-center justify-content-around">
+							<div class="col-sm-4 col h-100 d-flex flex-column align-items-center">
+                                <h2>LineBot</h2>
+                                <img style="width:75%;" id="qrImage" src=@ViewBag.ImageUrl alt="Your QR Code" />
+                                <div id="qrText" class="mt-2 p-1"></div> <!-- 新增的 div -->
+
+                            </div>
+                            <div class="col-sm-6 col h-100 d-flex flex-column align-items-center">
+                                <h2>For PC</h2>
+                                <img style="width:50%;" id="qrImage2" src=@ViewBag.ImageUrl2 alt="Your QR Code" />
+                                <div id="qrText2" class="mt-2 p-1"></div>
+                            </div>
+
+
                             <!-- 新增的複製按鈕 -->
                             @*                                <img id="Linebot" src=/assets/linebot.png  alt ="Your QR Code" />
                             <h1>LineBot</h1>*@
